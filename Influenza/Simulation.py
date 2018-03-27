@@ -23,7 +23,7 @@ class run_Simulation:
         self.parameters = Parameters.Parameters(index, **paramValues)
 
         # Initial condition
-        self.Y0 = numpy.zeros(12 * self.parameters.ages.size)
+        self.Y0 = numpy.zeros(9 * self.parameters.ages.size)
 
         self.hasSolution = False
 	
@@ -91,71 +91,60 @@ class run_Simulation:
         return self.parameters.computeR0()
 
     def getLastValues(self):
-        return (self.SU[-1, :], self.EU[-1, :],
-                self.IU[-1, :], self.RU[-1, :],
-		self.SVL[-1, :], self.EVL[-1, :],
-                self.IVL[-1, :], self.RVL[-1, :],
-                self.SVH[-1, :], self.EVH[-1, :],
-                self.IVH[-1, :], self.RVH[-1, :])
+        return (self.SU[-1, :], self.IU[-1, :], self.RU[-1, :],
+		self.SVL[-1, :], self.IVL[-1, :], self.RVL[-1, :],
+                self.SVH[-1, :], self.IVH[-1, :], self.RVH[-1, :])
 
     def updateIC(self):
         if not self.hasSolution:
             # S
 	    ## SU
 	   
-            self.Y0[ 0 : : 12] = \
+            self.Y0[ 0 : : 9] = \
                      (1 - self.parameters.proportionVaccinatedLow - self.parameters.proportionVaccinatedHigh) * self.parameters.population 
 
 	    ## SVL
-            self.Y0[ 4 : : 12] = \
+            self.Y0[ 3 : : 9] = \
                      self.parameters.proportionVaccinatedLow * self.parameters.population 
 	    ## SVH
-            self.Y0[ 8 : : 12] = \
+            self.Y0[ 6 : : 9] = \
                      self.parameters.proportionVaccinatedHigh * self.parameters.population 
 
-            # E (EU, EVL and EVH)	    
-            self.Y0[ 1 : : 12] = 0.
-            self.Y0[ 5 : : 12] = 0.
-	    self.Y0[ 9 : : 12] = 0.
 
             # I: Add a single infectious person in each age
 	    
-	    self.Y0[ 2 : : 12] = numpy.full(self.parameters.ages.size,1)
-            self.Y0[ 6 : : 12] = numpy.full(self.parameters.ages.size, 1)
-	    self.Y0[ 10 : : 12] = numpy.full(self.parameters.ages.size, 1)
+	    self.Y0[ 1 : : 9] = numpy.full(self.parameters.ages.size,1)
+            self.Y0[ 4 : : 9] = numpy.full(self.parameters.ages.size, 1)
+	    self.Y0[ 7 : : 9] = numpy.full(self.parameters.ages.size, 1)
 	    
             #self.Y0[ 2 : : 12] = (1 - self.parameters.proportionVaccinatedLow - self.parameters.proportionVaccinatedHigh)
             #self.Y0[ 6 : : 12] = self.parameters.proportionVaccinatedLow
 	    #self.Y0[ 10 : : 12] = self.parameters.proportionVaccinatedHigh
 
             # S: Remove those new infectious people from the susceptibles
-            self.Y0[ 0 : : 12] -= self.Y0[ 2 : : 12]
-            self.Y0[ 4 : : 12] -= self.Y0[ 6 : : 12]
-	    self.Y0[ 8 : : 12] -= self.Y0[ 10 : : 12]
+            self.Y0[ 0 : : 9] -= self.Y0[ 1 : : 9]
+            self.Y0[ 3 : : 9] -= self.Y0[ 4 : : 9]
+	    self.Y0[ 6 : : 9] -= self.Y0[ 7 : : 9]
 
             # R (RU, RVL, RVH)
-            self.Y0[ 3 : : 12] = 0.
-            self.Y0[ 7 : : 12] = 0.
-	    self.Y0[ 11 : : 12] = 0.
-	    print ("check!!!!"),  self.Y0[ 2 : : 12],  self.Y0[ 6 : : 12],  self.Y0[ 10 : : 12]
+            self.Y0[ 2 : : 9] = 0.
+            self.Y0[ 5 : : 9] = 0.
+	    self.Y0[ 8 : : 9] = 0.
+	    print ("check!!!!"),  self.Y0[ 1 : : 9],  self.Y0[ 4 : : 9],  self.Y0[ 7 : : 9]
 
         else:
 	    
-            SU, EU, IU, RU, SVL, EVL, IVL, RVL, SVH, EVH, IVH, RVH = self.getLastValues()
+            SU, IU, RU, SVL,  IVL, RVL, SVH, IVH, RVH = self.getLastValues()
             
-            self.Y0[ 0 : : 12] = (1 - self.parameters.proportionVaccinatedLow - self.parameters.proportionVaccinatedHigh)* SU
-            self.Y0[ 4 : : 12] = SVL + self.parameters.proportionVaccinatedLow * SU
-	    self.Y0[ 8 : : 12] = SVH + self.parameters.proportionVaccinatedHigh * SU
-
-            self.Y0[ 1 : : 12] = EU
-            self.Y0[ 5 : : 12] = EVL
-	    self.Y0[ 9 : : 12] = EVH
-            self.Y0[ 2 : : 12] = IU
-            self.Y0[ 6 : : 12] = IVL
-	    self.Y0[ 10 : : 12] = IVH
-            self.Y0[ 3 : : 12] = RU
-            self.Y0[ 7 : : 12] = RVL
-	    self.Y0[ 11 : : 12] = RVH
+            self.Y0[ 0 : : 9] = (1 - self.parameters.proportionVaccinatedLow - self.parameters.proportionVaccinatedHigh)* SU
+            self.Y0[ 3 : : 9] = SVL + self.parameters.proportionVaccinatedLow * SU
+	    self.Y0[ 6 : : 9] = SVH + self.parameters.proportionVaccinatedHigh * SU
+            self.Y0[ 1 : : 9] = IU
+            self.Y0[ 4 : : 9] = IVL
+	    self.Y0[ 7 : : 9] = IVH
+            self.Y0[ 2 : : 9] = RU
+            self.Y0[ 5 : : 9] = RVL
+	    self.Y0[ 8 : : 9] = RVH
 
     def RHS(self, Y, t):
         '''
@@ -166,65 +155,48 @@ class run_Simulation:
         
         # Convert vector to meaningful component vectors
 
-	SU = Y[ 0 : : 12]
-        EU = Y[ 1 : : 12]
-        IU = Y[ 2 : : 12]
-        RU = Y[ 3 : : 12]
-        SVL = Y[ 4 : : 12]
-        EVL = Y[ 5 : : 12]
-        IVL = Y[ 6 : : 12]
-        RVL = Y[ 7 : : 12]
-	SVH = Y[ 8 : : 12]
-        EVH = Y[ 9 : : 12]
-        IVH = Y[ 10 : : 12]
-        RVH = Y[ 11: : 12]
+	SU = Y[ 0 : : 9]
+        IU = Y[ 1 : : 9]
+        RU = Y[ 2 : : 9]
+        SVL = Y[ 3 : : 9]
+        IVL = Y[ 4 : : 9]
+        RVL = Y[ 5 : : 9]
+	SVH = Y[ 6 : : 9]
+        IVH = Y[ 7 : : 9]
+        RVH = Y[ 8: : 9]
         
-        N = sum(SU + EU + IU + RU + SVL + EVL + IVL + RVL+ SVH + EVH + IVH + RVH)
+        N = sum(SU + IU + RU + SVL + IVL + RVL+ SVH + IVH + RVH)
       
         # The force of infection
-        # Lambda[i] = transmissionScaling * susceptibility[i]
-        #             * sum(contactMatrix[i, j] * transmissibility[j] * I[j])
-        #             / N
         Lambda = self.parameters.transmissionScaling * self.parameters.susceptibility \
                  * numpy.dot(self.parameters.contactMatrix,
                              self.parameters.transmissibility * (IU + IVL + IVH)) / N
         
         # The right-hand sides
         dSU = - Lambda * SU
-        dEU = Lambda * SU - self.parameters.latencyRate * EU
-        #dIU = self.parameters.latencyRate * EU  - (self.parameters.recoveryRate + self.parameters.deathRateU) * IU
-	dIU = Lambda * SU - (self.parameters.recoveryRate + self.parameters.deathRateU) * IU
+        dIU = Lambda * SU - (self.parameters.recoveryRate + self.parameters.deathRateU) * IU
         dRU = self.parameters.recoveryRate * IU
         
 	dSVL = - (1 - self.parameters.vaccineEfficacyVsInfectionLow) * Lambda * SVL
-        dEVL = (1 - self.parameters.vaccineEfficacyVsInfectionLow) \
-               * Lambda * SVL - self.parameters.latencyRate * EVL
-        #dIVL = self.parameters.latencyRate * EVL  - (self.parameters.recoveryRate + self.parameters.deathRateV) * IVL
-	dIVL = Lambda * SVL  - (self.parameters.recoveryRate + self.parameters.deathRateV) * IVL
+        dIVL = Lambda * SVL  - (self.parameters.recoveryRate + self.parameters.deathRateV) * IVL
         dRVL = self.parameters.recoveryRate * IVL
 
 	dSVH = - (1 - self.parameters.vaccineEfficacyVsInfectionHigh) * Lambda * SVH
-        dEVH = (1 - self.parameters.vaccineEfficacyVsInfectionHigh) \
-               * Lambda * SVH - self.parameters.latencyRate * EVH
-        #dIVH = self.parameters.latencyRate * EVH - (self.parameters.recoveryRate + self.parameters.deathRateV) * IVH
-	dIVH = Lambda * SVH - (self.parameters.recoveryRate + self.parameters.deathRateV) * IVH
+        dIVH = Lambda * SVH - (self.parameters.recoveryRate + self.parameters.deathRateV) * IVH
         dRVH = self.parameters.recoveryRate * IVH
         
         
         # Convert meaningful component vectors into a single vector
         dY = numpy.empty(Y.size, dtype = float)
-        dY[ 0 : : 12] = dSU
-        dY[ 1 : : 12] = dEU
-        dY[ 2 : : 12] = dIU
-        dY[ 3 : : 12] = dRU
-        dY[ 4 : : 12] = dSVL
-        dY[ 5 : : 12] = dEVL
-        dY[ 6 : : 12] = dIVL
-        dY[ 7 : : 12] = dRVL
-        dY[ 8 : : 12] = dSVH
-        dY[ 9 : : 12] = dEVH
-        dY[ 10 : : 12] = dIVH
-        dY[ 11 : : 12] = dRVH
+        dY[ 0 : : 9] = dSU
+        dY[ 1 : : 9] = dIU
+        dY[ 2 : : 9] = dRU
+        dY[ 3 : : 9] = dSVL
+        dY[ 4 : : 9] = dIVL
+        dY[ 5 : : 9] = dRVL
+        dY[ 6 : : 9] = dSVH
+        dY[ 7 : : 9] = dIVH
+        dY[ 8 : : 9] = dRVH
       
         return dY
     
@@ -238,15 +210,12 @@ class run_Simulation:
         if self.hasSolution:
             TOld  = self.T.copy()
             SUOld = self.SU.copy()
-            EUOld = self.EU.copy()
             IUOld = self.IU.copy()
             RUOld = self.RU.copy()
             SVLOld = self.SVL.copy()
-            EVLOld = self.EVL.copy()
             IVLOld = self.IVL.copy()
             RVLOld = self.RVL.copy()
             SVHOld = self.SVH.copy()
-            EVHOld = self.EVH.copy()
             IVHOld = self.IVH.copy()
             RVHOld = self.RVH.copy()
             
@@ -261,42 +230,36 @@ class run_Simulation:
                         self.T,
                         mxstep = 1000)
         Z = self.Y.copy()
-	self.SU = Z[:,  0 : : 12]
-        self.EU = Z[:,  1 : : 12]
-        self.IU = Z[:,  2 : : 12]
-        self.RU = Z[:,  3 : : 12]
-        self.SVL = Z[:,  4 : : 12]
-        self.EVL = Z[:,  5 : : 12]
-        self.IVL = Z[:,  6 : : 12]
-        self.RVL = Z[:,  7 : : 12]
-        self.SVH = Z[:,  8 : : 12]
-        self.EVH = Z[:,  9 : : 12]
-        self.IVH = Z[:,  10 : : 12]
-        self.RVH = Z[:,  11 : : 12]
+	self.SU = Z[:,  0 : : 9]
+        self.IU = Z[:,  1 : : 9]
+        self.RU = Z[:,  2 : : 9]
+        self.SVL = Z[:,  3 : : 9]
+        self.IVL = Z[:,  4 : : 9]
+        self.RVL = Z[:,  5 : : 9]
+        self.SVH = Z[:,  6 : : 9]
+        self.IVH = Z[:,  7 : : 9]
+        self.RVH = Z[:,  8 : : 9]
 
         if self.hasSolution:
 	   
             self.T = numpy.hstack((TOld, self.T))
 
             self.SU = numpy.vstack((SUOld, self.SU))
-            self.EU = numpy.vstack((EUOld, self.EU))
             self.IU = numpy.vstack((IUOld, self.IU))
             self.RU = numpy.vstack((RUOld, self.RU))
             self.SVL = numpy.vstack((SVLOld, self.SVL))
-            self.EVL = numpy.vstack((EVLOld, self.EVL))
             self.IVL = numpy.vstack((IVLOld, self.IVL))
             self.RVL = numpy.vstack((RVLOld, self.RVL))
             self.SVH = numpy.vstack((SVHOld, self.SVH))
-            self.EVH = numpy.vstack((EVHOld, self.EVH))
             self.IVH = numpy.vstack((IVHOld, self.IVH))
             self.RVH = numpy.vstack((RVHOld, self.RVH))
 
         self.hasSolution = True
 
     def updateStats(self):
-        self.NU = self.SU + self.EU + self.IU + self.RU
-	self.NVL = self.SVL + self.EVL + self.IVL + self.RVL
-	self.NVH = self.SVH + self.EVH + self.IVH + self.RVH
+        self.NU = self.SU +  self.IU + self.RU
+	self.NVL = self.SVL +  self.IVL + self.RVL
+	self.NVH = self.SVH +  self.IVH + self.RVH
         self.NV = self.NVL + self.NVH
         self.N  = self.NU + self.NV
 
@@ -468,13 +431,11 @@ class run_Simulation:
         for (i, t) in enumerate(self.T):
             print '%g' % t,
             print '\t'.join(map(lambda f: ('%g' % f),
-                                (sum(self.EU[i, :]),
                                  sum(self.IU[i, :]),
                                  sum(self.RU[i, :]),
                                  sum(self.SV[i, :]),
-                                 sum(self.EV[i, :]),
                                  sum(self.IV[i, :]),
-                                 sum(self.RV[i, :]))))
+                                 sum(self.RV[i, :])))
     
     def outputInfo(self):
         print 'R0:\t\t\t %g' % self.parameters.R0

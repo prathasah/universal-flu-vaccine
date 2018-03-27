@@ -15,11 +15,6 @@ def recoveryRatePW(index):
     [0])
 
 
-def latencyRatePW(index):
-    #df  = pd.read_csv("sampled_parameter_set.csv")
-    return PiecewiseAgeRate(
-    [df.at[index, "latency_rate"]],
-    [0])
 
 def susceptibilityPW(index):
     return PiecewiseAgeRate(
