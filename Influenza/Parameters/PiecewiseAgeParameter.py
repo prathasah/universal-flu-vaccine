@@ -1,5 +1,5 @@
 import numpy
-
+import math
 
 class PiecewiseAgeParameter:
     """
@@ -22,7 +22,6 @@ class PiecewiseAgeParameter:
         'Extrapolate from piecewise definition onto an age mesh'
 
         T = self.makeTransMat(fullAges)
-	
 
         if weights != None:
             # Normalize sum of each column to 1
@@ -134,10 +133,12 @@ class PiecewiseAgeRate(PiecewiseAgeParameter):
                                             self.ages[j + 1]) \
                                             - max(a, b)
                         T[i, j] = float(lenSelfInFull) / float(lenFull)
-
-        T /= numpy.outer(T.sum(1), numpy.ones(len(self.ages)))
 	
-        assert numpy.all(abs(T.sum(1) - 1.) < 1e-12)
+        T /= numpy.outer(T.sum(1), numpy.ones(len(self.ages)))
+	#replace na with zero
+	T = numpy.nan_to_num(T)
+	#assert numpy.all(abs(T.sum(1) - 1.) < 1e-12)
+	assert numpy.all(T.sum(1) - 1. < 1e-12)
 	return T
 
     def __repr__(self):

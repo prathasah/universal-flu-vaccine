@@ -43,18 +43,19 @@ def setVacSchedule(option, opt_str, value, parser):
         parser.print_usage()
         raise ValueError, "Vaccine Information Needed!"
 
-    elif len(value) % 3 != 0:
+    elif len(value) % 2 !=0:
 	parser.print_usage()
-        raise ValueError, \
-            "Enter Vaccine Information as <objective> <vactime> <vacnumber> <vacefficacy>!"
+	print len(value)
+	raise ValueError, \
+            "Enter Vaccine Information as <objective> <vacnumber1> <vacefficacy1>  <vacnumber2> <vacefficacy2>!"
 
     else:
         while len(value) > 0:
             try:
                 getattr(parser.values,
                         option.dest).append((float(value.pop(0)),
-                                             float(value.pop(0)),
 					     float(value.pop(0))))
+
             except ValueError:
                 parser.print_usage()
                 raise ValueError, \
@@ -79,7 +80,7 @@ def getOptions(simType = 'Simulation'):
     
     if simType == 'Optimization':
         p.set_usage(
-            'Usage: %prog [options] vacTime0 vacNumber0 [vacTime1 vacNumber1 ...]')
+            'Usage: %prog [options] vacNumber0 vacEfficacy0 vacNumber1 vacEfficacy1 ...]')
 	
         g = optparse.OptionGroup(p, "Optimizitation options")
 	
@@ -95,7 +96,6 @@ def getOptions(simType = 'Simulation'):
         p.add_option_group(g)
 
     (options, args) = p.parse_args()
-    print ("strep 1"), options, args
     
    
 

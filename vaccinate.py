@@ -1,13 +1,14 @@
 #!/usr/bin/python
-#
-#
-#
+import sys
+sys.path.insert(0, r'./Influenza')
+import numpy as np
+import Simulation 
 
-import Influenza
 
-s = Influenza.Simulation()
 
-vacsUsed = s.simulateWithVaccine([0], [[0.7012, 0.5514, 0.3264, 0.4528, 0.6532]], 0.1)
+s = Simulation.run_Simulation(paramValues = {"vacEfficacy":[0.2, 0.8]})
+
+vacsUsed = s.simulateWithVaccine([0]*32, [0.2, 0.8])
 
 #if not s.options.quiet:
 #    print 'Doses:\t\t\t %s' % ', '.join('%g' % v for v in vacsUsed)

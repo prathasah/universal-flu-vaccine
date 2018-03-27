@@ -4,7 +4,7 @@ import random
 import efficacy_vs_coverage 
 import os
 ###########################################3
-niter =  50
+niter =  10
 
 ############################################
 #write csv
