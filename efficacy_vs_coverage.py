@@ -30,7 +30,7 @@ if __name__ == "__main__":
 	vax_60_incidence = []
 	total_doses = 150e6
 	for sub_index in xrange(1):
-		scenario = 0.99
+		scenario = 0.2
 		dose2 = scenario * total_doses
 		dose1 = total_doses - dose2
 		doses = [dose1, dose2]

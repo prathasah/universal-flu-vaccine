@@ -137,16 +137,16 @@ class Parameters:
         # from case mortalities
 
 	## Death probability for low risk **unvacccinated** individuals
-        self.caseMortalityL = self.caseMortality/ ((1 - self.proportionHighRisk) + (self.highRiskRelativeCaseMortality * self.proportionHighRisk))
+        self.caseMortalityL = self.caseMortality/ ((1 - self.proportionHighRisk) + (self.HighRiskRelativeCaseMortality * self.proportionHighRisk))
 	
 	## Death probability for high risk **unvacccinated** individuals
-        self.caseMortalityH = self.caseMortalityL * self.highRiskRelativeCaseMortality
+        self.caseMortalityH = self.caseMortalityL * self.HighRiskRelativeCaseMortality
 	
 	# Death probability for low risk **vacccinated** individuals
         self.caseMortalityVL = self.caseMortalityL * (1 - self.vaccineEfficacyVsDeath)
 	
 	# Death probability for high risk **vacccinated** individuals
-        self.caseMortalityVH = self.caseMortalityVL * self.highRiskRelativeCaseMortality
+        self.caseMortalityVH = self.caseMortalityVL * self.HighRiskRelativeCaseMortality
 	
 	##equation S1.7. Death rate of low-risk unvaccinated individuals
         self.deathRateUL = self.recoveryRate  * self.caseMortalityL/ (1 - self.caseMortalityL)
@@ -158,8 +158,8 @@ class Parameters:
         self.deathRateVH = self.recoveryRate  * self.caseMortalityVH  / (1 - self.caseMortalityVH)
 	
 	# Compute specific case hospitalizations
-        self.caseHospitalizationL = self.caseHospitalization / ((1 - self.proportionHighRisk) + (self.highRiskRelativeCaseHospitalization * self.proportionHighRisk))
-        self.caseHospitalizationH = self.highRiskRelativeCaseHospitalization * self.caseHospitalizationL
+        self.caseHospitalizationL = self.caseHospitalization / ((1 - self.proportionHighRisk) + (self.HighRiskRelativeCaseHospitalization * self.proportionHighRisk))
+        self.caseHospitalizationH = self.HighRiskRelativeCaseHospitalization * self.caseHospitalizationL
 	
 	
         # Set up proportion vaccinated vectors
@@ -176,20 +176,26 @@ class Parameters:
 		raise ValueError, "The number of age group bins for low and high efficacy vaccine should be the same!"
 	if len(vaccinationHighRiskAgesTypical) != len(vaccinationHighRiskAgesUniversal):
 		raise ValueError, "The number of age group bins for low and high efficacy vaccine should be the same!"
-	self.proportionVaccinatedLPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesTypical),
+	self.proportionVaccinatedTLPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesTypical),
             vaccinationLowRiskAgesTypical)
-	self.proportionVaccinatedLPW = PiecewiseAgeRate([0.0] * len(vaccinationHighRiskAgesTypical),
+	self.proportionVaccinatedNLPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesUniversal),
+            vaccinationLowRiskAgesUniversal)
+	self.proportionVaccinatedTHPW = PiecewiseAgeRate([0.0] * len(vaccinationHighRiskAgesTypical),
             vaccinationHighRiskAgesTypical)
+	self.proportionVaccinatedNHPW = PiecewiseAgeRate([0.0] * len(vaccinationHighRiskAgesUniversal),
+            vaccinationHighRiskAgesUniversal)
+		
 	
-	self.proportionVaccinatedL = self.proportionVaccinatedLPW.full(self.ages)
-	self.proportionVaccinatedH = self.proportionVaccinatedHPW.full(self.ages)
 	self.proportionVaccinatedTL = self.proportionVaccinatedTypicalLPW.full(self.ages)
 	self.proportionVaccinatedTH = self.proportionVaccinatedTypicalHPW.full(self.ages)
 	self.proportionVaccinatedNL = self.proportionVaccinatedUniversalLPW.full(self.ages)
 	self.proportionVaccinatedNH = self.proportionVaccinatedUniversalHPW.full(self.ages)
+	self.proportionVaccinatedL = self.proportionVaccinatedTL + self.proportionVaccinatedNL
+	self.proportionVaccinatedH = self.proportionVaccinatedTH + self.proportionVaccinatedNH
 	
 
-	self.proportionVaccinatedLength = len(vaccinationLowRiskAgesTypical)
+	self.proportionVaccinatedLLength = len(vaccinationLowRiskAgesTypical)
+	self.proportionVaccinatedHLength = len(vaccinationHighRiskAgesTypical)
         
 
         # Get contact matrix

@@ -72,8 +72,9 @@ class run_Simulation:
 	    #----------------------------------------------------------
 	    
 	    ## vaccination uptake in 2016 + adjustment to ensure total vaccines = 150million
+	    ##assuming vaccination coverage of high risk age group = 70% ------- TO CHANGE
 	    typical_vaccination = [ 0.70,  0.56,  0.56, 0.5152, 0.34, 0.34,0.34,0.34,0.34,0.34,
-				   0.46,  0.46, 0.46, 0.653, 0.653, 0.653]
+				   0.46,  0.46, 0.46, 0.653, 0.653, 0.653, 0.7]
 	    
 	    typical_proportion = self.vacNumbers[0]/(1. *sum(self.vacNumbers))
 	    universal_proportion = 1 - typical_proportion
@@ -148,8 +149,7 @@ class run_Simulation:
 	    self.Y0[ 11 : : 18] = 0.
 	    self.Y0[ 14 : : 18] = 0.
 	    self.Y0[ 17 : : 18] = 0.
-	    print ("check!!!!"),  self.Y0[ 1 : : 18],  self.Y0[ 4 : : 18],  self.Y0[ 7 : : 18],  self.Y0[ 10 : : 18],  self.Y0[ 13 : : 18],  self.Y0[ 16 : : 18]
-
+	   
         else:
 	    
             SUL, IUL, RUL, SUH, IUH, RUH, STL,  ITL, RTL, STH,  ITH, RTH, SNL, INL, RNL, SNH, INH, RNH = self.getLastValues()
@@ -469,32 +469,36 @@ class run_Simulation:
 	  
             PVPWVal = numpy.asarray(PVPWVal).reshape(
                 (nVacTypes,
-                 self.parameters.proportionVaccinatedLength))
+                 self.parameters.proportionVaccinatedLLength + self.parameters.proportionVaccinatedHLength))
 
    
 	
-        self.parameters.proportionVaccinatedTypicalPW.values = PVPWVal[0]
-	self.parameters.proportionVaccinatedUniversalPW.values = PVPWVal[1]
+        self.parameters.proportionVaccinatedTLPW.values = PVPWVal[0][: self.parameters.proportionVaccinatedLLength]
+	self.parameters.proportionVaccinatedTHPW.values = PVPWVal[0][self.parameters.proportionVaccinatedLLength:]
+	self.parameters.proportionVaccinatedNLPW.values = PVPWVal[1][: self.parameters.proportionVaccinatedLLength]
+	self.parameters.proportionVaccinatedNHPW.values = PVPWVal[1][self.parameters.proportionVaccinatedLLength:]
 
 	## extend to full ages groups. Proportions calculated by multiplying PVPWVal 
 	##values with the matrix defined in S.130
 	
-	self.parameters.proportionVaccinatedTypical = self.parameters.proportionVaccinatedTypicalPW.full(self.parameters.ages)
-	self.parameters.proportionVaccinatedUniversal = self.parameters.proportionVaccinatedUniversalPW.full(self.parameters.ages)
-	
+	self.parameters.proportionVaccinatedTL = self.parameters.proportionVaccinatedTLPW.full(self.parameters.ages)
+	self.parameters.proportionVaccinatedTH = self.parameters.proportionVaccinatedTHPW.full(self.parameters.ages)
+	self.parameters.proportionVaccinatedNL = self.parameters.proportionVaccinatedNLPW.full(self.parameters.ages)
+	self.parameters.proportionVaccinatedNH = self.parameters.proportionVaccinatedNHPW.full(self.parameters.ages)
 	
 	
 	if self.hasSolution:
 	   
-            vacsUsedTypical = (self.parameters.proportionVaccinatedTypical * IC[0])
-	    vacsUsedUniversal = (self.parameters.proportionVaccinatedUniversal * IC[0])
+            vacsUsedTL = self.parameters.proportionVaccinatedTL* IC[0]
+	    vacsUsedTH = self.parameters.proportionVaccinatedTH* IC[0]
+	    vacsUsedTypical = vacsUsedTL + vacsUsedTH
+	    vacsUsedNL = self.parameters.proportionVaccinatedNL* IC[0]
+	    vacsUsedNH = self.parameters.proportionVaccinatedNH* IC[0]
+	    vacsUsedUniversal = vacsUsedNL + vacsUsedNH
 
         else:
-	    vacsUsedTypical = (self.parameters.proportionVaccinatedTypical
-                        * self.parameters.population)
-
-            vacsUsedUniversal = (self.parameters.proportionVaccinatedUniversal
-                        * self.parameters.population)
+	    vacsUsedTypical = (self.parameters.proportionVaccinatedTL * self.parameters.population) + (self.parameters.proportionVaccinatedTH * self.parameters.population)
+            vacsUsedUniversal = (self.parameters.proportionVaccinatedNL * self.parameters.population) +  (self.parameters.proportionVaccinatedNH * self.parameters.population)
 	
 	   
         # Update initial condition for ODEs
@@ -521,7 +525,7 @@ class run_Simulation:
 	tStart = self.tMin
 	self.solve(tStart = tStart, tEnd = tEnd)
 	
-	print self.IU.sum(axis=1)
+	#print self.IU.sum(axis=1)
 	import matplotlib.pyplot as plt
 	times = [num for num in xrange(tEnd+1)]
 	plt.plot(times, self.IUL.sum(axis=1), color = "red", linestyle= "-")
