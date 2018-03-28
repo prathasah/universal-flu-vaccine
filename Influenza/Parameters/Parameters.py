@@ -172,13 +172,23 @@ class Parameters:
         self.proportionVaccinatedUniversalHPW = PiecewiseAgeRate([0.0] * len(vaccinationHighRiskAgesUniversal),
             vaccinationHighRiskAgesUniversal)
 	
+	if len(vaccinationLowRiskAgesTypical) != len(vaccinationLowRiskAgesUniversal):
+		raise ValueError, "The number of age group bins for low and high efficacy vaccine should be the same!"
+	if len(vaccinationHighRiskAgesTypical) != len(vaccinationHighRiskAgesUniversal):
+		raise ValueError, "The number of age group bins for low and high efficacy vaccine should be the same!"
+	self.proportionVaccinatedLPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesTypical),
+            vaccinationLowRiskAgesTypical)
+	self.proportionVaccinatedLPW = PiecewiseAgeRate([0.0] * len(vaccinationHighRiskAgesTypical),
+            vaccinationHighRiskAgesTypical)
+	
+	self.proportionVaccinatedL = self.proportionVaccinatedLPW.full(self.ages)
+	self.proportionVaccinatedH = self.proportionVaccinatedHPW.full(self.ages)
 	self.proportionVaccinatedTL = self.proportionVaccinatedTypicalLPW.full(self.ages)
 	self.proportionVaccinatedTH = self.proportionVaccinatedTypicalHPW.full(self.ages)
 	self.proportionVaccinatedNL = self.proportionVaccinatedUniversalLPW.full(self.ages)
 	self.proportionVaccinatedNH = self.proportionVaccinatedUniversalHPW.full(self.ages)
 	
-	if len(vaccinationLowRiskAgesTypical) != len(vaccinationLowRiskAgesUniversal):
-		raise ValueError, "The number of age group bins for low and high efficacy vaccine should be the same!"
+
 	self.proportionVaccinatedLength = len(vaccinationLowRiskAgesTypical)
         
 
