@@ -128,31 +128,55 @@ class Parameters:
 			self.epi_setPWAttrFromPassedOrOther(epidemiology,p, index)
 
 	
-	self.vaccineEfficacyVsInfectionLow = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection
-	self.vaccineEfficacyVsInfectionHigh = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection
+	self.vaccineEfficacyVsInfectionTypical = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection
+	self.vaccineEfficacyVsInfectionUniversal = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection
 
 
 
         # Compute mortality rates
         # from case mortalities
 
-	# Mortality of *vaccinated* risk individuals
-        self.caseMortalityV = self.caseMortality \
-                               * (1 - self.vaccineEfficacyVsDeath)
+	## Death probability for low risk **unvacccinated** individuals
+        self.caseMortalityL = self.caseMortality/ ((1 - self.proportionHighRisk) + (self.highRiskRelativeCaseMortality * self.proportionHighRisk))
 	
-	##Death rate of unvaccinated individuals
-        self.deathRateU = (self.recoveryRate * self.caseMortality) / (1 - self.caseMortality)
-	##Death rate of vaccinated individuals
-        self.deathRateV = (self.recoveryRate * self.caseMortalityV)/ (1 - self.caseMortalityV)
+	## Death probability for high risk **unvacccinated** individuals
+        self.caseMortalityH = self.caseMortalityL * self.highRiskRelativeCaseMortality
+	
+	# Death probability for low risk **vacccinated** individuals
+        self.caseMortalityVL = self.caseMortalityL * (1 - self.vaccineEfficacyVsDeath)
+	
+	# Death probability for high risk **vacccinated** individuals
+        self.caseMortalityVH = self.caseMortalityVL * self.highRiskRelativeCaseMortality
+	
+	##equation S1.7. Death rate of low-risk unvaccinated individuals
+        self.deathRateUL = self.recoveryRate  * self.caseMortalityL/ (1 - self.caseMortalityL)
+	##Death rate of low-risk vaccinated individuals
+        self.deathRateVL = self.recoveryRate  * self.caseMortalityVL / (1 - self.caseMortalityVL)
+	##Death rate of high-risk unvaccinated individuals
+        self.deathRateUH = self.recoveryRate  * self.caseMortalityH / (1 - self.caseMortalityH)
+	##Death rate of high-risk vaccinated individuals
+        self.deathRateVH = self.recoveryRate  * self.caseMortalityVH  / (1 - self.caseMortalityVH)
+	
+	# Compute specific case hospitalizations
+        self.caseHospitalizationL = self.caseHospitalization / ((1 - self.proportionHighRisk) + (self.highRiskRelativeCaseHospitalization * self.proportionHighRisk))
+        self.caseHospitalizationH = self.highRiskRelativeCaseHospitalization * self.caseHospitalizationL
+	
 	
         # Set up proportion vaccinated vectors
-        self.proportionVaccinatedLowPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesTypical),
+        self.proportionVaccinatedTypicalLPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesTypical),
             vaccinationLowRiskAgesTypical)
-        self.proportionVaccinatedHighPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesUniversal),
+	self.proportionVaccinatedTypicalHPW = PiecewiseAgeRate([0.0] * len(vaccinationHighRiskAgesTypical),
+            vaccinationHighRiskAgesTypical)
+	self.proportionVaccinatedUniversalLPW = PiecewiseAgeRate([0.0] * len(vaccinationLowRiskAgesUniversal),
             vaccinationLowRiskAgesUniversal)
+        self.proportionVaccinatedUniversalHPW = PiecewiseAgeRate([0.0] * len(vaccinationHighRiskAgesUniversal),
+            vaccinationHighRiskAgesUniversal)
 	
-	self.proportionVaccinatedLow = self.proportionVaccinatedLowPW.full(self.ages)
-	self.proportionVaccinatedHigh = self.proportionVaccinatedHighPW.full(self.ages)
+	self.proportionVaccinatedTL = self.proportionVaccinatedTypicalLPW.full(self.ages)
+	self.proportionVaccinatedTH = self.proportionVaccinatedTypicalHPW.full(self.ages)
+	self.proportionVaccinatedNL = self.proportionVaccinatedUniversalLPW.full(self.ages)
+	self.proportionVaccinatedNH = self.proportionVaccinatedUniversalHPW.full(self.ages)
+	
 	if len(vaccinationLowRiskAgesTypical) != len(vaccinationLowRiskAgesUniversal):
 		raise ValueError, "The number of age group bins for low and high efficacy vaccine should be the same!"
 	self.proportionVaccinatedLength = len(vaccinationLowRiskAgesTypical)
@@ -177,33 +201,50 @@ class Parameters:
     def computeR0(self):
 	#normalized population size for each age groups
         s0 = self.population / sum(self.population)
-	sU0 = s0 * (1 - self.proportionVaccinatedLow - self.proportionVaccinatedHigh)
-	sVL0 = s0 * self.proportionVaccinatedLow
-	sVH0 = s0 * self.proportionVaccinatedHigh
+	sL0 = s0 * (1 - self.proportionHighRisk)
+        sH0 = s0 * self.proportionHighRisk
+	
+	sUL0 = sL0 * (1 - self.proportionVaccinatedTL - self.proportionVaccinatedNL)
+        sTL0 = sL0 * self.proportionVaccinatedTL
+	sNL0 = sL0 * self.proportionVaccinatedNL
+        sUH0 = sH0 * (1 - self.proportionVaccinatedTH - self.proportionVaccinatedNH)
+        sTH0 = sH0 * self.proportionVaccinatedTH
+	sNH0 = sH0 * self.proportionVaccinatedNH
 	
 
-        FU = self.transmissionScaling \
-              * numpy.outer(self.susceptibility * sU0,
+        FUL = self.transmissionScaling  * numpy.outer(self.susceptibility * sUL0,
                             self.transmissibility) * self.contactMatrix
-	FVL = self.transmissionScaling \
-              * numpy.outer((1 - self.vaccineEfficacyVsInfectionLow)
-                            * self.susceptibility * sVL0,
+	FUH = self.transmissionScaling  * numpy.outer(self.susceptibility * sUH0,
                             self.transmissibility) * self.contactMatrix
-
-	FVH = self.transmissionScaling \
-              * numpy.outer((1 - self.vaccineEfficacyVsInfectionHigh)
-                            * self.susceptibility * sVH0,
+	FTL = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical)
+                            * self.susceptibility * sTL0,
+                            self.transmissibility) * self.contactMatrix
+	FTH = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical)
+                            * self.susceptibility * sTH0,
+                            self.transmissibility) * self.contactMatrix
+	FNL = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal)
+                            * self.susceptibility * sNL0,
+                            self.transmissibility) * self.contactMatrix
+	FNH = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal)
+                            * self.susceptibility * sNH0,
                             self.transmissibility) * self.contactMatrix
         
-        F = numpy.vstack((numpy.hstack((FU, FU, FU)),
-                          numpy.hstack((FVL, FVL, FU)),
-			  numpy.hstack((FVH, FVH, FU))))
+        F = numpy.vstack((numpy.hstack((FUL, FUL, FUL, FUL, FUL, FUL)),
+			  numpy.hstack((FUH, FUH, FUH, FUH, FUH, FUH)),
+			  numpy.hstack((FTL, FTL, FTL, FTL, FTL, FTL)),
+			  numpy.hstack((FTH, FTH, FTH, FTH, FTH, FTH)),
+			  numpy.hstack((FNL, FNL, FNL, FNL, FNL, FNL)),
+			  numpy.hstack((FNH, FNH, FNH, FNH, FNH, FNH))))
+                    
 
-	##death rate of low efficacy and high efficacy vaccine is same
+	##death rate of typical and universal vaccine is assumed to be the same.
         V = numpy.diag(numpy.hstack(
-            (self.recoveryRate + self.deathRateU,
-             self.recoveryRate + self.deathRateV,
-	     self.recoveryRate + self.deathRateV)))
+            (self.recoveryRate + self.deathRateUL,
+	     self.recoveryRate + self.deathRateUH,
+	     self.recoveryRate + self.deathRateVL,
+	     self.recoveryRate + self.deathRateVH,
+             self.recoveryRate + self.deathRateVL,
+	     self.recoveryRate + self.deathRateVH)))
 
 
         G = numpy.dot(F, numpy.linalg.inv(V))
