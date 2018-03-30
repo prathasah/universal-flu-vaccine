@@ -404,8 +404,8 @@ class run_Simulation:
 	    self.deathsNH += self.NNH[i + 1, :] - self.NNH[i, :]
 
 
-	self.deathsL = self.dealthsUL + self.deathsTL + self.deathsNL
-	self.deathsH = self.dealthsUH + self.deathsTH + self.deathsNH
+	self.deathsL = self.deathsUL + self.deathsTL + self.deathsNL
+	self.deathsH = self.deathsUH + self.deathsTH + self.deathsNH
 	self.deathsU = self.deathsUL + self.deathsUH
 	self.deathsV = self.deathsTL + self.deathsTH + self.deathsNL + self.deathsNH
         self.deaths  = self.deathsL + self.deathsH
