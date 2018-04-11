@@ -192,6 +192,8 @@ class Parameters:
 	self.proportionVaccinatedNH = self.proportionVaccinatedUniversalHPW.full(self.ages)
 	self.proportionVaccinatedL = self.proportionVaccinatedTL + self.proportionVaccinatedNL
 	self.proportionVaccinatedH = self.proportionVaccinatedTH + self.proportionVaccinatedNH
+	self.proportionVaccinatedTypical = self.proportionVaccinatedTL + self.proportionVaccinatedTH
+	self.proportionVaccinatedUniversal = self.proportionVaccinatedNL + self.proportionVaccinatedNH
 	
 
 	self.proportionVaccinatedLLength = len(vaccinationLowRiskAgesTypical)

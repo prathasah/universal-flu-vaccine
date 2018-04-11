@@ -11,7 +11,6 @@ vaccinationLowRiskAgesUniversal= [4, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 
 #: Age groups to use for high-risk vaccination variables
 vaccinationHighRiskAgesTypical = [0]
 
-
 #: Age groups to use for high-risk vaccination variables
 vaccinationHighRiskAgesUniversal = [0]
 
