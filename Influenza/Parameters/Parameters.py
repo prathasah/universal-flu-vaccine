@@ -128,38 +128,43 @@ class Parameters:
 			self.epi_setPWAttrFromPassedOrOther(epidemiology,p, index)
 
 	
-	self.vaccineEfficacyVsInfectionTypical = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection
-	self.vaccineEfficacyVsInfectionUniversal = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection
-
-
-
-        # Compute mortality rates
-        # from case mortalities
-
-	## Death probability for low risk **unvacccinated** individuals
-        self.caseMortalityL = self.caseMortality/ ((1 - self.proportionHighRisk) + (self.HighRiskRelativeCaseMortality * self.proportionHighRisk))
+	self.vaccineEfficacyVsInfectionTypical_H1 = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection_H1
+	self.vaccineEfficacyVsInfectionTypical_H3 = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection_H3
+	self.vaccineEfficacyVsInfectionTypical_B = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection_B
 	
-	## Death probability for high risk **unvacccinated** individuals
-        self.caseMortalityH = self.caseMortalityL * self.HighRiskRelativeCaseMortality
-	
+	self.vaccineEfficacyVsInfectionUniversal_H1 = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_H1
+	self.vaccineEfficacyVsInfectionUniversal_H3 = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_H3
+	self.vaccineEfficacyVsInfectionUniversal_B = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_B
+
 	# Death probability for low risk **vacccinated** individuals
-        self.caseMortalityVL = self.caseMortalityL * (1 - self.vaccineEfficacyVsDeath)
+        self.caseMortalityVL_H1 = self.lowRiskcaseMortality_H1 * (1 - self.vaccineEfficacyVsDeath_H1)
+	self.caseMortalityVL_H3 = self.lowRiskcaseMortality_H3 * (1 - self.vaccineEfficacyVsDeath_H3)
+	self.caseMortalityVL_B = self.lowRiskcaseMortality_B * (1 - self.vaccineEfficacyVsDeath_B)
 	
 	# Death probability for high risk **vacccinated** individuals
-        self.caseMortalityVH = self.caseMortalityVL * self.HighRiskRelativeCaseMortality
+        self.caseMortalityVH_H1 = self.highRiskcaseMortality_H1 * (1 - self.highRiskvaccineEfficacyVsDeath_H1)
+	self.caseMortalityVH_H3 = self.highRiskcaseMortality_H3 * (1 - self.highRiskvaccineEfficacyVsDeath_H3)
+	self.caseMortalityVH_B = self.highRiskcaseMortality_B * (1 - self.highRiskvaccineEfficacyVsDeath_B)
 	
 	##equation S1.7. Death rate of low-risk unvaccinated individuals
-        self.deathRateUL = self.recoveryRate  * self.caseMortalityL/ (1 - self.caseMortalityL)
-	##Death rate of low-risk vaccinated individuals
-        self.deathRateVL = self.recoveryRate  * self.caseMortalityVL / (1 - self.caseMortalityVL)
-	##Death rate of high-risk unvaccinated individuals
-        self.deathRateUH = self.recoveryRate  * self.caseMortalityH / (1 - self.caseMortalityH)
-	##Death rate of high-risk vaccinated individuals
-        self.deathRateVH = self.recoveryRate  * self.caseMortalityVH  / (1 - self.caseMortalityVH)
+        self.deathRateUL_H1 = self.recoveryRate  * self.lowRiskcaseMortality_H1/ (1 - self.lowRiskcaseMortality_H1)
+	self.deathRateUL_H3 = self.recoveryRate  * self.lowRiskcaseMortality_H3/ (1 - self.lowRiskcaseMortality_H3)
+	self.deathRateUL_B = self.recoveryRate  * self.lowRiskcaseMortality_B/ (1 - self.lowRiskcaseMortality_B)
 	
-	# Compute specific case hospitalizations
-        self.caseHospitalizationL = self.caseHospitalization / ((1 - self.proportionHighRisk) + (self.HighRiskRelativeCaseHospitalization * self.proportionHighRisk))
-        self.caseHospitalizationH = self.HighRiskRelativeCaseHospitalization * self.caseHospitalizationL
+	##Death rate of low-risk vaccinated individuals
+        self.deathRateVL_H1 = self.recoveryRate  * self.caseMortalityVL_H1 / (1 - self.caseMortalityVL_H1)
+	self.deathRateVL_H3 = self.recoveryRate  * self.caseMortalityVL_H3 / (1 - self.caseMortalityVL_H3)
+	self.deathRateVL_B = self.recoveryRate  * self.caseMortalityVL_B / (1 - self.caseMortalityVL_B)
+	
+	##Death rate of high-risk unvaccinated individuals
+        self.deathRateUH_H1 = self.recoveryRate  * self.highRiskcaseMortality_H1 / (1 - self.highRiskcaseMortality_H1)
+	self.deathRateUH_H3 = self.recoveryRate  * self.highRiskcaseMortality_H3 / (1 - self.highRiskcaseMortality_H3)
+	self.deathRateUH_B = self.recoveryRate  * self.highRiskcaseMortality_B / (1 - self.highRiskcaseMortality_B)
+	
+	##Death rate of high-risk vaccinated individuals
+        self.deathRateVH_H1 = self.recoveryRate  * self.caseMortalityVH_H1  / (1 - self.caseMortalityVH_H1)
+	self.deathRateVH_H3 = self.recoveryRate  * self.caseMortalityVH_H3  / (1 - self.caseMortalityVH_H3)
+	self.deathRateVH_B = self.recoveryRate  * self.caseMortalityVH_B  / (1 - self.caseMortalityVH_B)
 	
 	
         # Set up proportion vaccinated vectors
@@ -230,39 +235,82 @@ class Parameters:
 	sNH0 = sH0 * self.proportionVaccinatedNH
 	
 
-        FUL = self.transmissionScaling  * numpy.outer(self.susceptibility * sUL0,
-                            self.transmissibility) * self.contactMatrix
-	FUH = self.transmissionScaling  * numpy.outer(self.susceptibility * sUH0,
-                            self.transmissibility) * self.contactMatrix
-	FTL = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical)
-                            * self.susceptibility * sTL0,
-                            self.transmissibility) * self.contactMatrix
-	FTH = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical)
-                            * self.susceptibility * sTH0,
-                            self.transmissibility) * self.contactMatrix
-	FNL = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal)
-                            * self.susceptibility * sNL0,
-                            self.transmissibility) * self.contactMatrix
-	FNH = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal)
-                            * self.susceptibility * sNH0,
-                            self.transmissibility) * self.contactMatrix
+        FUL_H1 = self.transmissionScaling  * numpy.outer(self.susceptibility_H1 * sUL0, self.transmissibility) * self.contactMatrix
+	FUL_H3 = self.transmissionScaling  * numpy.outer(self.susceptibility_H3 * sUL0, self.transmissibility) * self.contactMatrix
+	FUL_B = self.transmissionScaling  * numpy.outer(self.susceptibility_B * sUL0, self.transmissibility) * self.contactMatrix
+	
+	FUH_H1 = self.transmissionScaling  * numpy.outer(self.susceptibility_H1 * sUH0, self.transmissibility) * self.contactMatrix
+	FUH_H3 = self.transmissionScaling  * numpy.outer(self.susceptibility_H3 * sUH0, self.transmissibility) * self.contactMatrix
+	FUH_B = self.transmissionScaling  * numpy.outer(self.susceptibility_B * sUH0, self.transmissibility) * self.contactMatrix
+	
+	FTL_H1 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical_H1) * self.susceptibility_H1 * sTL0, self.transmissibility) * self.contactMatrix
+	FTL_H3 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical_H3) * self.susceptibility_H3 * sTL0, self.transmissibility) * self.contactMatrix
+	FTL_B = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical_B) * self.susceptibility_B * sTL0, self.transmissibility) * self.contactMatrix
+	
+	FTH_H1 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical_H1) * self.susceptibility_H1* sTH0, self.transmissibility) * self.contactMatrix
+	FTH_H3 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical_H3) * self.susceptibility_H3* sTH0, self.transmissibility) * self.contactMatrix
+	FTH_B = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionTypical_B) * self.susceptibility_B* sTH0, self.transmissibility) * self.contactMatrix
+	
+	
+	FNL_H1 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal_H1) * self.susceptibility_H1 * sNL0, self.transmissibility) * self.contactMatrix
+	FNL_H3 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal_H3) * self.susceptibility_H3 * sNL0, self.transmissibility) * self.contactMatrix
+	FNL_B = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal_B) * self.susceptibility_B * sNL0, self.transmissibility) * self.contactMatrix
+	
+	FNH_H1 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal_H1)* self.susceptibility_H1 * sNH0, self.transmissibility) * self.contactMatrix
+	FNH_H3 = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal_H3)* self.susceptibility_H3 * sNH0, self.transmissibility) * self.contactMatrix
+	FNH_B = self.transmissionScaling  * numpy.outer((1 - self.vaccineEfficacyVsInfectionUniversal_B)* self.susceptibility_B * sNH0, self.transmissibility) * self.contactMatrix
         
-        F = numpy.vstack((numpy.hstack((FUL, FUL, FUL, FUL, FUL, FUL)),
-			  numpy.hstack((FUH, FUH, FUH, FUH, FUH, FUH)),
-			  numpy.hstack((FTL, FTL, FTL, FTL, FTL, FTL)),
-			  numpy.hstack((FTH, FTH, FTH, FTH, FTH, FTH)),
-			  numpy.hstack((FNL, FNL, FNL, FNL, FNL, FNL)),
-			  numpy.hstack((FNH, FNH, FNH, FNH, FNH, FNH))))
+	
+	F = numpy.vstack((numpy.hstack((FUL_H1, FUL_H1, FUL_H1, FUL_H1, FUL_H1, FUL_H1,FUL_H1, FUL_H1, FUL_H1, FUL_H1, FUL_H1, FUL_H1,FUL_H1, FUL_H1, FUL_H1, FUL_H1, FUL_H1, FUL_H1)),
+			  numpy.hstack((FUL_H3, FUL_H3, FUL_H3, FUL_H3, FUL_H3, FUL_H3,FUL_H3, FUL_H3, FUL_H3, FUL_H3, FUL_H3, FUL_H3,FUL_H3, FUL_H3, FUL_H3, FUL_H3, FUL_H3, FUL_H3)),
+			  numpy.hstack((FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B, FUL_B)),
+			  
+			  numpy.hstack((FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1,FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1, FUH_H1)),
+			  numpy.hstack((FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3, FUH_H3)),
+			  numpy.hstack((FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B, FUH_B)),
+			  
+			  numpy.hstack((FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1, FTL_H1)),
+			  numpy.hstack((FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3, FTL_H3)),
+			  numpy.hstack((FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B, FTL_B)),
+			  
+			  numpy.hstack((FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1, FTH_H1)),
+			  numpy.hstack((FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3, FTH_H3)),
+			  numpy.hstack((FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B, FTH_B)),
+			  
+			  numpy.hstack((FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1, FNL_H1)),
+			  numpy.hstack((FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3, FNL_H3)),
+			  numpy.hstack((FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B, FNL_B)),
+			  
+			  numpy.hstack((FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1, FNH_H1)),
+			  numpy.hstack((FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3, FNH_H3)),
+			  numpy.hstack((FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B, FNH_B))))
                     
 
 	##death rate of typical and universal vaccine is assumed to be the same.
         V = numpy.diag(numpy.hstack(
-            (self.recoveryRate + self.deathRateUL,
-	     self.recoveryRate + self.deathRateUH,
-	     self.recoveryRate + self.deathRateVL,
-	     self.recoveryRate + self.deathRateVH,
-             self.recoveryRate + self.deathRateVL,
-	     self.recoveryRate + self.deathRateVH)))
+            (self.recoveryRate + self.deathRateUL_H1,
+	     self.recoveryRate + self.deathRateUL_H3,
+	     self.recoveryRate + self.deathRateUL_B,
+	     
+	     self.recoveryRate + self.deathRateUH_H1,
+	     self.recoveryRate + self.deathRateUH_H3,
+	     self.recoveryRate + self.deathRateUH_B,
+	     
+	     self.recoveryRate + self.deathRateVL_H1,
+	     self.recoveryRate + self.deathRateVL_H3,
+	     self.recoveryRate + self.deathRateVL_B,
+	     
+	     self.recoveryRate + self.deathRateVH_H1,
+	     self.recoveryRate + self.deathRateVH_H3,
+	     self.recoveryRate + self.deathRateVH_B,
+	     
+             self.recoveryRate + self.deathRateVL_H1,
+	     self.recoveryRate + self.deathRateVL_H3,
+	     self.recoveryRate + self.deathRateVL_B,
+	     
+	     self.recoveryRate + self.deathRateVH_H1,
+	     self.recoveryRate + self.deathRateVH_H3,
+	     self.recoveryRate + self.deathRateVH_B)))
 
 
         G = numpy.dot(F, numpy.linalg.inv(V))
