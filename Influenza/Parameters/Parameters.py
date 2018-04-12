@@ -151,15 +151,17 @@ class Parameters:
 	self.deathRateUL_H3 = self.recoveryRate  * self.lowRiskcaseMortality_H3/ (1 - self.lowRiskcaseMortality_H3)
 	self.deathRateUL_B = self.recoveryRate  * self.lowRiskcaseMortality_B/ (1 - self.lowRiskcaseMortality_B)
 	
+	##Death rate of high-risk unvaccinated individuals
+        self.deathRateUH_H1 = self.recoveryRate  * self.highRiskcaseMortality_H1 / (1 - self.highRiskcaseMortality_H1)
+	self.deathRateUH_H3 = self.recoveryRate  * self.highRiskcaseMortality_H3 / (1 - self.highRiskcaseMortality_H3)
+	self.deathRateUH_B = self.recoveryRate  * self.highRiskcaseMortality_B / (1 - self.highRiskcaseMortality_B)
+	
 	##Death rate of low-risk vaccinated individuals
         self.deathRateVL_H1 = self.recoveryRate  * self.caseMortalityVL_H1 / (1 - self.caseMortalityVL_H1)
 	self.deathRateVL_H3 = self.recoveryRate  * self.caseMortalityVL_H3 / (1 - self.caseMortalityVL_H3)
 	self.deathRateVL_B = self.recoveryRate  * self.caseMortalityVL_B / (1 - self.caseMortalityVL_B)
 	
-	##Death rate of high-risk unvaccinated individuals
-        self.deathRateUH_H1 = self.recoveryRate  * self.highRiskcaseMortality_H1 / (1 - self.highRiskcaseMortality_H1)
-	self.deathRateUH_H3 = self.recoveryRate  * self.highRiskcaseMortality_H3 / (1 - self.highRiskcaseMortality_H3)
-	self.deathRateUH_B = self.recoveryRate  * self.highRiskcaseMortality_B / (1 - self.highRiskcaseMortality_B)
+
 	
 	##Death rate of high-risk vaccinated individuals
         self.deathRateVH_H1 = self.recoveryRate  * self.caseMortalityVH_H1  / (1 - self.caseMortalityVH_H1)
