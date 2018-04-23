@@ -271,6 +271,9 @@ def highRiskcaseHospitalization_BPW(index):
     df.at[index, "highRiskcaseHospitalization_B_75"]],
     [0, 5, 18, 50, 65, 75])
 
+def crossImmunity(index):
+    return df.at[index, "crossImmunity"]
+
 def R0(index):
     return df.at[index, "R0"]
 

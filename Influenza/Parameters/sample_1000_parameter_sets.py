@@ -31,7 +31,7 @@ if __name__ == "__main__":
               "lowRiskcaseHospitalization_B_0","lowRiskcaseHospitalization_B_5","lowRiskcaseHospitalization_B_18","lowRiskcaseHospitalization_B_50","lowRiskcaseHospitalization_B_65", "lowRiskcaseHospitalization_B_75",
               "highRiskcaseHospitalization_H1_0","highRiskcaseHospitalization_H1_5","highRiskcaseHospitalization_H1_18","highRiskcaseHospitalization_H1_50","highRiskcaseHospitalization_H1_65", "highRiskcaseHospitalization_H1_75",
               "highRiskcaseHospitalization_H3_0","highRiskcaseHospitalization_H3_5","highRiskcaseHospitalization_H3_18","highRiskcaseHospitalization_H3_50","highRiskcaseHospitalization_H3_65", "highRiskcaseHospitalization_H3_75",
-              "highRiskcaseHospitalization_B_0","highRiskcaseHospitalization_B_5","highRiskcaseHospitalization_B_18","highRiskcaseHospitalization_B_50","highRiskcaseHospitalization_B_65", "highRiskcaseHospitalization_B_75","R0"]
+              "highRiskcaseHospitalization_B_0","highRiskcaseHospitalization_B_5","highRiskcaseHospitalization_B_18","highRiskcaseHospitalization_B_50","highRiskcaseHospitalization_B_65", "highRiskcaseHospitalization_B_75", "crossImmunity", "R0"]
     writer = csv.writer(open('sampled_parameter_set.csv','wb'))
     writer.writerow(header)
     
@@ -248,8 +248,9 @@ if __name__ == "__main__":
         high_risk_hosp_B_65 = numpy.random.triangular(0.00001, 0.00044, 0.00105)
         high_risk_hosp_B_75 = numpy.random.triangular(0.00004, 0.00161, 0.00380)
         ##################
-        
-        R0 = 1.222
+        ## from http://rsif.royalsocietypublishing.org/content/early/2011/06/22/rsif.2011.0309#F7
+        cross_immunity = numpy.random.uniform(0.2, 0.6)
+        R0 = 1.18
         
         elements = [num, rec_rate,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, susc_H1_0, susc_H1_4, susc_H1_18,  susc_H1_65, susc_H3_0, susc_H3_4, susc_H3_18,  susc_H3_65,susc_B_0, susc_B_4, susc_B_18,  susc_B_65,
                     vac_eff_inf_H1_0, vac_eff_inf_H1_6mo, vac_eff_inf_H1_5, vac_eff_inf_H1_18, vac_eff_inf_H1_50,
@@ -281,7 +282,7 @@ if __name__ == "__main__":
                     low_risk_case_hosp_B_0, low_risk_case_hosp_B_5, low_risk_case_hosp_B_18, low_risk_case_hosp_B_50, low_risk_case_hosp_B_65, low_risk_case_hosp_B_75,
                     high_risk_hosp_H1_0, high_risk_hosp_H1_5, high_risk_hosp_H1_18, high_risk_hosp_H1_50, high_risk_hosp_H1_65, high_risk_hosp_H1_75,
                     high_risk_hosp_H3_0, high_risk_hosp_H3_5, high_risk_hosp_H3_18, high_risk_hosp_H3_50, high_risk_hosp_H3_65, high_risk_hosp_H3_75,
-                    high_risk_hosp_B_0, high_risk_hosp_B_5, high_risk_hosp_B_18, high_risk_hosp_B_50, high_risk_hosp_B_65, high_risk_hosp_B_75,                
+                    high_risk_hosp_B_0, high_risk_hosp_B_5, high_risk_hosp_B_18, high_risk_hosp_B_50, high_risk_hosp_B_65, high_risk_hosp_B_75, cross_immunity,               
                      R0]
         writer.writerow(elements)
         

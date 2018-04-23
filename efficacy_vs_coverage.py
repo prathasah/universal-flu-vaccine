@@ -31,7 +31,7 @@ if __name__ == "__main__":
 		dose1 = total_doses - dose2
 		doses = [dose1, dose2]
 		print ("doses"), doses, total_doses
-		list_prop_vax_low, list_prop_vax_high, list_total_vax_low, list_total_vax_high, infections, hospitalizations, mortality, DALY = run_efficacy_simulation([0, 0], doses, "typical", sub_index)
+		list_prop_vax_low, list_prop_vax_high, list_total_vax_low, list_total_vax_high, infections, hospitalizations, mortality, DALY = run_efficacy_simulation([0.4,0.75], doses, "typical", sub_index)
 		vax_60_incidence.append(sum(infections)/1e6)
 		
 	print ("typical vaccination incidence"), np.mean(vax_60_incidence), np.std(vax_60_incidence)

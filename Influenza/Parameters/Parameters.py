@@ -195,6 +195,10 @@ class Parameters:
             vaccinationAgesUniversal)
 		
 	
+	self.population_highrisk = [(a*b) for (a,b) in zip(self.population, self.proportionHighRisk)]
+        self.population_lowrisk = self.population - self.population_highrisk
+	
+	
 	self.proportionVaccinatedTL = self.proportionVaccinatedTypicalLPW.full(self.ages)
 	self.proportionVaccinatedTH = self.proportionVaccinatedTypicalHPW.full(self.ages)
 	self.proportionVaccinatedNL = self.proportionVaccinatedUniversalLPW.full(self.ages)
@@ -227,9 +231,12 @@ class Parameters:
 	self.transmissionScaling_H3 *=  self.R0 / self.computeR0_H3()
 	self.transmissionScaling_B = 1.0
 	self.transmissionScaling_B *=  self.R0 / self.computeR0_B()
-	print ("scaling H1 =========="), self.transmissionScaling_H1, self.R0, self.R0/self.transmissionScaling_H1
-	print ("scaling H3 =========="), self.transmissionScaling_H3, self.R0, self.R0/self.transmissionScaling_H3
-	print ("scaling B =========="), self.transmissionScaling_B, self.R0, self.R0/self.transmissionScaling_B
+    
+	
+	
+	print ("scaling H1 =========="), self.transmissionScaling_H1
+	print ("scaling H3 =========="), self.transmissionScaling_H3
+	print ("scaling B =========="), self.transmissionScaling_B
 	
         
     def computeR0_H1(self):
