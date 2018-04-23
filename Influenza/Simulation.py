@@ -198,7 +198,7 @@ class run_Simulation:
 	    STH, ITH_H1, ITH_H3, ITH_B, RTH_H1, RTH_H3, RTH_B, DTH_H1, DTH_H3, DTH_B, 
 	    SNL, INL_H1, INL_H3, INL_B, RNL_H1, RNL_H3, RNL_B, DNL_H1, DNL_H3, DNL_B, 
 	    SNH, INH_H1, INH_H3, INH_B, RNH_H1, RNH_H3, RNH_B, DNH_H1, DNH_H3, DNH_B = self.getLastValues()
-            
+	    
             self.Y0[ 0 : : 60] = (1 - self.parameters.proportionVaccinatedL) * SUL
 	    self.Y0[ 10 : : 60] = (1 - self.parameters.proportionVaccinatedH) * SUH
 	    self.Y0[ 20 : : 60] = STL + (1 - self.parameters.proportionVaccinatedTL) * SUL
@@ -407,57 +407,49 @@ class run_Simulation:
 	dDUH_B  = self.parameters.deathRateUH_B * IUH_B
 	
 	#TL
-	dSTL = - ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 *STL)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 *STL)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B *STL)
+	dSTL = - ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STL
 
-        dITL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_H1) *self.parameters.deathRateVL_H1) * ITL_H1
-	dITL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate +  (1 - self.parameters.vaccineEfficacyVsDeath_H3) *self.parameters.deathRateVL_H3) * ITL_H3
-	dITL_B  = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STL) - (self.parameters.recoveryRate +  (1 - self.parameters.vaccineEfficacyVsDeath_B) * self.parameters.deathRateVL_B) * ITL_B
+        dITL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * ITL_H1
+	dITL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * ITL_H3
+	dITL_B  = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * ITL_B
 	dRTL_H1    = self.parameters.recoveryRate * ITL_H1
 	dRTL_H3    = self.parameters.recoveryRate * ITL_H3
 	dRTL_B    = self.parameters.recoveryRate * ITL_B
 	dDTL_H1  = self.parameters.deathRateVL_H1 * ITL_H1
-	dDTL_H3  = self.parameters.deathRateVL_H3 * ITL_H3
-	dDTL_B  = self.parameters.deathRateVL_B * ITL_B
+	dDTL_H3  =  self.parameters.deathRateVL_H3 * ITL_H3
+	dDTL_B   = self.parameters.deathRateVL_B * ITL_B
 	
 	#TH
-	dSTH = - ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 *STH)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 *STH)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B *STH)
+	dSTH =- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STH
 	
-        dITH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H1) *self.parameters.deathRateVH_H1) * ITH_H1
-	dITH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H3) *self.parameters.deathRateVH_H3) * ITH_H3
-	dITH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_B) *self.parameters.deathRateVH_B) * ITH_B
+        dITH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * ITH_H1
+	dITH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * ITH_H3
+	dITH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STH) - (self.parameters.recoveryRate +  self.parameters.deathRateVH_B) * ITH_B
 	dRTH_H1    = self.parameters.recoveryRate * ITH_H1
 	dRTH_H3    = self.parameters.recoveryRate * ITH_H3
 	dRTH_B    = self.parameters.recoveryRate * ITH_B
-	dDTH_H1  = self.parameters.deathRateVH_H1 * ITH_H1
-	dDTH_H3  = self.parameters.deathRateVH_H3 * ITH_H3
-	dDTH_B  = self.parameters.deathRateVH_B * ITH_B
+	dDTH_H1   =  self.parameters.deathRateVH_H1 * ITH_H1
+	dDTH_H3   = self.parameters.deathRateVH_H3 * ITH_H3
+	dDTH_B    = self.parameters.deathRateVH_B * ITH_B
 	
 	#NL
-	dSNL = - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 *SNL)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3 *SNL)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B *SNL)
+	dSNL = - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNL
 	
-        dINL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_H1) *self.parameters.deathRateVL_H1) * INL_H1
-	dINL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_H3) *self.parameters.deathRateVL_H3) * INL_H3
-	dINL_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B * SNL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_B) *self.parameters.deathRateVL_B) * INL_B
+        dINL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * INL_H1
+	dINL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * INL_H3
+	dINL_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * INL_B
 	dRNL_H1    = self.parameters.recoveryRate * INL_H1
 	dRNL_H3    = self.parameters.recoveryRate * INL_H3
 	dRNL_B    = self.parameters.recoveryRate * INL_B
-	dDNL_H1  = self.parameters.deathRateVL_H1 * INL_H1
-	dDNL_H3  = self.parameters.deathRateVL_H3 * INL_H3
-	dDNL_B  = self.parameters.deathRateVL_B * INL_B
+	dDNL_H1  =  self.parameters.deathRateVL_H1 * INL_H1
+	dDNL_H3  =  self.parameters.deathRateVL_H3 * INL_H3
+	dDNL_B  =   self.parameters.deathRateVL_B * INL_B
 	
 	#NH
-	dSNH = - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 *SNH)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3 *SNH)
-	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B *SNH)
-        dINH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H1) *self.parameters.deathRateVH_H1) * INH_H1
-	dINH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H3) *self.parameters.deathRateVH_H3) * INH_H3
-	dINH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) *Lambda_B * SNH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_B) *self.parameters.deathRateVH_B) * INH_B
+	dSNH =  - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNH
+        dINH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * INH_H1
+	dINH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * INH_H3
+	dINH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) *Lambda_B * SNH) - (self.parameters.recoveryRate +  self.parameters.deathRateVH_B) * INH_B
 	dRNH_H1    = self.parameters.recoveryRate * INH_H1
 	dRNH_H3    = self.parameters.recoveryRate * INH_H3
 	dRNH_B    = self.parameters.recoveryRate * INH_B
@@ -770,12 +762,12 @@ class run_Simulation:
 
     def updateStats(self):
 	    
-	self.NUL = self.SUL +  self.IUL_H1 + self.IUL_H3 + self.IUL_B + self.RUL_H1 +  self.RUL_H3 +  self.RUL_H3 + self.DUL_H1 +  self.DUL_H3 +  self.DUL_H3  
-	self.NUH = self.SUH +  self.IUH_H1 + self.IUH_H3 + self.IUH_B + self.RUH_H1 +  self.RUH_H3 +  self.RUH_H3 + self.DUH_H1 +  self.DUH_H3 +  self.DUH_H3 
-	self.NTL = self.STL +  self.ITL_H1 + self.ITL_H3 + self.ITL_B + self.RTL_H1 +  self.RTL_H3 +  self.RTL_H3 + self.DTL_H1 +  self.DTL_H3 +  self.DTL_H3 
-	self.NTH = self.STH +  self.ITH_H1 + self.ITH_H3 + self.ITH_B + self.RTH_H1 +  self.RTH_H3 +  self.RTH_H3 + self.DTH_H1 +  self.DTH_H3 +  self.DTH_H3 
-	self.NNL = self.SNL +  self.INL_H1 + self.INL_H3 + self.INL_B + self.RNL_H1 +  self.RNL_H3 +  self.RNL_H3 + self.DNL_H1 +  self.DNL_H3 +  self.DNL_H3 
-	self.NNH = self.SNH +  self.INH_H1 + self.INH_H3 + self.INH_B + self.RNH_H1 +  self.RNH_H3 +  self.RNH_H3 + self.DNH_H1 +  self.DNH_H3 +  self.DNH_H3 
+	self.NUL = self.SUL +  self.IUL_H1 + self.IUL_H3 + self.IUL_B + self.RUL_H1 +  self.RUL_H3 +  self.RUL_B + self.DUL_H1 +  self.DUL_H3 +  self.DUL_B  
+	self.NUH = self.SUH +  self.IUH_H1 + self.IUH_H3 + self.IUH_B + self.RUH_H1 +  self.RUH_H3 +  self.RUH_B + self.DUH_H1 +  self.DUH_H3 +  self.DUH_B 
+	self.NTL = self.STL +  self.ITL_H1 + self.ITL_H3 + self.ITL_B + self.RTL_H1 +  self.RTL_H3 +  self.RTL_B + self.DTL_H1 +  self.DTL_H3 +  self.DTL_B 
+	self.NTH = self.STH +  self.ITH_H1 + self.ITH_H3 + self.ITH_B + self.RTH_H1 +  self.RTH_H3 +  self.RTH_B + self.DTH_H1 +  self.DTH_H3 +  self.DTH_B 
+	self.NNL = self.SNL +  self.INL_H1 + self.INL_H3 + self.INL_B + self.RNL_H1 +  self.RNL_H3 +  self.RNL_B + self.DNL_H1 +  self.DNL_H3 +  self.DNL_B 
+	self.NNH = self.SNH +  self.INH_H1 + self.INH_H3 + self.INH_B + self.RNH_H1 +  self.RNH_H3 +  self.RNH_B + self.DNH_H1 +  self.DNH_H3 +  self.DNH_B 
 	
 	self.NU = self.NUL + self.NUH
 	self.NT = self.NTL + self.NTH
@@ -790,21 +782,21 @@ class run_Simulation:
 	self.infectionsNL = self.NNL[0,:] - self.SNL[-1,:]
 	self.infectionsNH = self.NNH[0,:] - self.SNH[-1,:]
 	
-	self.infectionsUL_H1 =  self.RUL_H1[-1,: ] + self.DUL_H1[-1,: ]
-	self.infectionsUL_H3 =  self.RUL_H3[-1,: ] + self.DUL_H3[-1,: ]
-	self.infectionsUL_B  =  self.RUL_B[-1,: ]  + self.DUL_B[-1,: ]
+	self.infectionsUL_H1 =  self.RUL_H1[-1,: ] + self.DUL_H1[-1,: ] + self.IUL_H1[-1,: ]
+	self.infectionsUL_H3 =  self.RUL_H3[-1,: ] + self.DUL_H3[-1,: ] + self.IUL_H3[-1,: ]
+	self.infectionsUL_B  =  self.RUL_B[-1,: ]  + self.DUL_B[-1,: ] + self.IUL_B[-1,: ]
 	
-	self.infectionsVL_H1 =  self.RTL_H1[-1,: ] + self.RNL_H1[-1,: ] + self.DTL_H1[-1,: ] + self.DNL_H1[-1,: ]
-	self.infectionsVL_H3 =  self.RTL_H3[-1,: ] + self.RNL_H3[-1,: ] + self.DTL_H3[-1,: ] + self.DNL_H3[-1,: ]
-	self.infectionsVL_B  =  self.RTL_B[-1,: ]  + self.RNL_B[-1,: ]  + self.DTL_B[-1,: ] + self.DNL_B[-1,: ]
+	self.infectionsVL_H1 =  self.RTL_H1[-1,: ] + self.RNL_H1[-1,: ] + self.DTL_H1[-1,: ] + self.DNL_H1[-1,: ] + self.ITL_H1[-1,: ] + self.INL_H1[-1,: ]
+	self.infectionsVL_H3 =  self.RTL_H3[-1,: ] + self.RNL_H3[-1,: ] + self.DTL_H3[-1,: ] + self.DNL_H3[-1,: ] + self.ITL_H3[-1,: ] + self.INL_H3[-1,: ]
+	self.infectionsVL_B  =  self.RTL_B[-1,: ]  + self.RNL_B[-1,: ]  + self.DTL_B[-1,: ] + self.DNL_B[-1,: ] + self.ITL_B[-1,: ] + self.INL_B[-1,: ]
 	
-	self.infectionsUH_H1 =  self.RUH_H1[-1,: ] + self.DUH_H1[-1,: ]
-	self.infectionsUH_H3 =  self.RUH_H3[-1,: ] + self.DUH_H3[-1,: ]
-	self.infectionsUH_B  =  self.RUH_B[-1,: ]  + self.DUH_B[-1,: ]
+	self.infectionsUH_H1 =  self.RUH_H1[-1,: ] + self.DUH_H1[-1,: ] + self.IUH_H1[-1,: ]
+	self.infectionsUH_H3 =  self.RUH_H3[-1,: ] + self.DUH_H3[-1,: ] + self.IUH_H3[-1,: ]
+	self.infectionsUH_B  =  self.RUH_B[-1,: ]  + self.DUH_B[-1,: ] + self.IUH_B[-1,: ]
 	
-	self.infectionsVH_H1 =  self.RTH_H1[-1,: ] + self.RNH_H1[-1,: ] + self.DTH_H1[-1,: ] + self.DNH_H1[-1,: ]
-	self.infectionsVH_H3 =  self.RTH_H3[-1,: ] + self.RNH_H3[-1,: ] + self.DTH_H3[-1,: ] + self.DNH_H3[-1,: ]
-	self.infectionsVH_B  =  self.RTH_B[-1,: ]  + self.RNH_B[-1,: ]  + self.DTH_B[-1,: ] + self.DNH_B[-1,: ]
+	self.infectionsVH_H1 =  self.RTH_H1[-1,: ] + self.RNH_H1[-1,: ] + self.DTH_H1[-1,: ] + self.DNH_H1[-1,: ] + self.ITH_H1[-1,: ] + self.INH_H1[-1,: ]
+	self.infectionsVH_H3 =  self.RTH_H3[-1,: ] + self.RNH_H3[-1,: ] + self.DTH_H3[-1,: ] + self.DNH_H3[-1,: ] + self.ITH_H3[-1,: ] + self.INH_H3[-1,: ]
+	self.infectionsVH_B  =  self.RTH_B[-1,: ]  + self.RNH_B[-1,: ]  + self.DTH_B[-1,: ] + self.DNH_B[-1,: ]   + self.ITH_B[-1,: ] + self.INH_B[-1,: ]
 
         # Find duplicate times: these are where vaccination occurs
         #for i in numpy.arange(len(self.T)).compress(numpy.diff(self.T) == 0):
@@ -816,6 +808,10 @@ class run_Simulation:
 	#    self.infectionsNL += self.SNL[i + 1, :] - self.SNL[i, :]
 	#    self.infectionsNH += self.SNH[i + 1, :] - self.SNH[i, :]
 
+	self.infections_H1 = self.infectionsUL_H1 + self.infectionsUH_H1 + self.infectionsVL_H1 + self.infectionsVH_H1 
+	self.infections_H3 = self.infectionsUL_H3 + self.infectionsUH_H3 + self.infectionsVL_H3 + self.infectionsVH_H3 
+	self.infections_B = self.infectionsUL_B + self.infectionsUH_B + self.infectionsVL_B + self.infectionsVH_B 
+	
 	self.infectionsL  = self.infectionsUL + self.infectionsTL + self.infectionsNL
         self.infectionsH  = self.infectionsUH + self.infectionsTH + self.infectionsNH
 	self.infectionsU =  self.infectionsUL + self.infectionsUH
@@ -1022,22 +1018,23 @@ class run_Simulation:
 	self.solve(tStart = tStart, tEnd = tEnd)
 	self.updateStats()
 	
-	unvax  = ((self.SUL[0,:].sum() + self.SUH[0,:].sum() - self.SUL[-1,:].sum() - self.SUH[-1,:].sum()))/1e6
-	typical = (self.STL[0,:].sum() + self.STH[0,:].sum() - self.STL[-1,:].sum() - self.STH[-1,:].sum())/1e6
-	universal = ((self.SNL[0,:].sum() + self.SNH[0,:].sum() - self.SNL[-1,:].sum() - self.SNH[-1,:].sum()))/1e6
+	unvax  = ((self.NUL[0,:].sum() + self.NUH[0,:].sum() - self.SUL[-1,:].sum() - self.SUH[-1,:].sum()))/1e6
+	typical = (self.NTL[0,:].sum() + self.NTH[0,:].sum() - self.STL[-1,:].sum() - self.STH[-1,:].sum())/1e6
+	universal = ((self.NNL[0,:].sum() + self.NNH[0,:].sum() - self.SNL[-1,:].sum() - self.SNH[-1,:].sum()))/1e6
 	print ("Unvax infected"), unvax
 	print ("Typical infected"), typical
 	print ("Universal infected"), universal
 	print ("total"), unvax + typical + universal
+	print ("check total"), (sum(self.infections_H1) + sum(self.infections_H3) + sum(self.infections_B))/1e6
+	print ("infections H1"), (sum(self.infections_H1) *100.)/(1e6*(unvax + typical + universal))
+	print ("infections H3"), (sum(self.infections_H3) *100.)/(1e6*(unvax + typical + universal))
+	print ("infections B"), (sum(self.infections_B) *100.)/(1e6 * (unvax + typical + universal))
 
-	import matplotlib.pyplot as plt
-	times = [num for num in xrange(tEnd+1)]
-	plt.plot(times, (self.DUL_H3+ self.DUL_H1+ self.DUL_B).sum(axis=1), color = "red", linestyle= "-")
-	plt.plot(times, (self.DUH_H3+ self.DUH_H1+ self.DUH_B).sum(axis=1), color = "red", linestyle= "--")
-	plt.plot(times, (self.DTL_H3+ self.DTL_H1+ self.DTL_B).sum(axis=1), color = "blue", linestyle = "-")
-	plt.plot(times, (self.DTH_H3+ self.DTH_H1+ self.DTH_B).sum(axis=1), color = "blue", linestyle = "--")
-	plt.plot(times, (self.DNL_H3+ self.DNL_H1+ self.DNL_B).sum(axis=1), color = "green", linestyle = "-")
-	plt.plot(times, (self.DNH_H3+ self.DNH_H1+ self.DNH_B).sum(axis=1), color = "green", linestyle = "--")
+	#import matplotlib.pyplot as plt
+	#times = [num for num in xrange(tEnd+1)]
+	#plt.plot(times, (self.infections_H1).sum(axis=1), color = "red", linestyle= "-")
+	#plt.plot(times, (self.infections_H3).sum(axis=1), color = "blue", linestyle= "-")
+	#plt.plot(times, (self.infections_B).sum(axis=1), color = "green", linestyle = "-")
 
 	
 		 
