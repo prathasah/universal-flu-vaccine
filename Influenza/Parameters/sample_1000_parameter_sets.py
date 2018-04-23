@@ -180,26 +180,26 @@ if __name__ == "__main__":
         low_risk_case_mort_B_75 = numpy.random.uniform(0.00012317, 0.00012321)
         
         
-        high_risk_mort_H1_0 = numpy.random.uniform(0.00000018, 0.00000022)
-        high_risk_mort_H1_5 = numpy.random.uniform(0.00000022, 0.00000026)
-        high_risk_mort_H1_18 = numpy.random.uniform(0.00000050, 0.00000054)
-        high_risk_mort_H1_50 = numpy.random.uniform(0.00000005, 0.00000009)
-        high_risk_mort_H1_65 =numpy.random.uniform(0.00000010, 0.00000014)
-        high_risk_mort_H1_75 = numpy.random.uniform(0.00000004, 0.00000008)
+        high_risk_case_mort_H1_0 = numpy.random.uniform(0.00000018, 0.00000022)
+        high_risk_case_mort_H1_5 = numpy.random.uniform(0.00000022, 0.00000026)
+        high_risk_case_mort_H1_18 = numpy.random.uniform(0.00000050, 0.00000054)
+        high_risk_case_mort_H1_50 = numpy.random.uniform(0.00000005, 0.00000009)
+        high_risk_case_mort_H1_65 =numpy.random.uniform(0.00000010, 0.00000014)
+        high_risk_case_mort_H1_75 = numpy.random.uniform(0.00000004, 0.00000008)
         
-        high_risk_mort_H3_0 = numpy.random.uniform(0.00000057, 0.00000061)
-        high_risk_mort_H3_5 = numpy.random.uniform(0.00000044, 0.00000048)
-        high_risk_mort_H3_18 = numpy.random.uniform(0.00000349, 0.00000353)
-        high_risk_mort_H3_50 = numpy.random.uniform(0.00004544, 0.00004548)
-        high_risk_mort_H3_65 =numpy.random.uniform(0.00027000, 0.00027004)
-        high_risk_mort_H3_75 = numpy.random.uniform(0.00096745, 0.00096749)
+        high_risk_case_mort_H3_0 = numpy.random.uniform(0.00000057, 0.00000061)
+        high_risk_case_mort_H3_5 = numpy.random.uniform(0.00000044, 0.00000048)
+        high_risk_case_mort_H3_18 = numpy.random.uniform(0.00000349, 0.00000353)
+        high_risk_case_mort_H3_50 = numpy.random.uniform(0.00004544, 0.00004548)
+        high_risk_case_mort_H3_65 =numpy.random.uniform(0.00027000, 0.00027004)
+        high_risk_case_mort_H3_75 = numpy.random.uniform(0.00096745, 0.00096749)
         
-        high_risk_mort_B_0 = numpy.random.uniform(0.00000033, 0.00000035)
-        high_risk_mort_B_5 = numpy.random.uniform(0.00000036, 0.00000040)
-        high_risk_mort_B_18 = numpy.random.uniform(0.00000176, 0.00000180)
-        high_risk_mort_B_50 = numpy.random.uniform(0.00001776, 0.00001780)
-        high_risk_mort_B_65 =numpy.random.uniform(0.00007452, 0.00007456)
-        high_risk_mort_B_75 = numpy.random.uniform(0.00033876, 0.00033880)
+        high_risk_case_mort_B_0 = numpy.random.uniform(0.00000033, 0.00000035)
+        high_risk_case_mort_B_5 = numpy.random.uniform(0.00000036, 0.00000040)
+        high_risk_case_mort_B_18 = numpy.random.uniform(0.00000176, 0.00000180)
+        high_risk_case_mort_B_50 = numpy.random.uniform(0.00001776, 0.00001780)
+        high_risk_case_mort_B_65 =numpy.random.uniform(0.00007452, 0.00007456)
+        high_risk_case_mort_B_75 = numpy.random.uniform(0.00033876, 0.00033880)
         ###################
         
         ##################
@@ -273,9 +273,9 @@ if __name__ == "__main__":
                     low_risk_case_mort_H1_0, low_risk_case_mort_H1_5, low_risk_case_mort_H1_18, low_risk_case_mort_H1_50, low_risk_case_mort_H1_65, low_risk_case_mort_H1_75,
                     low_risk_case_mort_H3_0, low_risk_case_mort_H3_5, low_risk_case_mort_H3_18, low_risk_case_mort_H3_50, low_risk_case_mort_H3_65, low_risk_case_mort_H3_75,
                     low_risk_case_mort_B_0, low_risk_case_mort_B_5, low_risk_case_mort_B_18, low_risk_case_mort_B_50, low_risk_case_mort_B_65, low_risk_case_mort_B_75,
-                    high_risk_mort_H1_0, high_risk_mort_H1_5, high_risk_mort_H1_18, high_risk_mort_H1_50, high_risk_mort_H1_65, high_risk_mort_H1_75,
-                    high_risk_mort_H3_0, high_risk_mort_H3_5, high_risk_mort_H3_18, high_risk_mort_H3_50, high_risk_mort_H3_65, high_risk_mort_H3_75,
-                    high_risk_mort_B_0, high_risk_mort_B_5, high_risk_mort_B_18, high_risk_mort_B_50, high_risk_mort_B_65, high_risk_mort_B_75,
+                    high_risk_case_mort_H1_0, high_risk_case_mort_H1_5, high_risk_case_mort_H1_18, high_risk_case_mort_H1_50, high_risk_case_mort_H1_65, high_risk_case_mort_H1_75,
+                    high_risk_case_mort_H3_0, high_risk_case_mort_H3_5, high_risk_case_mort_H3_18, high_risk_case_mort_H3_50, high_risk_case_mort_H3_65, high_risk_case_mort_H3_75,
+                    high_risk_case_mort_B_0, high_risk_case_mort_B_5, high_risk_case_mort_B_18, high_risk_case_mort_B_50, high_risk_case_mort_B_65, high_risk_case_mort_B_75,
                     
                     low_risk_case_hosp_H1_0, low_risk_case_hosp_H1_5, low_risk_case_hosp_H1_18, low_risk_case_hosp_H1_50, low_risk_case_hosp_H1_65, low_risk_case_hosp_H1_75,
                     low_risk_case_hosp_H3_0, low_risk_case_hosp_H3_5, low_risk_case_hosp_H3_18, low_risk_case_hosp_H3_50, low_risk_case_hosp_H3_65, low_risk_case_hosp_H3_75,

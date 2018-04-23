@@ -23,7 +23,7 @@ class run_Simulation:
         self.parameters = Parameters.Parameters(index, **paramValues)
 
         # Initial condition
-        self.Y0 = numpy.zeros(84 * self.parameters.ages.size)
+        self.Y0 = numpy.zeros(60 * self.parameters.ages.size)
 
         self.hasSolution = False
 	
@@ -85,208 +85,202 @@ class run_Simulation:
         return self.parameters.computeR0()
 
     def getLastValues(self):
-        return (self.SUL[-1, :], self.IUL_H1[-1, :], self.IUL_H3[-1, :], self.IUL_B[-1, :], self.RUL_H1[-1, :], self.RUL_H3[-1, :], self.RUL_B[-1, :], self.IUL_H1_H3[-1, :], self.IUL_H1_B[-1, :], self.IUL_H3_H1[-1, :], self.IUL_H3_B[-1, :], self.IUL_B_H3[-1, :], self.IUL_B_H1[-1, :], self.RUL[-1, :], 
-		self.SUH[-1, :], self.IUH_H1[-1, :], self.IUH_H3[-1, :], self.IUH_B[-1, :], self.RUH_H1[-1, :], self.RUH_H3[-1, :], self.RUH_B[-1, :], self.IUH_H1_H3[-1, :], self.IUH_H1_B[-1, :], self.IUH_H3_H1[-1, :], self.IUH_H3_B[-1, :], self.IUH_B_H3[-1, :], self.IUH_B_H1[-1, :], self.RUH[-1, :], 
-		self.STL[-1, :], self.ITL_H1[-1, :], self.ITL_H3[-1, :], self.ITL_B[-1, :], self.RTL_H1[-1, :], self.RTL_H3[-1, :], self.RTL_B[-1, :], self.ITL_H1_H3[-1, :], self.ITL_H1_B[-1, :], self.ITL_H3_H1[-1, :], self.ITL_H3_B[-1, :], self.ITL_B_H3[-1, :], self.ITL_B_H1[-1, :], self.RTL[-1, :], 
-		self.STH[-1, :], self.ITH_H1[-1, :], self.ITH_H3[-1, :], self.ITH_B[-1, :], self.RTH_H1[-1, :], self.RTH_H3[-1, :], self.RTH_B[-1, :], self.ITH_H1_H3[-1, :], self.ITH_H1_B[-1, :], self.ITH_H3_H1[-1, :], self.ITH_H3_B[-1, :], self.ITH_B_H3[-1, :], self.ITH_B_H1[-1, :], self.RTH[-1, :], 
-		self.SNL[-1, :], self.INL_H1[-1, :], self.INL_H3[-1, :], self.INL_B[-1, :], self.RNL_H1[-1, :], self.RNL_H3[-1, :], self.RNL_B[-1, :], self.INL_H1_H3[-1, :], self.INL_H1_B[-1, :], self.INL_H3_H1[-1, :], self.INL_H3_B[-1, :], self.INL_B_H3[-1, :], self.INL_B_H1[-1, :], self.RNL[-1, :], 
-		self.SNH[-1, :], self.INH_H1[-1, :], self.INH_H3[-1, :], self.INH_B[-1, :], self.RNH_H1[-1, :], self.RNH_H3[-1, :], self.RNH_B[-1, :], self.INH_H1_H3[-1, :], self.INH_H1_B[-1, :], self.INH_H3_H1[-1, :], self.INH_H3_B[-1, :], self.INH_B_H3[-1, :], self.INH_B_H1[-1, :], self.RNH[-1, :])
+        return (self.SUL[-1, :], self.IUL_H1[-1, :], self.IUL_H3[-1, :], self.IUL_B[-1, :], self.RUL_H1[-1, :], self.RUL_H3[-1, :], self.RUL_B[-1, :], self.DUL_H1[-1, :], self.DUL_H3[-1, :], self.DUL_B[-1, :], 
+		self.SUH[-1, :], self.IUH_H1[-1, :], self.IUH_H3[-1, :], self.IUH_B[-1, :], self.RUH_H1[-1, :], self.RUH_H3[-1, :], self.RUH_B[-1, :], self.DUH_H1[-1, :], self.DUH_H3[-1, :], self.DUH_B[-1, :],
+		self.STL[-1, :], self.ITL_H1[-1, :], self.ITL_H3[-1, :], self.ITL_B[-1, :], self.RTL_H1[-1, :], self.RTL_H3[-1, :], self.RTL_B[-1, :], self.DTL_H1[-1, :], self.DTL_H3[-1, :], self.DTL_B[-1, :],
+		self.STH[-1, :], self.ITH_H1[-1, :], self.ITH_H3[-1, :], self.ITH_B[-1, :], self.RTH_H1[-1, :], self.RTH_H3[-1, :], self.RTH_B[-1, :],self.DTH_H1[-1, :], self.DTH_H3[-1, :], self.DTH_B[-1, :],    
+		self.SNL[-1, :], self.INL_H1[-1, :], self.INL_H3[-1, :], self.INL_B[-1, :], self.RNL_H1[-1, :], self.RNL_H3[-1, :], self.RNL_B[-1, :], self.DNL_H1[-1, :], self.DNL_H3[-1, :], self.DNL_B[-1, :],
+		self.SNH[-1, :], self.INH_H1[-1, :], self.INH_H3[-1, :], self.INH_B[-1, :], self.RNH_H1[-1, :], self.RNH_H3[-1, :], self.RNH_B[-1, :], self.DNH_H1[-1, :], self.DNH_H3[-1, :], self.DNH_B[-1, :])
     
     def updateIC(self):
         if not self.hasSolution:
             # S
 	    ## SUL
-            self.Y0[ 0: : 84] =  (1 - self.parameters.proportionVaccinatedTL -  self.parameters.proportionVaccinatedNL) * self.parameters.population_lowrisk 
+            self.Y0[ 0: : 60] =  (1 - self.parameters.proportionVaccinatedTL -  self.parameters.proportionVaccinatedNL) * self.parameters.population_lowrisk 
 
 	    ## SUH
-            self.Y0[14: : 84] =  (1 - self.parameters.proportionVaccinatedTH -  self.parameters.proportionVaccinatedNH) * self.parameters.population_highrisk 
+            self.Y0[ 10: : 60] =  (1 - self.parameters.proportionVaccinatedTH -  self.parameters.proportionVaccinatedNH) * self.parameters.population_highrisk 
   
 	    ## STL
-            self.Y0[28: : 84] = self.parameters.proportionVaccinatedTL * self.parameters.population_lowrisk 
+            self.Y0[ 20: : 60] = self.parameters.proportionVaccinatedTL * self.parameters.population_lowrisk 
 	    
 	    ## STH
-            self.Y0[42: : 84] =  self.parameters.proportionVaccinatedTH * self.parameters.population_highrisk
+            self.Y0[ 30: : 60] =  self.parameters.proportionVaccinatedTH * self.parameters.population_highrisk
 
 	    ## SNL
-            self.Y0[56: : 84] = self.parameters.proportionVaccinatedNL * self.parameters.population_lowrisk 
+            self.Y0[ 40: : 60] = self.parameters.proportionVaccinatedNL * self.parameters.population_lowrisk 
 	    ## SNH 
-            self.Y0[70: : 84] = self.parameters.proportionVaccinatedNH  * self.parameters.population_highrisk
+            self.Y0[ 50: : 60] = self.parameters.proportionVaccinatedNH  * self.parameters.population_highrisk
 	
             # I: Add a single infectious person in each age
 	    # IUL_H1, IUL_H3, IUL_B
-	    self.Y0[ 1: : 84] = numpy.full(self.parameters.ages.size,1000)
-	    self.Y0[ 2: : 84] = numpy.full(self.parameters.ages.size,1000)
-	    self.Y0[ 3: : 84] = numpy.full(self.parameters.ages.size,1000)
+	    self.Y0[ 1: : 60] = numpy.full(self.parameters.ages.size,1000)
+	    self.Y0[ 2: : 60] = numpy.full(self.parameters.ages.size,1000)
+	    self.Y0[ 3: : 60] = numpy.full(self.parameters.ages.size,1000)
 	    
 	    # IUH_H1, IUH_H3, IUH_B
-            self.Y0[ 15: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 16: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 17: : 84] = numpy.full(self.parameters.ages.size, 1000)
+            self.Y0[ 11: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 12: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 13: : 60] = numpy.full(self.parameters.ages.size, 1000)
 	    
 	    # ITL_H1, ITL_H3, ITL_B
-	    self.Y0[ 29: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 30: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 31: : 84] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 21: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 22: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 23: : 60] = numpy.full(self.parameters.ages.size, 1000)
 	    
 	    # ITH_H1, ITH_H3, ITH_B
-	    self.Y0[43: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[44: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[45: : 84] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 31: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 32: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 33: : 60] = numpy.full(self.parameters.ages.size, 1000)
 	    
 	    # INL_H1, INL_H3, INL_B
-	    self.Y0[57: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[58: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[59: : 84] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 41: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 42: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 43: : 60] = numpy.full(self.parameters.ages.size, 1000)
 	    
 	    # INH_H1, INH_H3, INH_B
-	    self.Y0[71: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[72: : 84] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[73: : 84] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 51: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 52: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 53: : 60] = numpy.full(self.parameters.ages.size, 1000)
 
             # S: Remove those new infectious people from the susceptibles
-            self.Y0[ 0: : 84] -= (self.Y0[ 1: : 84] + self.Y0[ 2: : 84] + self.Y0[ 3: : 84])
-	    self.Y0[ 14: : 84] -= (self.Y0[ 15: : 84] + self.Y0[ 16: : 84] + self.Y0[ 17: : 84])
-	    self.Y0[ 28: : 84] -= (self.Y0[ 29: : 84] + self.Y0[ 30: : 84] + self.Y0[ 31: : 84])
-	    self.Y0[ 42: : 84] -= (self.Y0[ 43: : 84] + self.Y0[ 44: : 84] + self.Y0[ 45: : 84])
-	    self.Y0[ 56: : 84] -= (self.Y0[ 57: : 84] + self.Y0[ 58: : 84] + self.Y0[ 59: : 84])
-	    self.Y0[ 70: : 84] -= (self.Y0[ 71: : 84] + self.Y0[ 72: : 84] + self.Y0[ 73: : 84])
+            self.Y0[ 0: : 60] -= (self.Y0[ 1: : 60] + self.Y0[ 2: : 60] + self.Y0[ 3: : 60])
+	    self.Y0[ 10: : 60] -= (self.Y0[ 11: : 60] + self.Y0[ 12: : 60] + self.Y0[ 13: : 60])
+	    self.Y0[ 20: : 60] -= (self.Y0[ 21: : 60] + self.Y0[ 22: : 60] + self.Y0[ 23: : 60])
+	    self.Y0[ 30: : 60] -= (self.Y0[ 31: : 60] + self.Y0[ 32: : 60] + self.Y0[ 33: : 60])
+	    self.Y0[ 40: : 60] -= (self.Y0[ 41: : 60] + self.Y0[ 42: : 60] + self.Y0[ 43: : 60])
+	    self.Y0[ 50: : 60] -= (self.Y0[ 51: : 60] + self.Y0[ 52: : 60] + self.Y0[ 53: : 60])
  
-            # R, I reinfections ans final R
-	    for num in range(4,14):
-		self.Y0[ num:  : 84] = 0.
+            # R
+	    self.Y0[ 4:  : 60] = 0.
+	    self.Y0[ 5:  : 60] = 0.
+	    self.Y0[ 6:  : 60] = 0.
+	    self.Y0[ 14:  : 60] = 0.
+	    self.Y0[ 15:  : 60] = 0.
+	    self.Y0[ 16:  : 60] = 0.
+	    self.Y0[ 24:  : 60] = 0.
+	    self.Y0[ 25:  : 60] = 0.
+	    self.Y0[ 26:  : 60] = 0.
+	    self.Y0[ 34:  : 60] = 0.
+	    self.Y0[ 35:  : 60] = 0.
+	    self.Y0[ 36:  : 60] = 0.
+	    self.Y0[ 44:  : 60] = 0.
+	    self.Y0[ 45:  : 60] = 0.
+	    self.Y0[ 46:  : 60] = 0.
+	    self.Y0[ 54:  : 60] = 0.
+	    self.Y0[ 55:  : 60] = 0.
+	    self.Y0[ 56:  : 60] = 0.
 	    
-	    for num in range(18, 28):
-		self.Y0[ num:  : 84] = 0.
+	    #Dead class
+	    self.Y0[ 7:  : 60] = 0.
+	    self.Y0[ 8:  : 60] = 0.
+	    self.Y0[ 9:  : 60] = 0.
+	    self.Y0[ 17:  : 60] = 0.
+	    self.Y0[ 18:  : 60] = 0.
+	    self.Y0[ 19:  : 60] = 0.
+	    self.Y0[ 27:  : 60] = 0.
+	    self.Y0[ 28:  : 60] = 0.
+	    self.Y0[ 29:  : 60] = 0.
+	    self.Y0[ 37:  : 60] = 0.
+	    self.Y0[ 38:  : 60] = 0.
+	    self.Y0[ 39:  : 60] = 0.
+	    self.Y0[ 47:  : 60] = 0.
+	    self.Y0[ 48:  : 60] = 0.
+	    self.Y0[ 49:  : 60] = 0.
+	    self.Y0[ 57:  : 60] = 0.
+	    self.Y0[ 58:  : 60] = 0.
+	    self.Y0[ 59:  : 60] = 0.
 	    
-	    for num in range(32, 42):
-		self.Y0[ num:  : 84] = 0.
-		
-	    for num in range(46, 56):
-		self.Y0[ num:  : 84] = 0.
-		
-	    for num in range(60, 70):
-		self.Y0[ num:  : 84] = 0.
-		
-	    for num in range(74, 84):
-		self.Y0[ num:  : 84] = 0.
-
-	   
         else:
-	    SUL, IUL_H1, IUL_H3, IUL_B, RUL_H1, RUL_H3, RUL_B, IUL_H1_H3 , IUL_H1_B, IUL_H3_H1, IUL_H3_B, IUL_B_H3, IUL_B_H1, RUL, 
-	    SUH, IUH_H1, IUH_H3, IUH_B, RUH, RUH_H3, RUH_B, IUH_H1_H3 , IUH_H1_B, IUH_H3_H1, IUH_H3_B, IUH_B_H3, IUH_B_H1, RUH, 
-	    STL, ITL_H1, ITL_H3, ITL_B, RTL, RTL_H3, RTL_B,ITL_H1_H3 , ITL_H1_B, ITL_H3_H1, ITL_H3_B, ITL_B_H3, ITL_B_H1, RTL, 
-	    STH, ITH_H1, ITH_H3, ITH_B, RTH, RTH_H3, RTH_B,ITH_H1_H3 , ITH_H1_B, ITH_H3_H1, ITH_H3_B, ITH_B_H3, ITH_B_H1, RTH, 
-	    SNL, INL_H1, INL_H3, INL_B, RNL, RNL_H3, RNL_B,INL_H1_H3 , INL_H1_B, INL_H3_H1, INL_H3_B, INL_B_H3, INL_B_H1, RNL, 
-	    SNH, INH_H1, INH_H3, INH_B, RNH, RNH_H3, RNH_B, INH_H1_H3 , INH_H1_B, INH_H3_H1, INH_H3_B, INH_B_H3, INH_B_H1, RNH   = self.getLastValues()
+	    SUL, IUL_H1, IUL_H3, IUL_B, RUL_H1, RUL_H3, RUL_B, DUL_H1, DUL_H3, DUL_B, 
+	    SUH, IUH_H1, IUH_H3, IUH_B, RUH_H1, RUH_H3, RUH_B, DUH_H1, DUH_H3, DUH_B, 
+	    STL, ITL_H1, ITL_H3, ITL_B, RTL_H1, RTL_H3, RTL_B, DTL_H1, DTL_H3, DTL_B, 
+	    STH, ITH_H1, ITH_H3, ITH_B, RTH_H1, RTH_H3, RTH_B, DTH_H1, DTH_H3, DTH_B, 
+	    SNL, INL_H1, INL_H3, INL_B, RNL_H1, RNL_H3, RNL_B, DNL_H1, DNL_H3, DNL_B, 
+	    SNH, INH_H1, INH_H3, INH_B, RNH_H1, RNH_H3, RNH_B, DNH_H1, DNH_H3, DNH_B = self.getLastValues()
             
-            self.Y0[ 0 : : 84] = (1 - self.parameters.proportionVaccinatedL) * SUL
-	    self.Y0[ 14 : : 84] = (1 - self.parameters.proportionVaccinatedH) * SUH
-	    self.Y0[ 28 : : 84] = STL + (1 - self.parameters.proportionVaccinatedTL) * SUL
-	    self.Y0[ 42 : : 84] = STH + (1 - self.parameters.proportionVaccinatedTH) * SUH
-	    self.Y0[ 56 : : 84] = SNL + (1 - self.parameters.proportionVaccinatedNL) * SUL
-	    self.Y0[ 70 : : 84] = SNH + (1 - self.parameters.proportionVaccinatedNH) * SUH
+            self.Y0[ 0 : : 60] = (1 - self.parameters.proportionVaccinatedL) * SUL
+	    self.Y0[ 10 : : 60] = (1 - self.parameters.proportionVaccinatedH) * SUH
+	    self.Y0[ 20 : : 60] = STL + (1 - self.parameters.proportionVaccinatedTL) * SUL
+	    self.Y0[ 30 : : 60] = STH + (1 - self.parameters.proportionVaccinatedTH) * SUH
+	    self.Y0[ 40 : : 60] = SNL + (1 - self.parameters.proportionVaccinatedNL) * SUL
+	    self.Y0[ 50 : : 60] = SNH + (1 - self.parameters.proportionVaccinatedNH) * SUH
 	    
 	    #I
-	    self.Y0[ 1 : : 84] = IUL_H1
-	    self.Y0[ 2 : : 84] = IUL_H3
-	    self.Y0[ 3 : : 84] = IUL_B
+	    self.Y0[ 1 : : 60] = IUL_H1
+	    self.Y0[ 2 : : 60] = IUL_H3
+	    self.Y0[ 3 : : 60] = IUL_B
 	    
-	    self.Y0[ 15 : : 84] = IUH_H1
-	    self.Y0[ 16 : : 84] = IUH_H3
-	    self.Y0[ 17 : : 84] = IUH_B
+	    self.Y0[ 11 : : 60] = IUH_H1
+	    self.Y0[ 12 : : 60] = IUH_H3
+	    self.Y0[ 13 : : 60] = IUH_B
 	    
-	    self.Y0[ 29 : : 84] = ITL_H1
-	    self.Y0[ 30 : : 84] = ITL_H3
-	    self.Y0[ 31 : : 84] = ITL_B
+	    self.Y0[ 21 : : 60] = ITL_H1
+	    self.Y0[ 22 : : 60] = ITL_H3
+	    self.Y0[ 23 : : 60] = ITL_B
 	    
-	    self.Y0[ 43 : : 84] = ITH_H1
-	    self.Y0[ 44 : : 84] = ITH_H3
-	    self.Y0[ 45 : : 84] = ITH_B
+	    self.Y0[ 31 : : 60] = ITH_H1
+	    self.Y0[ 32 : : 60] = ITH_H3
+	    self.Y0[ 33 : : 60] = ITH_B
 	    
-	    self.Y0[ 57 : : 84] = INL_H1
-	    self.Y0[ 58 : : 84] = INL_H3
-	    self.Y0[ 59 : : 84] = INL_B
+	    self.Y0[ 41 : : 60] = INL_H1
+	    self.Y0[ 42 : : 60] = INL_H3
+	    self.Y0[ 43 : : 60] = INL_B
 	    
-	    self.Y0[ 71 : : 84] = INH_H1
-	    self.Y0[ 72 : : 84] = INH_H3
-	    self.Y0[ 73 : : 84] = INH_B
-	    
-	    #R
-	    self.Y0[ 4 : : 84] = RUL_H1
-	    self.Y0[ 5 : : 84] = RUL_H3
-	    self.Y0[ 6 : : 84] = RUL_B
-	    
-	    self.Y0[ 18 : : 84] = RUH_H1
-	    self.Y0[ 19 : : 84] = RUH_H3
-	    self.Y0[ 20 : : 84] = RUH_B
-	    
-	    self.Y0[ 32 : : 84] = RTL_H1
-	    self.Y0[ 33 : : 84] = RTL_H3
-	    self.Y0[ 34 : : 84] = RTL_B
-	    
-	    self.Y0[ 46 : : 84] = RTH_H1
-	    self.Y0[ 47 : : 84] = RTH_H3
-	    self.Y0[ 48 : : 84] = RTH_B
-	    
-	    self.Y0[ 60 : : 84] = RNL_H1
-	    self.Y0[ 61 : : 84] = RNL_H3
-	    self.Y0[ 62 : : 84] = RNL_B
-	    
-	    self.Y0[ 74 : : 84] = RNH_H1
-	    self.Y0[ 75 : : 84] = RNH_H3
-	    self.Y0[ 76 : : 84] = RNH_B
-	    
-	    #re-infected T class
-	    self.Y0[ 7 : : 84] = IUL_H1_H3
-	    self.Y0[ 8 : : 84] = IUL_H1_B
-	    self.Y0[ 9 : : 84] = IUL_H3_H1
-	    self.Y0[ 10 : : 84] = IUL_H3_B
-	    self.Y0[ 11 : : 84] = IUL_B_H3
-	    self.Y0[ 12 : : 84] = IUL_B_H1
-	    
-	    self.Y0[ 7 : : 84] = IUH_H1_H3
-	    self.Y0[ 8 : : 84] = IUH_H1_B
-	    self.Y0[ 9 : : 84] = IUH_H3_H1
-	    self.Y0[ 10 : : 84] = IUH_H3_B
-	    self.Y0[ 11 : : 84] = IUH_B_H3
-	    self.Y0[ 12 : : 84] = IUH_B_H1
-	    
-	    self.Y0[ 7 : : 84] = ITL_H1_H3
-	    self.Y0[ 8 : : 84] = ITL_H1_B
-	    self.Y0[ 9 : : 84] = ITL_H3_H1
-	    self.Y0[ 10 : : 84] = ITL_H3_B
-	    self.Y0[ 11 : : 84] = ITL_B_H3
-	    self.Y0[ 12 : : 84] = ITL_B_H1
-	    
-	    self.Y0[ 7 : : 84] = ITH_H1_H3
-	    self.Y0[ 8 : : 84] = ITH_H1_B
-	    self.Y0[ 9 : : 84] = ITH_H3_H1
-	    self.Y0[ 10 : : 84] = ITH_H3_B
-	    self.Y0[ 11 : : 84] = ITH_B_H3
-	    self.Y0[ 12 : : 84] = ITH_B_H1
-	    
-	    self.Y0[ 7 : : 84] = INL_H1_H3
-	    self.Y0[ 8 : : 84] = INL_H1_B
-	    self.Y0[ 9 : : 84] = INL_H3_H1
-	    self.Y0[ 10 : : 84] = INL_H3_B
-	    self.Y0[ 11 : : 84] = INL_B_H3
-	    self.Y0[ 12 : : 84] = INL_B_H1
-	    
-	    self.Y0[ 7 : : 84] = INH_H1_H3
-	    self.Y0[ 8 : : 84] = INH_H1_B
-	    self.Y0[ 9 : : 84] = INH_H3_H1
-	    self.Y0[ 10 : : 84] = INH_H3_B
-	    self.Y0[ 11 : : 84] = INH_B_H3
-	    self.Y0[ 12 : : 84] = INH_B_H1
+	    self.Y0[ 51 : : 60] = INH_H1
+	    self.Y0[ 52 : : 60] = INH_H3
+	    self.Y0[ 53 : : 60] = INH_B
 	    
 	    #R class
-	    self.Y0[ 13 : : 84] = RUL
-	    self.Y0[ 27 : : 84] = RUH
-	    self.Y0[ 41 : : 84] = RTL
-	    self.Y0[ 55 : : 84] = RTH
-	    self.Y0[ 69 : : 84] = RNL
-	    self.Y0[ 83 : : 84] = RNH
-
+	    self.Y0[ 4 : : 60] = RUL_H1
+	    self.Y0[ 5 : : 60] = RUL_H3
+	    self.Y0[ 6 : : 60] = RUL_B
+	    
+	    self.Y0[ 14 : : 60] = RUH_H1
+	    self.Y0[ 15 : : 60] = RUH_H3
+	    self.Y0[ 16 : : 60] = RUH_B
+	    
+	    self.Y0[ 24 : : 60] = RTL_H1
+	    self.Y0[ 25 : : 60] = RTL_H3
+	    self.Y0[ 26 : : 60] = RTL_B
+	    
+	    self.Y0[ 34 : : 60] = RTH_H1
+	    self.Y0[ 35 : : 60] = RTH_H3
+	    self.Y0[ 36 : : 60] = RTH_B
+	    
+	    self.Y0[ 44 : : 60] = RNL_H1
+	    self.Y0[ 45 : : 60] = RNL_H3
+	    self.Y0[ 46 : : 60] = RNL_B
+	    
+	    self.Y0[ 54 : : 60] = RNH_H1
+	    self.Y0[ 55 : : 60] = RNH_H3
+	    self.Y0[ 56 : : 60] = RNH_B
+	    
+	    #D class
+	    self.Y0[ 7 : : 60] = DUL_H1
+	    self.Y0[ 8 : : 60] = DUL_H3
+	    self.Y0[ 9 : : 60] = DUL_B
+	    
+	    self.Y0[ 17 : : 60] = DUH_H1
+	    self.Y0[ 18 : : 60] = DUH_H3
+	    self.Y0[ 19 : : 60] = DUH_B
+	    
+	    self.Y0[ 27 : : 60] = DTL_H1
+	    self.Y0[ 28 : : 60] = DTL_H3
+	    self.Y0[ 29 : : 60] = DTL_B
+	    
+	    self.Y0[ 37 : : 60] = DTH_H1
+	    self.Y0[ 38 : : 60] = DTH_H3
+	    self.Y0[ 39 : : 60] = DTH_B
+	    
+	    self.Y0[ 47 : : 60] = DNL_H1
+	    self.Y0[ 48 : : 60] = DNL_H3
+	    self.Y0[ 49 : : 60] = DNL_B
+	    
+	    self.Y0[ 57 : : 60] = DNH_H1
+	    self.Y0[ 58 : : 60] = DNH_H3
+	    self.Y0[ 59 : : 60] = DNH_B
+	    
 
     def RHS(self, Y, t):
         '''
@@ -297,114 +291,91 @@ class run_Simulation:
         
         # Convert vector to meaningful component vectors
 
-	SUL    = Y[ 0 : : 84]
-        IUL_H1 = Y[ 1 : : 84]
-	IUL_H3 = Y[ 2 : : 84]
-	IUL_B  = Y[ 3 : : 84]
-	RUL_H1 = Y[ 4 : : 84]
-	RUL_H3 = Y[ 5 : : 84]
-	RUL_B = Y[ 6 : : 84]
-	IUL_H1_H3 = Y[ 7 : : 84]
-	IUL_H1_B = Y[ 8 : : 84]
-	IUL_H3_H1 = Y[ 9 : : 84]
-	IUL_H3_B = Y[ 10 : : 84]
-	IUL_B_H3 = Y[ 11 : : 84]
-	IUL_B_H1 = Y[ 12 : : 84]
-	RUL =  Y[13: : 84]
+	SUL    = Y[ 0 : : 60]
+        IUL_H1 = Y[ 1 : : 60]
+	IUL_H3 = Y[ 2 : : 60]
+	IUL_B  = Y[ 3 : : 60]
+	RUL_H1 = Y[ 4 : : 60]
+	RUL_H3 = Y[ 5 : : 60]
+	RUL_B =  Y[ 6 : : 60]
+	DUL_H1 = Y[ 7 : : 60]
+	DUL_H3 = Y[ 8 : : 60]
+	DUL_B =  Y[ 9 : : 60]
 	
-	SUH    = Y[ 14 : : 84]
-        IUH_H1 = Y[ 15 : : 84]
-	IUH_H3 = Y[ 16 : : 84]
-	IUH_B  = Y[ 17 : : 84]
-	RUH_H1 = Y[ 18 : : 84]
-	RUH_H3 = Y[ 19 : : 84]
-	RUH_B = Y[ 20 : : 84]
-	IUH_H1_H3 = Y[ 21 : : 84]
-	IUH_H1_B = Y[ 22 : : 84]
-	IUH_H3_H1 = Y[ 23 : : 84]
-	IUH_H3_B = Y[ 24 : : 84]
-	IUH_B_H3 = Y[ 25 : : 84]
-	IUH_B_H1 = Y[ 26 : : 84]
-	RUH = Y[27: : 84]
+	SUH    = Y[ 10 : : 60]
+        IUH_H1 = Y[ 11 : : 60]
+	IUH_H3 = Y[ 12 : : 60]
+	IUH_B  = Y[ 13 : : 60]
+	RUH_H1 = Y[ 14 : : 60]
+	RUH_H3 = Y[ 15 : : 60]
+	RUH_B =  Y[ 16 : : 60]
+	DUH_H1 = Y[ 17 : : 60]
+	DUH_H3 = Y[ 18 : : 60]
+	DUH_B =  Y[ 19 : : 60]
 	
-	STL    = Y[ 28 : : 84]
-        ITL_H1 = Y[ 29 : : 84]
-	ITL_H3 = Y[ 30 : : 84]
-	ITL_B  = Y[ 31 : : 84]
-	RTL_H1 = Y[ 32 : : 84]
-	RTL_H3 = Y[ 33 : : 84]
-	RTL_B = Y[ 34 : : 84]
-	ITL_H1_H3 = Y[ 35 : : 84]
-	ITL_H1_B = Y[ 36 : : 84]
-	ITL_H3_H1 = Y[ 37 : : 84]
-	ITL_H3_B = Y[ 38 : : 84]
-	ITL_B_H3 = Y[ 39 : : 84]
-	ITL_B_H1 = Y[ 40 : : 84]
-	RTL = Y[41: : 84]
+	STL    = Y[ 20 : : 60]
+        ITL_H1 = Y[ 21 : : 60]
+	ITL_H3 = Y[ 22 : : 60]
+	ITL_B  = Y[ 23 : : 60]
+	RTL_H1 = Y[ 24 : : 60]
+	RTL_H3 = Y[ 25 : : 60]
+	RTL_B =  Y[ 26 : : 60]
+	DTL_H1 = Y[ 27 : : 60]
+	DTL_H3 = Y[ 28 : : 60]
+	DTL_B =  Y[ 29 : : 60]
 	
-	STH    = Y[ 42 : : 84]
-        ITH_H1 = Y[ 43 : : 84]
-	ITH_H3 = Y[ 44 : : 84]
-	ITH_B  = Y[ 45 : : 84]
-	RTH_H1 = Y[ 46 : : 84]
-	RTH_H3 = Y[ 47 : : 84]
-	RTH_B = Y[ 48 : : 84]
-	ITH_H1_H3 = Y[ 49 : : 84]
-	ITH_H1_B = Y[ 50 : : 84]
-	ITH_H3_H1 = Y[ 51 : : 84]
-	ITH_H3_B = Y[ 52 : : 84]
-	ITH_B_H3 = Y[ 53 : : 84]
-	ITH_B_H1 = Y[ 54 : : 84]
-	RTH = Y[55: : 84]
+	STH    = Y[ 30 : : 60]
+        ITH_H1 = Y[ 31 : : 60]
+	ITH_H3 = Y[ 32 : : 60]
+	ITH_B  = Y[ 33 : : 60]
+	RTH_H1 = Y[ 34 : : 60]
+	RTH_H3 = Y[ 35 : : 60]
+	RTH_B =  Y[ 36 : : 60]
+	DTH_H1 = Y[ 37 : : 60]
+	DTH_H3 = Y[ 38 : : 60]
+	DTH_B =  Y[ 39 : : 60]
 	
-	SNL    = Y[ 56 : : 84]
-        INL_H1 = Y[ 57 : : 84]
-	INL_H3 = Y[ 58 : : 84]
-	INL_B  = Y[ 59 : : 84]
-	RNL_H1 = Y[ 60 : : 84]
-	RNL_H3 = Y[ 61 : : 84]
-	RNL_B = Y[ 62 : : 84]
-	INL_H1_H3 = Y[ 63 : : 84]
-	INL_H1_B = Y[ 64 : : 84]
-	INL_H3_H1 = Y[ 65 : : 84]
-	INL_H3_B = Y[ 66 : : 84]
-	INL_B_H3 = Y[ 67 : : 84]
-	INL_B_H1 = Y[ 68 : : 84]
-	RNL = Y[69: : 84]
+	SNL    = Y[ 40 : : 60]
+        INL_H1 = Y[ 41 : : 60]
+	INL_H3 = Y[ 42 : : 60]
+	INL_B  = Y[ 43 : : 60]
+	RNL_H1 = Y[ 44 : : 60]
+	RNL_H3 = Y[ 45 : : 60]
+	RNL_B =  Y[ 46 : : 60]
+	DNL_H1 = Y[ 47 : : 60]
+	DNL_H3 = Y[ 48 : : 60]
+	DNL_B =  Y[ 49 : : 60]
 	
-	SNH    = Y[ 70 : : 84]
-        INH_H1 = Y[ 71 : : 84]
-	INH_H3 = Y[ 72 : : 84]
-	INH_B  = Y[ 73 : : 84]
-	RNH_H1 = Y[ 74 : : 84]
-	RNH_H3 = Y[ 75 : : 84]
-	RNH_B = Y[ 76 : : 84]
-	INH_H1_H3 = Y[ 77 : : 84]
-	INH_H1_B = Y[ 78 : : 84]
-	INH_H3_H1 = Y[ 79 : : 84]
-	INH_H3_B = Y[ 80 : : 84]
-	INH_B_H3 = Y[ 81 : : 84]
-	INH_B_H1 = Y[ 82 : : 84]
-	RNH = Y[83: : 84]
+	SNH    = Y[ 50 : : 60]
+        INH_H1 = Y[ 51 : : 60]
+	INH_H3 = Y[ 52 : : 60]
+	INH_B  = Y[ 53 : : 60]
+	RNH_H1 = Y[ 54 : : 60]
+	RNH_H3 = Y[ 55 : : 60]
+	RNH_B =  Y[ 56 : : 60]
+	DNH_H1 = Y[ 57 : : 60]
+	DNH_H3 = Y[ 58 : : 60]
+	DNH_B =  Y[ 59 : : 60]
 	
-        N =  sum(SUL+ IUL_H1+ IUL_H3+ IUL_B+ RUL_H1+ RUL_H3+ RUL_B+ IUL_H1_H3 + IUL_H1_B+ IUL_H3_H1+ IUL_H3_B+ IUL_B_H3+ IUL_B_H1+ RUL+ 
-	    SUH+ IUH_H1+ IUH_H3+ IUH_B+ RUH+ RUH_H3+ RUH_B+ IUH_H1_H3 + IUH_H1_B+ IUH_H3_H1+ IUH_H3_B+ IUH_B_H3+ IUH_B_H1+ RUH+ 
-	    STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL+ RTL_H3+ RTL_B+ITL_H1_H3 + ITL_H1_B+ ITL_H3_H1+ ITL_H3_B+ ITL_B_H3+ ITL_B_H1+ RTL+ 
-	    STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH+ RTH_H3+ RTH_B+ITH_H1_H3 + ITH_H1_B+ ITH_H3_H1+ ITH_H3_B+ ITH_B_H3+ ITH_B_H1+ RTH+ 
-	    SNL+ INL_H1+ INL_H3+ INL_B+ RNL+ RNL_H3+ RNL_B+INL_H1_H3 + INL_H1_B+ INL_H3_H1+ INL_H3_B+ INL_B_H3+ INL_B_H1+ RNL+ 
-	    SNH+ INH_H1+ INH_H3+ INH_B+ RNH+ RNH_H3+ RNH_B+ INH_H1_H3 + INH_H1_B+ INH_H3_H1+ INH_H3_B+ INH_B_H3+ INH_B_H1+ RNH) 
+	
+        N =  sum(SUL+ IUL_H1+ IUL_H3+ IUL_B+ RUL_H1 + RUL_H3 + RUL_B + DUL_H1 + DUL_H3 + DUL_B + 
+	    SUH+ IUH_H1+ IUH_H3+ IUH_B+ RUH_H1 + RUH_H3 + RUH_B + DUH_H1 + DUH_H3 + DUH_B +
+	    STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL_H1 + RTL_H3 + RTL_B + DTL_H1 + DTL_H3 + DTL_B +
+	    STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH_H1 + RTH_H3 + RTH_B + DTH_H1 + DTH_H3 + DTH_B + 
+	    SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B + DNL_H1 + DNL_H3 + DNL_B +  
+	    SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B + DNH_H1 + DNH_H3 + DNH_B) 
       
         # The force of infection
         Lambda_H1 = self.parameters.transmissionScaling_H1 * self.parameters.susceptibility_H1\
-		    * numpy.dot(self.parameters.contactMatrix, self.parameters.transmissibility * (IUL_H1 + IUL_H1_H3 + IUL_H1_B + IUH_H1 + IUH_H1_H3 + IUH_H1_B+  ITL_H1 + ITL_H1_H3 + ITL_H1_B+ ITH_H1+ ITH_H1_H3 + ITH_H1_B + INL_H1+ INL_H1_H3 + INL_H1_B + INH_H1+ INH_H1_H3 + INH_H1_B)) / N
+		    * numpy.dot(self.parameters.contactMatrix, self.parameters.transmissibility * (IUL_H1 + IUH_H1 + ITL_H1 + ITH_H1+ INL_H1+ INH_H1)) / N
 	
 	Lambda_H3 = self.parameters.transmissionScaling_H3 * self.parameters.susceptibility_H3 \
                  * numpy.dot(self.parameters.contactMatrix, 
-                             self.parameters.transmissibility * (IUL_H3 + IUL_H3_H1 + IUL_H3_B + IUH_H3 + IUH_H3_H1 + IUH_H3_B+  ITL_H3 + ITL_H3_H1 + ITL_H3_B+ ITH_H3+ ITH_H3_H1 + ITH_H3_B + INL_H3+ INL_H3_H1 + INL_H3_B + INH_H3+ INH_H3_H1 + INH_H3_B)) / N
+                             self.parameters.transmissibility * (IUL_H3 + IUH_H3 + ITL_H3 + ITH_H3 + INL_H3+ INH_H3)) / N
 		
 	Lambda_B = self.parameters.transmissionScaling_B * self.parameters.susceptibility_B \
                  * numpy.dot(self.parameters.contactMatrix,
-                             self.parameters.transmissibility * (IUL_B + IUL_B_H3 + IUL_B_H1 + IUH_B + IUH_B_H3 + IUH_B_H1 +  ITL_B + ITL_B_H3 + ITL_B_H1+ ITH_B+ ITH_B_H3 + ITH_B_H1 + INL_B+ INL_B_H3 + INL_B_H1 + INH_B+ INH_B_H3 + INH_B_H1)) / N
+                             self.parameters.transmissibility * (IUL_B + IUH_B + ITL_B + ITH_B+ INL_B+ INH_B)) / N
 	
 	
         
@@ -415,16 +386,12 @@ class run_Simulation:
         dIUL_H1 = (Lambda_H1 * SUL) - (self.parameters.recoveryRate + self.parameters.deathRateUL_H1) * IUL_H1
 	dIUL_H3 = (Lambda_H3 * SUL) - (self.parameters.recoveryRate + self.parameters.deathRateUL_H3) * IUL_H3
 	dIUL_B  = (Lambda_B * SUL) - (self.parameters.recoveryRate + self.parameters.deathRateUL_B) * IUL_B
-        dRUL_H1 = self.parameters.recoveryRate * IUL_H1 - ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUL_H1) - ((1 - self.parameters.crossImmunity)*Lambda_B * RUL_H1)
-	dRUL_H3 = self.parameters.recoveryRate * IUL_H3 - ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUL_H3) - ((1 - self.parameters.crossImmunity)*Lambda_B * RUL_H3)
-	dRUL_B = self.parameters.recoveryRate * IUL_B - ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUL_B) - ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUL_B)
-	dIUL_H1_H3 = ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUL_H3)  - (self.parameters.recoveryRate + self.parameters.deathRateUL_H1) * IUL_H1_H3
-	dIUL_H1_B =  ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUL_B) - (self.parameters.recoveryRate + self.parameters.deathRateUL_H1) * IUL_H1_B
-	dIUL_H3_H1 = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUL_H1) - (self.parameters.recoveryRate + self.parameters.deathRateUL_H3) * IUL_H3_H1
-	dIUL_H3_B = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUL_B) - (self.parameters.recoveryRate + self.parameters.deathRateUL_H3) * IUL_H3_B
-	dIUL_B_H3 = ((1 - self.parameters.crossImmunity)*Lambda_B * RUL_H3) - (self.parameters.recoveryRate + self.parameters.deathRateUL_B) * IUL_B_H3
-	dIUL_B_H1 = ((1 - self.parameters.crossImmunity)*Lambda_B * RUL_H1) - (self.parameters.recoveryRate + self.parameters.deathRateUL_B) * IUL_B_H1
-	dRUL = self.parameters.recoveryRate *(IUL_H1_H3 + IUL_H1_B + IUL_H3_H1 + IUL_H3_B + IUL_B_H3 + IUL_B_H1)
+	dRUL_H1    = self.parameters.recoveryRate * IUL_H1
+	dRUL_H3    = self.parameters.recoveryRate * IUL_H3
+	dRUL_B    = self.parameters.recoveryRate * IUL_B
+	dDUL_H1  = self.parameters.deathRateUL_H1 * IUL_H1
+	dDUL_H3  = self.parameters.deathRateUL_H3 * IUL_H3
+	dDUL_B  = self.parameters.deathRateUL_B * IUL_B
 
 	
 	#UH
@@ -432,184 +399,140 @@ class run_Simulation:
         dIUH_H1 = (Lambda_H1 * SUH) - (self.parameters.recoveryRate + self.parameters.deathRateUH_H1) * IUH_H1
 	dIUH_H3 = (Lambda_H3 * SUH) - (self.parameters.recoveryRate + self.parameters.deathRateUH_H3) * IUH_H3
 	dIUH_B  = (Lambda_B * SUH) - (self.parameters.recoveryRate + self.parameters.deathRateUH_B) * IUH_B
-	dRUH_H1 = self.parameters.recoveryRate * IUH_H1 - ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUH_H1) - ((1 - self.parameters.crossImmunity)*Lambda_B * RUH_H1)
-	dRUH_H3 = self.parameters.recoveryRate * IUH_H3 - ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUH_H3) - ((1 - self.parameters.crossImmunity)*Lambda_B * RUH_H3)
-	dRUH_B = self.parameters.recoveryRate * IUH_B - ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUH_B) - ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUH_B)
-	dIUH_H1_H3 = ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUH_H3)  - (self.parameters.recoveryRate + self.parameters.deathRateUH_H1) * IUH_H1_H3
-	dIUH_H1_B =  ((1 - self.parameters.crossImmunity)*Lambda_H1 * RUH_B) - (self.parameters.recoveryRate + self.parameters.deathRateUH_H1) * IUH_H1_B
-	dIUH_H3_H1 = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUH_H1) - (self.parameters.recoveryRate + self.parameters.deathRateUH_H3) * IUH_H3_H1
-	dIUH_H3_B = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RUH_B) - (self.parameters.recoveryRate + self.parameters.deathRateUH_H3) * IUH_H3_B
-	dIUH_B_H3 = ((1 - self.parameters.crossImmunity)*Lambda_B * RUH_H3) - (self.parameters.recoveryRate + self.parameters.deathRateUH_B) * IUH_B_H3
-	dIUH_B_H1 = ((1 - self.parameters.crossImmunity)*Lambda_B * RUH_H1) - (self.parameters.recoveryRate + self.parameters.deathRateUH_B) * IUH_B_H1
-	dRUH = self.parameters.recoveryRate *(IUH_H1_H3 + IUH_H1_B + IUH_H3_H1 + IUH_H3_B + IUH_B_H3 + IUH_B_H1)
+	dRUH_H1    = self.parameters.recoveryRate * IUH_H1
+	dRUH_H3    = self.parameters.recoveryRate * IUH_H3
+	dRUH_B    = self.parameters.recoveryRate * IUH_B
+	dDUH_H1  = self.parameters.deathRateUH_H1 * IUH_H1
+	dDUH_H3  = self.parameters.deathRateUH_H3 * IUH_H3
+	dDUH_B  = self.parameters.deathRateUH_B * IUH_B
 	
 	#TL
 	dSTL = - ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 *STL)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 *STL)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B *STL)
 
-        dITL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * ITL_H1
-	dITL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * ITL_H3
-	dITL_B = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * ITL_B
-	dRTL_H1 = self.parameters.recoveryRate * ITL_H1 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RTL_H1) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RTL_H1)
-	dRTL_H3 = self.parameters.recoveryRate * ITL_H3 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RTL_H3) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RTL_H3)
-	dRTL_B = self.parameters.recoveryRate * ITL_B - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RTL_B) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RTL_B)
-	dITL_H1_H3 = ((1 - self.parameters.crossImmunity)*Lambda_H1 * RTL_H3)  - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * ITL_H1_H3
-	dITL_H1_B =  ((1 - self.parameters.crossImmunity)*Lambda_H1 * RTL_B) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * ITL_H1_B
-	dITL_H3_H1 = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RTL_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * ITL_H3_H1
-	dITL_H3_B = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RTL_B) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * ITL_H3_B
-	dITL_B_H3 = ((1 - self.parameters.crossImmunity)*Lambda_B * RTL_H3) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * ITL_B_H3
-	dITL_B_H1 = ((1 - self.parameters.crossImmunity)*Lambda_B * RTL_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * ITL_B_H1
-	dRTL = self.parameters.recoveryRate *(ITL_H1_H3 + ITL_H1_B + ITL_H3_H1 + ITL_H3_B + ITL_B_H3 + ITL_B_H1)	
+        dITL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_H1) *self.parameters.deathRateVL_H1) * ITL_H1
+	dITL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate +  (1 - self.parameters.vaccineEfficacyVsDeath_H3) *self.parameters.deathRateVL_H3) * ITL_H3
+	dITL_B  = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STL) - (self.parameters.recoveryRate +  (1 - self.parameters.vaccineEfficacyVsDeath_B) * self.parameters.deathRateVL_B) * ITL_B
+	dRTL_H1    = self.parameters.recoveryRate * ITL_H1
+	dRTL_H3    = self.parameters.recoveryRate * ITL_H3
+	dRTL_B    = self.parameters.recoveryRate * ITL_B
+	dDTL_H1  = self.parameters.deathRateVL_H1 * ITL_H1
+	dDTL_H3  = self.parameters.deathRateVL_H3 * ITL_H3
+	dDTL_B  = self.parameters.deathRateVL_B * ITL_B
 	
 	#TH
 	dSTH = - ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 *STH)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 *STH)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B *STH)
 	
-        dITH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * ITH_H1
-	dITH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * ITH_H3
-	dITH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_B) * ITH_B
-	dRTH_H1 = self.parameters.recoveryRate * ITH_H1 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RTH_H1) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RTH_H1)
-	dRTH_H3 = self.parameters.recoveryRate * ITH_H3 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RTH_H3) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RTH_H3)
-	dRTH_B = self.parameters.recoveryRate * ITH_B - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RTH_B) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RTH_B)
-	dITH_H1_H3 = ((1 - self.parameters.crossImmunity)*Lambda_H1 * RTH_H3)  - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * ITH_H1_H3
-	dITH_H1_B =  ((1 - self.parameters.crossImmunity)*Lambda_H1 * RTH_B) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * ITH_H1_B
-	dITH_H3_H1 = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RTH_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * ITH_H3_H1
-	dITH_H3_B = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RTH_B) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * ITH_H3_B
-	dITH_B_H3 = ((1 - self.parameters.crossImmunity)*Lambda_B * RTH_H3) - (self.parameters.recoveryRate + self.parameters.deathRateVH_B) * ITH_B_H3
-	dITH_B_H1 = ((1 - self.parameters.crossImmunity)*Lambda_B * RTH_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVH_B) * ITH_B_H1
-	dRTH = self.parameters.recoveryRate *(ITH_H1_H3 + ITH_H1_B + ITH_H3_H1 + ITH_H3_B + ITH_B_H3 + ITH_B_H1)
+        dITH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H1) *self.parameters.deathRateVH_H1) * ITH_H1
+	dITH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H3) *self.parameters.deathRateVH_H3) * ITH_H3
+	dITH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_B) *self.parameters.deathRateVH_B) * ITH_B
+	dRTH_H1    = self.parameters.recoveryRate * ITH_H1
+	dRTH_H3    = self.parameters.recoveryRate * ITH_H3
+	dRTH_B    = self.parameters.recoveryRate * ITH_B
+	dDTH_H1  = self.parameters.deathRateVH_H1 * ITH_H1
+	dDTH_H3  = self.parameters.deathRateVH_H3 * ITH_H3
+	dDTH_B  = self.parameters.deathRateVH_B * ITH_B
 	
 	#NL
 	dSNL = - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 *SNL)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3 *SNL)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B *SNL)
 	
-        dINL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * INL_H1
-	dINL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * INL_H3
-	dINL_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * INL_B
-	dRNL_H1 = self.parameters.recoveryRate * INL_H1 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RNL_H1) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RNL_H1)
-	dRNL_H3 = self.parameters.recoveryRate * INL_H3 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RNL_H3) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RNL_H3)
-	dRNL_B = self.parameters.recoveryRate * INL_B - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RNL_B) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RNL_B)
-	dINL_H1_H3 = ((1 - self.parameters.crossImmunity)*Lambda_H1 * RNL_H3)  - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * INL_H1_H3
-	dINL_H1_B =  ((1 - self.parameters.crossImmunity)*Lambda_H1 * RNL_B) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * INL_H1_B
-	dINL_H3_H1 = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RNL_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * INL_H3_H1
-	dINL_H3_B = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RNL_B) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * INL_H3_B
-	dINL_B_H3 = ((1 - self.parameters.crossImmunity)*Lambda_B * RNL_H3) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * INL_B_H3
-	dINL_B_H1 = ((1 - self.parameters.crossImmunity)*Lambda_B * RNL_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * INL_B_H1
-	dRNL = self.parameters.recoveryRate *(INL_H1_H3 + INL_H1_B + INL_H3_H1 + INL_H3_B + INL_B_H3 + INL_B_H1)
+        dINL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_H1) *self.parameters.deathRateVL_H1) * INL_H1
+	dINL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_H3) *self.parameters.deathRateVL_H3) * INL_H3
+	dINL_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B * SNL) - (self.parameters.recoveryRate + (1 - self.parameters.vaccineEfficacyVsDeath_B) *self.parameters.deathRateVL_B) * INL_B
+	dRNL_H1    = self.parameters.recoveryRate * INL_H1
+	dRNL_H3    = self.parameters.recoveryRate * INL_H3
+	dRNL_B    = self.parameters.recoveryRate * INL_B
+	dDNL_H1  = self.parameters.deathRateVL_H1 * INL_H1
+	dDNL_H3  = self.parameters.deathRateVL_H3 * INL_H3
+	dDNL_B  = self.parameters.deathRateVL_B * INL_B
 	
 	#NH
 	dSNH = - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 *SNH)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3 *SNH)
 	- ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B *SNH)
-        dINH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * INH_H1
-	dINH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * INH_H3
-	dINH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) *Lambda_B * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_B) * INH_B
-	dRNH_H1 = self.parameters.recoveryRate * INH_H1 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RNH_H1) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RNH_H1)
-	dRNH_H3 = self.parameters.recoveryRate * INH_H3 - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RNH_H3) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) *Lambda_B * RNH_H3)
-	dRNH_B = self.parameters.recoveryRate * INH_B - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * RNH_B) - ((1 - self.parameters.crossImmunity)*(1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * RNH_B)
-	dINH_H1_H3 = ((1 - self.parameters.crossImmunity)*Lambda_H1 * RNH_H3)  - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * INH_H1_H3
-	dINH_H1_B =  ((1 - self.parameters.crossImmunity)*Lambda_H1 * RNH_B) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * INH_H1_B
-	dINH_H3_H1 = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RNH_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * INH_H3_H1
-	dINH_H3_B = ((1 - self.parameters.crossImmunity)*Lambda_H3 * RNH_B) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * INH_H3_B
-	dINH_B_H3 = ((1 - self.parameters.crossImmunity)*Lambda_B * RNH_H3) - (self.parameters.recoveryRate + self.parameters.deathRateVH_B) * INH_B_H3
-	dINH_B_H1 = ((1 - self.parameters.crossImmunity)*Lambda_B * RNH_H1) - (self.parameters.recoveryRate + self.parameters.deathRateVH_B) * INH_B_H1
-	dRNH = self.parameters.recoveryRate *(INH_H1_H3 + INH_H1_B + INH_H3_H1 + INH_H3_B + INH_B_H3 + INH_B_H1)
+        dINH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H1) *self.parameters.deathRateVH_H1) * INH_H1
+	dINH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_H3) *self.parameters.deathRateVH_H3) * INH_H3
+	dINH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) *Lambda_B * SNH) - (self.parameters.recoveryRate + (1 - self.parameters.highRiskvaccineEfficacyVsDeath_B) *self.parameters.deathRateVH_B) * INH_B
+	dRNH_H1    = self.parameters.recoveryRate * INH_H1
+	dRNH_H3    = self.parameters.recoveryRate * INH_H3
+	dRNH_B    = self.parameters.recoveryRate * INH_B
+	dDNH_H1  = self.parameters.deathRateVH_H1 * INH_H1
+	dDNH_H3  = self.parameters.deathRateVH_H3 * INH_H3
+	dDNH_B  = self.parameters.deathRateVH_B * INH_B
 	
 	
         # Convert meaningful component vectors into a single vector
         dY = numpy.empty(Y.size, dtype = float)
-        dY[ 0 : : 84] = dSUL
-        dY[ 1 : : 84] = dIUL_H1
-        dY[ 2 : : 84] = dIUL_H3
-	dY[ 3 : : 84] = dIUL_B
-        dY[ 4 : : 84] = dRUL_H1
-	dY[ 5 : : 84] = dRUL_H3
-	dY[ 6 : : 84] = dRUL_B
-	dY[ 7 : : 84] = dIUL_H1_H3
-	dY[ 8 : : 84] = dIUL_H1_B
-	dY[ 9 : : 84] = dIUL_H3_H1
-	dY[ 10 : : 84] = dIUL_H3_B
-	dY[ 11 : : 84] = dIUL_B_H3
-	dY[ 12 : : 84] = dIUL_B_H1
-	dY[ 13 : : 84] = dRUL
+        dY[ 0 : : 60] = dSUL
+        dY[ 1 : : 60] = dIUL_H1
+        dY[ 2 : : 60] = dIUL_H3
+	dY[ 3 : : 60] = dIUL_B
+	dY[ 4 : : 60] = dRUL_H1
+	dY[ 5 : : 60] = dRUL_H3
+	dY[ 6 : : 60] = dRUL_B
+	dY[ 7 : : 60] = dDUL_H1
+	dY[ 8 : : 60] = dDUL_H3
+	dY[ 9 : : 60] = dDUL_B
 	
-	dY[ 14 : : 84] = dSUH
-        dY[ 15 : : 84] = dIUH_H1
-        dY[ 16 : : 84] = dIUH_H3
-	dY[ 17 : : 84] = dIUH_B
-        dY[ 18 : : 84] = dRUH_H1
-	dY[ 19 : : 84] = dRUH_H3
-	dY[ 20 : : 84] = dRUH_B
-	dY[ 21 : : 84] = dIUH_H1_H3
-	dY[ 22 : : 84] = dIUH_H1_B
-	dY[ 23 : : 84] = dIUH_H3_H1
-	dY[ 24 : : 84] = dIUH_H3_B
-	dY[ 25 : : 84] = dIUH_B_H3
-	dY[ 26 : : 84] = dIUH_B_H1
-	dY[ 27 : : 84] = dRUH
+	dY[ 10 : : 60] = dSUH
+        dY[ 11 : : 60] = dIUH_H1
+        dY[ 12 : : 60] = dIUH_H3
+	dY[ 13 : : 60] = dIUH_B
+	dY[ 14 : : 60] = dRUH_H1
+	dY[ 15 : : 60] = dRUH_H3
+	dY[ 16 : : 60] = dRUH_B
+	dY[ 17 : : 60] = dDUH_H1
+	dY[ 18 : : 60] = dDUH_H3
+	dY[ 19 : : 60] = dDUH_B
 	
-	dY[ 28 : : 84] = dSTL
-        dY[ 29 : : 84] = dITL_H1
-        dY[ 30 : : 84] = dITL_H3
-	dY[ 31 : : 84] = dITL_B
-        dY[ 32 : : 84] = dRTL_H1
-	dY[ 33 : : 84] = dRTL_H3
-	dY[ 34 : : 84] = dRTL_B
-	dY[ 35 : : 84] = dITL_H1_H3
-	dY[ 36 : : 84] = dITL_H1_B
-	dY[ 37 : : 84] = dITL_H3_H1
-	dY[ 38 : : 84] = dITL_H3_B
-	dY[ 39 : : 84] = dITL_B_H3
-	dY[ 40 : : 84] = dITL_B_H1
-	dY[ 41 : : 84] = dRTL
+	dY[ 20 : : 60] = dSTL
+        dY[ 21 : : 60] = dITL_H1
+        dY[ 22 : : 60] = dITL_H3
+	dY[ 23 : : 60] = dITL_B
+	dY[ 24 : : 60] = dRTL_H1
+	dY[ 25 : : 60] = dRTL_H3
+	dY[ 26 : : 60] = dRTL_B
+	dY[ 27 : : 60] = dDTL_H1
+	dY[ 28 : : 60] = dDTL_H3
+	dY[ 29 : : 60] = dDTL_B
 	
-	dY[ 42 : : 84] = dSTH
-        dY[ 43 : : 84] = dITH_H1
-        dY[ 44 : : 84] = dITH_H3
-	dY[ 45 : : 84] = dITH_B
-        dY[ 46 : : 84] = dRTH_H1
-	dY[ 47 : : 84] = dRTH_H3
-	dY[ 48 : : 84] = dRTH_B
-	dY[ 49 : : 84] = dITH_H1_H3
-	dY[ 50 : : 84] = dITH_H1_B
-	dY[ 51 : : 84] = dITH_H3_H1
-	dY[ 52 : : 84] = dITH_H3_B
-	dY[ 53 : : 84] = dITH_B_H3
-	dY[ 54 : : 84] = dITH_B_H1
-	dY[ 55 : : 84] = dRTH
+	dY[ 30 : : 60] = dSTH
+        dY[ 31 : : 60] = dITH_H1
+        dY[ 32 : : 60] = dITH_H3
+	dY[ 33 : : 60] = dITH_B
+	dY[ 34 : : 60] = dRTH_H1
+	dY[ 35 : : 60] = dRTH_H3
+	dY[ 36 : : 60] = dRTH_B
+	dY[ 37 : : 60] = dDTH_H1
+	dY[ 38 : : 60] = dDTH_H3
+	dY[ 39 : : 60] = dDTH_B
 	
-	dY[ 56 : : 84] = dSNL
-        dY[ 57 : : 84] = dINL_H1
-        dY[ 58 : : 84] = dINL_H3
-	dY[ 59 : : 84] = dINL_B
-        dY[ 60 : : 84] = dRNL_H1
-	dY[ 61 : : 84] = dRNL_H3
-	dY[ 62 : : 84] = dRNL_B
-	dY[ 63 : : 84] = dINL_H1_H3
-	dY[ 64 : : 84] = dINL_H1_B
-	dY[ 65 : : 84] = dINL_H3_H1
-	dY[ 66 : : 84] = dINL_H3_B
-	dY[ 67 : : 84] = dINL_B_H3
-	dY[ 68 : : 84] = dINL_B_H1
-	dY[ 69 : : 84] = dRNL
+	dY[ 40 : : 60] = dSNL
+        dY[ 41 : : 60] = dINL_H1
+        dY[ 42 : : 60] = dINL_H3
+	dY[ 43 : : 60] = dINL_B
+	dY[ 44 : : 60] = dRNL_H1
+	dY[ 45 : : 60] = dRNL_H3
+	dY[ 46 : : 60] = dRNL_B
+	dY[ 47 : : 60] = dDNL_H1
+	dY[ 48 : : 60] = dDNL_H3
+	dY[ 49 : : 60] = dDNL_B
 	
-	dY[ 70 : : 84] = dSNH
-        dY[ 71 : : 84] = dINH_H1
-        dY[ 72 : : 84] = dINH_H3
-	dY[ 73 : : 84] = dINH_B
-        dY[ 74 : : 84] = dRNH_H1
-	dY[ 75 : : 84] = dRNH_H3
-	dY[ 76 : : 84] = dRNH_B
-	dY[ 77 : : 84] = dINH_H1_H3
-	dY[ 78 : : 84] = dINH_H1_B
-	dY[ 79 : : 84] = dINH_H3_H1
-	dY[ 80 : : 84] = dINH_H3_B
-	dY[ 81 : : 84] = dINH_B_H3
-	dY[ 82 : : 84] = dINH_B_H1
-	dY[ 83 : : 84] = dRNH
+	dY[ 50 : : 60] = dSNH
+        dY[ 51 : : 60] = dINH_H1
+        dY[ 52 : : 60] = dINH_H3
+	dY[ 53 : : 60] = dINH_B
+	dY[ 54 : : 60] = dRNH_H1
+	dY[ 55 : : 60] = dRNH_H3
+	dY[ 56 : : 60] = dRNH_B
+	dY[ 57 : : 60] = dDNH_H1
+	dY[ 58 : : 60] = dDNH_H3
+	dY[ 59 : : 60] = dDNH_B
 	
         return dY
     
@@ -627,91 +550,67 @@ class run_Simulation:
             IUL_H1_Old = self.IUL_H1.copy()
 	    IUL_H3_Old = self.IUL_H3.copy()
 	    IUL_B_Old = self.IUL_B.copy()
-            RUL_H1_Old = self.RUL_H1.copy()
+	    RUL_H1_Old = self.RUL_H1.copy()
 	    RUL_H3_Old = self.RUL_H3.copy()
 	    RUL_B_Old = self.RUL_B.copy()
-	    IUL_H1_H3_Old = self.IUL_H1_H3.copy()
-	    IUL_H1_B_Old = self.IUL_H1_B.copy()
-	    IUL_H3_H1_Old = self.IUL_H3_H1.copy()
-	    IUL_H3_B_Old = self.IUL_H3_B.copy()
-	    IUL_B_H3_Old = self.IUL_B_H3.copy()
-	    IUL_B_H1_Old = self.IUL_B_H1.copy()
-	    RUL_Old = self.RUL.copy()
+	    DUL_H1_Old = self.DUL_H1.copy()
+	    DUL_H3_Old = self.DUL_H3.copy()
+	    DUL_B_Old = self.DUL_B.copy()
 	    
 	    SUH_Old = self.SUH.copy()
             IUH_H1_Old = self.IUH_H1.copy()
 	    IUH_H3_Old = self.IUH_H3.copy()
 	    IUH_B_Old = self.IUH_B.copy()
-            RUH_H1_Old = self.RUH_H1.copy()
+	    RUH_H1_Old = self.RUH_H1.copy()
 	    RUH_H3_Old = self.RUH_H3.copy()
 	    RUH_B_Old = self.RUH_B.copy()
-	    IUH_H1_H3_Old = self.IUH_H1_H3.copy()
-	    IUH_H1_B_Old = self.IUH_H1_B.copy()
-	    IUH_H3_H1_Old = self.IUH_H3_H1.copy()
-	    IUH_H3_B_Old = self.IUH_H3_B.copy()
-	    IUH_B_H3_Old = self.IUH_B_H3.copy()
-	    IUH_B_H1_Old = self.IUH_B_H1.copy()
-	    RUH_Old = self.RUH.copy()
+	    DUH_H1_Old = self.DUH_H1.copy()
+	    DUH_H3_Old = self.DUH_H3.copy()
+	    DUH_B_Old = self.DUH_B.copy()
 	    
 	    STL_Old = self.STL.copy()
             ITL_H1_Old = self.ITL_H1.copy()
 	    ITL_H3_Old = self.ITL_H3.copy()
 	    ITL_B_Old = self.ITL_B.copy()
-            RTL_H1_Old = self.RTL_H1.copy()
+	    RTL_H1_Old = self.RTL_H1.copy()
 	    RTL_H3_Old = self.RTL_H3.copy()
 	    RTL_B_Old = self.RTL_B.copy()
-	    ITL_H1_H3_Old = self.ITL_H1_H3.copy()
-	    ITL_H1_B_Old = self.ITL_H1_B.copy()
-	    ITL_H3_H1_Old = self.ITL_H3_H1.copy()
-	    ITL_H3_B_Old = self.ITL_H3_B.copy()
-	    ITL_B_H3_Old = self.ITL_B_H3.copy()
-	    ITL_B_H1_Old = self.ITL_B_H1.copy()
-	    RTL_Old = self.RTL.copy()
+	    DTL_H1_Old = self.DTL_H1.copy()
+	    DTL_H3_Old = self.DTL_H3.copy()
+	    DTL_B_Old = self.DTL_B.copy()
 	    
 	    STH_Old = self.STH.copy()
             ITH_H1_Old = self.ITH_H1.copy()
 	    ITH_H3_Old = self.ITH_H3.copy()
 	    ITH_B_Old = self.ITH_B.copy()
-            RTH_H1_Old = self.RTH_H1.copy()
+	    RTH_H1_Old = self.RTH_H1.copy()
 	    RTH_H3_Old = self.RTH_H3.copy()
 	    RTH_B_Old = self.RTH_B.copy()
-	    ITH_H1_H3_Old = self.ITH_H1_H3.copy()
-	    ITH_H1_B_Old = self.ITH_H1_B.copy()
-	    ITH_H3_H1_Old = self.ITH_H3_H1.copy()
-	    ITH_H3_B_Old = self.ITH_H3_B.copy()
-	    ITH_B_H3_Old = self.ITH_B_H3.copy()
-	    ITH_B_H1_Old = self.ITH_B_H1.copy()
-	    RTH_Old = self.RTH.copy()
+	    DTH_H1_Old = self.DTH_H1.copy()
+	    DTH_H3_Old = self.DTH_H3.copy()
+	    DTH_B_Old = self.DTH_B.copy()
 	    
 	    SNL_Old = self.SNL.copy()
             INL_H1_Old = self.INL_H1.copy()
 	    INL_H3_Old = self.INL_H3.copy()
 	    INL_B_Old = self.INL_B.copy()
-            RNL_H1_Old = self.RNL_H1.copy()
+	    RNL_H1_Old = self.RNL_H1.copy()
 	    RNL_H3_Old = self.RNL_H3.copy()
 	    RNL_B_Old = self.RNL_B.copy()
-	    INL_H1_H3_Old = self.INL_H1_H3.copy()
-	    INL_H1_B_Old = self.INL_H1_B.copy()
-	    INL_H3_H1_Old = self.INL_H3_H1.copy()
-	    INL_H3_B_Old = self.INL_H3_B.copy()
-	    INL_B_H3_Old = self.INL_B_H3.copy()
-	    INL_B_H1_Old = self.INL_B_H1.copy()
-	    RNL_Old = self.RNL.copy()
+	    DNL_H1_Old = self.DNL_H1.copy()
+	    DNL_H3_Old = self.DNL_H3.copy()
+	    DNL_B_Old = self.DNL_B.copy()
 	    
 	    SNH_Old = self.SNH.copy()
             INH_H1_Old = self.INH_H1.copy()
 	    INH_H3_Old = self.INH_H3.copy()
 	    INH_B_Old = self.INH_B.copy()
-            RNH_H1_Old = self.RNH_H1.copy()
+	    RNH_H1_Old = self.RNH_H1.copy()
 	    RNH_H3_Old = self.RNH_H3.copy()
 	    RNH_B_Old = self.RNH_B.copy()
-	    INH_H1_H3_Old = self.INH_H1_H3.copy()
-	    INH_H1_B_Old = self.INH_H1_B.copy()
-	    INH_H3_H1_Old = self.INH_H3_H1.copy()
-	    INH_H3_B_Old = self.INH_H3_B.copy()
-	    INH_B_H3_Old = self.INH_B_H3.copy()
-	    INH_B_H1_Old = self.INH_B_H1.copy()
-	    RNH_Old = self.RNH.copy()
+	    DNH_H1_Old = self.DNH_H1.copy()
+	    DNH_H3_Old = self.DNH_H3.copy()
+	    DNH_B_Old = self.DNH_B.copy()
 	
         # Time vector for solution
         self.T = numpy.hstack((numpy.arange(tStart, tEnd, tStep), tEnd))
@@ -724,95 +623,71 @@ class run_Simulation:
                         mxstep = 1000)
         Z = self.Y.copy()
 	
-	self.SUL    = Z[:, 0 : : 84]
-        self.IUL_H1 = Z[:, 1 : : 84]
-	self.IUL_H3 = Z[:, 2 : : 84]
-	self.IUL_B  = Z[:, 3 : : 84]
-	self.RUL_H1 = Z[:, 4 : : 84]
-	self.RUL_H3 = Z[:, 5 : : 84]
-	self.RUL_B = Z[:, 6 : : 84]
-	self.IUL_H1_H3 = Z[:, 7 : : 84]
-	self.IUL_H1_B = Z[:, 8 : : 84]
-	self.IUL_H3_H1 = Z[:, 9 : : 84]
-	self.IUL_H3_B = Z[:, 10 : : 84]
-	self.IUL_B_H3 = Z[:, 11 : : 84]
-	self.IUL_B_H1 = Z[:, 12 : : 84]
-	self.RUL =  Z[:,13: : 84]
+	self.SUL    = Z[:, 0 : : 60]
+        self.IUL_H1 = Z[:, 1 : : 60]
+	self.IUL_H3 = Z[:, 2 : : 60]
+	self.IUL_B  = Z[:, 3 : : 60]
+	self.RUL_H1 = Z[:, 4 : : 60]
+	self.RUL_H3 = Z[:, 5 : : 60]
+	self.RUL_B  = Z[:, 6 : : 60]
+	self.DUL_H1 = Z[:, 7 : : 60]
+	self.DUL_H3 = Z[:, 8 : : 60]
+	self.DUL_B  = Z[:, 9 : : 60]
 	
-	self.SUH    = Z[:, 14 : : 84]
-        self.IUH_H1 = Z[:, 15 : : 84]
-	self.IUH_H3 = Z[:, 16 : : 84]
-	self.IUH_B  = Z[:, 17 : : 84]
-	self.RUH_H1 = Z[:, 18 : : 84]
-	self.RUH_H3 = Z[:, 19 : : 84]
-	self.RUH_B = Z[:, 20 : : 84]
-	self.IUH_H1_H3 = Z[:, 21 : : 84]
-	self.IUH_H1_B = Z[:, 22 : : 84]
-	self.IUH_H3_H1 = Z[:, 23 : : 84]
-	self.IUH_H3_B = Z[:, 24 : : 84]
-	self.IUH_B_H3 = Z[:, 25 : : 84]
-	self.IUH_B_H1 = Z[:, 26 : : 84]
-	self.RUH = Z[:,27: : 84]
+	self.SUH    = Z[:, 10 : : 60]
+        self.IUH_H1 = Z[:, 11 : : 60]
+	self.IUH_H3 = Z[:, 12 : : 60]
+	self.IUH_B  = Z[:, 13 : : 60]
+	self.RUH_H1 = Z[:, 14 : : 60]
+	self.RUH_H3 = Z[:, 15 : : 60]
+	self.RUH_B  = Z[:, 16 : : 60]
+	self.DUH_H1 = Z[:, 17 : : 60]
+	self.DUH_H3 = Z[:, 18 : : 60]
+	self.DUH_B  = Z[:, 19 : : 60]
 	
-	self.STL    = Z[:, 28 : : 84]
-        self.ITL_H1 = Z[:, 29 : : 84]
-	self.ITL_H3 = Z[:, 30 : : 84]
-	self.ITL_B  = Z[:, 31 : : 84]
-	self.RTL_H1 = Z[:, 32 : : 84]
-	self.RTL_H3 = Z[:, 33 : : 84]
-	self.RTL_B = Z[:, 34 : : 84]
-	self.ITL_H1_H3 = Z[:, 35 : : 84]
-	self.ITL_H1_B = Z[:, 36 : : 84]
-	self.ITL_H3_H1 = Z[:, 37 : : 84]
-	self.ITL_H3_B = Z[:, 38 : : 84]
-	self.ITL_B_H3 = Z[:, 39 : : 84]
-	self.ITL_B_H1 = Z[:, 40 : : 84]
-	self.RTL = Z[:,41: : 84]
+	self.STL    = Z[:, 20 : : 60]
+        self.ITL_H1 = Z[:, 21 : : 60]
+	self.ITL_H3 = Z[:, 22 : : 60]
+	self.ITL_B  = Z[:, 23 : : 60]
+	self.RTL_H1 = Z[:, 24 : : 60]
+	self.RTL_H3 = Z[:, 25 : : 60]
+	self.RTL_B  = Z[:, 26 : : 60]
+	self.DTL_H1 = Z[:, 27 : : 60]
+	self.DTL_H3 = Z[:, 28 : : 60]
+	self.DTL_B  = Z[:, 29 : : 60]
 	
-	self.STH    = Z[:, 42 : : 84]
-        self.ITH_H1 = Z[:, 43 : : 84]
-	self.ITH_H3 = Z[:, 44 : : 84]
-	self.ITH_B  = Z[:, 45 : : 84]
-	self.RTH_H1 = Z[:, 46 : : 84]
-	self.RTH_H3 = Z[:, 47 : : 84]
-	self.RTH_B = Z[:, 48 : : 84]
-	self.ITH_H1_H3 = Z[:, 49 : : 84]
-	self.ITH_H1_B = Z[:, 50 : : 84]
-	self.ITH_H3_H1 = Z[:, 51 : : 84]
-	self.ITH_H3_B = Z[:, 52 : : 84]
-	self.ITH_B_H3 = Z[:, 53 : : 84]
-	self.ITH_B_H1 = Z[:, 54 : : 84]
-	self.RTH = Z[:,55: : 84]
+	self.STH    = Z[:, 30 : : 60]
+        self.ITH_H1 = Z[:, 31 : : 60]
+	self.ITH_H3 = Z[:, 32 : : 60]
+	self.ITH_B  = Z[:, 33 : : 60]
+	self.RTH_H1 = Z[:, 34 : : 60]
+	self.RTH_H3 = Z[:, 35 : : 60]
+	self.RTH_B  = Z[:, 36 : : 60]
+	self.DTH_H1 = Z[:, 37 : : 60]
+	self.DTH_H3 = Z[:, 38 : : 60]
+	self.DTH_B  = Z[:, 39 : : 60]
 	
-	self.SNL    = Z[:, 56 : : 84]
-        self.INL_H1 = Z[:, 57 : : 84]
-	self.INL_H3 = Z[:, 58 : : 84]
-	self.INL_B  = Z[:, 59 : : 84]
-	self.RNL_H1 = Z[:, 60 : : 84]
-	self.RNL_H3 = Z[:, 61 : : 84]
-	self.RNL_B = Z[:, 62 : : 84]
-	self.INL_H1_H3 = Z[:, 63 : : 84]
-	self.INL_H1_B = Z[:, 64 : : 84]
-	self.INL_H3_H1 = Z[:, 65 : : 84]
-	self.INL_H3_B = Z[:, 66 : : 84]
-	self.INL_B_H3 = Z[:, 67 : : 84]
-	self.INL_B_H1 = Z[:, 68 : : 84]
-	self.RNL = Z[:,69: : 84]
+	self.SNL    = Z[:, 40 : : 60]
+        self.INL_H1 = Z[:, 41 : : 60]
+	self.INL_H3 = Z[:, 42 : : 60]
+	self.INL_B  = Z[:, 43 : : 60]
+	self.RNL_H1 = Z[:, 44 : : 60]
+	self.RNL_H3 = Z[:, 45 : : 60]
+	self.RNL_B  = Z[:, 46 : : 60]
+	self.DNL_H1 = Z[:, 47 : : 60]
+	self.DNL_H3 = Z[:, 48 : : 60]
+	self.DNL_B  = Z[:, 49 : : 60]
 	
-	self.SNH    = Z[:, 70 : : 84]
-        self.INH_H1 = Z[:, 71 : : 84]
-	self.INH_H3 = Z[:, 72 : : 84]
-	self.INH_B  = Z[:, 73 : : 84]
-	self.RNH_H1 = Z[:, 74 : : 84]
-	self.RNH_H3 = Z[:, 75 : : 84]
-	self.RNH_B = Z[:, 76 : : 84]
-	self.INH_H1_H3 = Z[:, 77 : : 84]
-	self.INH_H1_B = Z[:, 78 : : 84]
-	self.INH_H3_H1 = Z[:, 79 : : 84]
-	self.INH_H3_B = Z[:, 80 : : 84]
-	self.INH_B_H3 = Z[:, 81 : : 84]
-	self.INH_B_H1 = Z[:, 82 : : 84]
-	self.RNH = Z[:,83: : 84]
+	self.SNH    = Z[:, 50 : : 60]
+        self.INH_H1 = Z[:, 51 : : 60]
+	self.INH_H3 = Z[:, 52 : : 60]
+	self.INH_B  = Z[:, 53 : : 60]
+	self.RNH_H1 = Z[:, 54 : : 60]
+	self.RNH_H3 = Z[:, 55 : : 60]
+	self.RNH_B  = Z[:, 56 : : 60]
+	self.DNH_H1 = Z[:, 57 : : 60]
+	self.DNH_H3 = Z[:, 58 : : 60]
+	self.DNH_B  = Z[:, 59 : : 60]
 	
 	
         if self.hasSolution:
@@ -823,108 +698,84 @@ class run_Simulation:
             self.IUL_H1 = numpy.vstack((IUL_H1_Old, self.IUL_H1))
 	    self.IUL_H3 = numpy.vstack((IUL_H3_Old, self.IUL_H3))
 	    self.IUL_B = numpy.vstack((IUL_B_Old, self.IUL_B))
-            self.RUL_H1 = numpy.vstack((RUL_H1_Old, self.RUL_H1))
-	    self.RUL_H3 = numpy.vstack((RUL_H3_Old, self.RUL_H3))
-	    self.RUL_B = numpy.vstack((RUL_B_Old, self.RUL_B))
-	    self.IUL_H1_H3 = numpy.vstack((IUL_H1_H3_Old, self.IUL_H1_H3))
-	    self.IUL_H1_B = numpy.vstack((IUL_H1_B_Old, self.IUL_H1_B))
-	    self.IUL_H3_H1 = numpy.vstack((IUL_H3_H1_Old, self.IUL_H3_H1))
-	    self.IUL_H3_B = numpy.vstack((IUL_H3_B_Old, self.IUL_H3_B))
-	    self.IUL_B_H3 = numpy.vstack((IUL_B_H3_Old, self.IUL_B_H3))
-	    self.IUL_B_H1 = numpy.vstack((IUL_B_H1_Old, self.IUL_B_H1))
-	    self.RUL =  numpy.vstack((RUL_Old, self.RUL))
+	    self.RUL_H1 =  numpy.vstack((RUL_H1_Old, self.RUL_H1))
+	    self.RUL_H3 =  numpy.vstack((RUL_H3_Old, self.RUL_H3))
+	    self.RUL_B =  numpy.vstack((RUL_B_Old, self.RUL_B))
+	    self.DUL_H1 =  numpy.vstack((DUL_H1_Old, self.DUL_H1))
+	    self.DUL_H3 =  numpy.vstack((DUL_H3_Old, self.DUL_H3))
+	    self.DUL_B =  numpy.vstack((DUL_B_Old, self.DUL_B))
 	    
 	    #UH
 	    self.SUH = numpy.vstack((SUH_Old, self.SUH))
             self.IUH_H1 = numpy.vstack((IUH_H1_Old, self.IUH_H1))
 	    self.IUH_H3 = numpy.vstack((IUH_H3_Old, self.IUH_H3))
 	    self.IUH_B = numpy.vstack((IUH_B_Old, self.IUH_B))
-            self.RUH_H1 = numpy.vstack((RUH_H1_Old, self.RUH_H1))
-	    self.RUH_H3 = numpy.vstack((RUH_H3_Old, self.RUH_H3))
-	    self.RUH_B = numpy.vstack((RUH_B_Old, self.RUH_B))
-	    self.IUH_H1_H3 = numpy.vstack((IUH_H1_H3_Old, self.IUH_H1_H3))
-	    self.IUH_H1_B = numpy.vstack((IUH_H1_B_Old, self.IUH_H1_B))
-	    self.IUH_H3_H1 = numpy.vstack((IUH_H3_H1_Old, self.IUH_H3_H1))
-	    self.IUH_H3_B = numpy.vstack((IUH_H3_B_Old, self.IUH_H3_B))
-	    self.IUH_B_H3 = numpy.vstack((IUH_B_H3_Old, self.IUH_B_H3))
-	    self.IUH_B_H1 = numpy.vstack((IUH_B_H1_Old, self.IUH_B_H1))
-	    self.RUH =  numpy.vstack((RUH_Old, self.RUH))
+	    self.RUH_H1 =  numpy.vstack((RUH_H1_Old, self.RUH_H1))
+	    self.RUH_H3 =  numpy.vstack((RUH_H3_Old, self.RUH_H3))
+	    self.RUH_B =  numpy.vstack((RUH_B_Old, self.RUH_B))
+	    self.DUH_H1 =  numpy.vstack((DUH_H1_Old, self.DUH_H1))
+	    self.DUH_H3 =  numpy.vstack((DUH_H3_Old, self.DUH_H3))
+	    self.DUH_B =  numpy.vstack((DUH_B_Old, self.DUH_B))
 	    
 	    #TL
 	    self.STL = numpy.vstack((STL_Old, self.STL))
             self.ITL_H1 = numpy.vstack((ITL_H1_Old, self.ITL_H1))
 	    self.ITL_H3 = numpy.vstack((ITL_H3_Old, self.ITL_H3))
 	    self.ITL_B = numpy.vstack((ITL_B_Old, self.ITL_B))
-            self.RTL_H1 = numpy.vstack((RTL_H1_Old, self.RTL_H1))
-	    self.RTL_H3 = numpy.vstack((RTL_H3_Old, self.RTL_H3))
-	    self.RTL_B = numpy.vstack((RTL_B_Old, self.RTL_B))
-	    self.ITL_H1_H3 = numpy.vstack((ITL_H1_H3_Old, self.ITL_H1_H3))
-	    self.ITL_H1_B = numpy.vstack((ITL_H1_B_Old, self.ITL_H1_B))
-	    self.ITL_H3_H1 = numpy.vstack((ITL_H3_H1_Old, self.ITL_H3_H1))
-	    self.ITL_H3_B = numpy.vstack((ITL_H3_B_Old, self.ITL_H3_B))
-	    self.ITL_B_H3 = numpy.vstack((ITL_B_H3_Old, self.ITL_B_H3))
-	    self.ITL_B_H1 = numpy.vstack((ITL_B_H1_Old, self.ITL_B_H1))
-	    self.RTL =  numpy.vstack((RTL_Old, self.RTL))
+	    self.RTL_H1 =  numpy.vstack((RTL_H1_Old, self.RTL_H1))
+	    self.RTL_H3 =  numpy.vstack((RTL_H3_Old, self.RTL_H3))
+	    self.RTL_B =  numpy.vstack((RTL_B_Old, self.RTL_B))
+	    self.DTL_H1 =  numpy.vstack((DTL_H1_Old, self.DTL_H1))
+	    self.DTL_H3 =  numpy.vstack((DTL_H3_Old, self.DTL_H3))
+	    self.DTL_B =  numpy.vstack((DTL_B_Old, self.DTL_B))
 	    
 	    #TH
 	    self.STH = numpy.vstack((STH_Old, self.STH))
             self.ITH_H1 = numpy.vstack((ITH_H1_Old, self.ITH_H1))
 	    self.ITH_H3 = numpy.vstack((ITH_H3_Old, self.ITH_H3))
 	    self.ITH_B = numpy.vstack((ITH_B_Old, self.ITH_B))
-            self.RTH_H1 = numpy.vstack((RTH_H1_Old, self.RTH_H1))
-	    self.RTH_H3 = numpy.vstack((RTH_H3_Old, self.RTH_H3))
-	    self.RTH_B = numpy.vstack((RTH_B_Old, self.RTH_B))
-	    self.ITH_H1_H3 = numpy.vstack((ITH_H1_H3_Old, self.ITH_H1_H3))
-	    self.ITH_H1_B = numpy.vstack((ITH_H1_B_Old, self.ITH_H1_B))
-	    self.ITH_H3_H1 = numpy.vstack((ITH_H3_H1_Old, self.ITH_H3_H1))
-	    self.ITH_H3_B = numpy.vstack((ITH_H3_B_Old, self.ITH_H3_B))
-	    self.ITH_B_H3 = numpy.vstack((ITH_B_H3_Old, self.ITH_B_H3))
-	    self.ITH_B_H1 = numpy.vstack((ITH_B_H1_Old, self.ITH_B_H1))
-	    self.RTH =  numpy.vstack((RTH_Old, self.RTH))
+	    self.RTH_H1 =  numpy.vstack((RTH_H1_Old, self.RTH_H1))
+	    self.RTH_H3 =  numpy.vstack((RTH_H3_Old, self.RTH_H3))
+	    self.RTH_B =  numpy.vstack((RTH_B_Old, self.RTH_B))
+	    self.DTH_H1 =  numpy.vstack((DTH_H1_Old, self.DTH_H1))
+	    self.DTH_H3 =  numpy.vstack((DTH_H3_Old, self.DTH_H3))
+	    self.DTH_B =  numpy.vstack((DTH_B_Old, self.DTH_B))
 	    
 	    #NL
 	    self.SNL = numpy.vstack((SNL_Old, self.SNL))
             self.INL_H1 = numpy.vstack((INL_H1_Old, self.INL_H1))
 	    self.INL_H3 = numpy.vstack((INL_H3_Old, self.INL_H3))
 	    self.INL_B = numpy.vstack((INL_B_Old, self.INL_B))
-            self.RNL_H1 = numpy.vstack((RNL_H1_Old, self.RNL_H1))
-	    self.RNL_H3 = numpy.vstack((RNL_H3_Old, self.RNL_H3))
-	    self.RNL_B = numpy.vstack((RNL_B_Old, self.RNL_B))
-	    self.INL_H1_H3 = numpy.vstack((INL_H1_H3_Old, self.INL_H1_H3))
-	    self.INL_H1_B = numpy.vstack((INL_H1_B_Old, self.INL_H1_B))
-	    self.INL_H3_H1 = numpy.vstack((INL_H3_H1_Old, self.INL_H3_H1))
-	    self.INL_H3_B = numpy.vstack((INL_H3_B_Old, self.INL_H3_B))
-	    self.INL_B_H3 = numpy.vstack((INL_B_H3_Old, self.INL_B_H3))
-	    self.INL_B_H1 = numpy.vstack((INL_B_H1_Old, self.INL_B_H1))
-	    self.RNL =  numpy.vstack((RNL_Old, self.RNL))
+	    self.RNL_H1 =  numpy.vstack((RNL_H1_Old, self.RNL_H1))
+	    self.RNL_H3 =  numpy.vstack((RNL_H3_Old, self.RNL_H3))
+	    self.RNL_B =  numpy.vstack((RNL_B_Old, self.RNL_B))
+	    self.DNL_H1 =  numpy.vstack((DNL_H1_Old, self.DNL_H1))
+	    self.DNL_H3 =  numpy.vstack((DNL_H3_Old, self.DNL_H3))
+	    self.DNL_B =  numpy.vstack((DNL_B_Old, self.DNL_B))
 	    
 	    #NH
 	    self.SNH = numpy.vstack((SNH_Old, self.SNH))
             self.INH_H1 = numpy.vstack((INH_H1_Old, self.INH_H1))
 	    self.INH_H3 = numpy.vstack((INH_H3_Old, self.INH_H3))
 	    self.INH_B = numpy.vstack((INH_B_Old, self.INH_B))
-            self.RNH_H1 = numpy.vstack((RNH_H1_Old, self.RNH_H1))
-	    self.RNH_H3 = numpy.vstack((RNH_H3_Old, self.RNH_H3))
-	    self.RNH_B = numpy.vstack((RNH_B_Old, self.RNH_B))
-	    self.INH_H1_H3 = numpy.vstack((INH_H1_H3_Old, self.INH_H1_H3))
-	    self.INH_H1_B = numpy.vstack((INH_H1_B_Old, self.INH_H1_B))
-	    self.INH_H3_H1 = numpy.vstack((INH_H3_H1_Old, self.INH_H3_H1))
-	    self.INH_H3_B = numpy.vstack((INH_H3_B_Old, self.INH_H3_B))
-	    self.INH_B_H3 = numpy.vstack((INH_B_H3_Old, self.INH_B_H3))
-	    self.INH_B_H1 = numpy.vstack((INH_B_H1_Old, self.INH_B_H1))
-	    self.RNH =  numpy.vstack((RNH_Old, self.RNH))
+	    self.RNH_H1 =  numpy.vstack((RNH_H1_Old, self.RNH_H1))
+	    self.RNH_H3 =  numpy.vstack((RNH_H3_Old, self.RNH_H3))
+	    self.RNH_B =  numpy.vstack((RNH_B_Old, self.RNH_B))
+	    self.DNH_H1 =  numpy.vstack((DNH_H1_Old, self.DNH_H1))
+	    self.DNH_H3 =  numpy.vstack((DNH_H3_Old, self.DNH_H3))
+	    self.DNH_B =  numpy.vstack((DNH_B_Old, self.DNH_B))
 	    
 	    
         self.hasSolution = True
 
     def updateStats(self):
 	    
-	self.NUL = self.SUL +  self.IUL_H1 + self.IUL_H3 + self.IUL_B + self.RUL_H1 + self.RUL_H3 + self.RUL_B + self.IUL_H1_H3 + self.IUL_H1_B+ self.IUL_H3_H1+ self.IUL_H3_B+ self.IUL_B_H3+ self.IUL_B_H1+ self.RUL
-	self.NUH = self.SUH +  self.IUH_H1 + self.IUH_H3 + self.IUH_B + self.RUH_H1 + self.RUH_H3 + self.RUH_B + self.IUH_H1_H3 + self.IUH_H1_B+ self.IUH_H3_H1+ self.IUH_H3_B+ self.IUH_B_H3+ self.IUH_B_H1+ self.RUH
-	self.NTL = self.STL +  self.ITL_H1 + self.ITL_H3 + self.ITL_B + self.RTL_H1 + self.RTL_H3 + self.RTL_B + self.ITL_H1_H3 + self.ITL_H1_B+ self.ITL_H3_H1+ self.ITL_H3_B+ self.ITL_B_H3+ self.ITL_B_H1+ self.RTL
-	self.NTH = self.STH +  self.ITH_H1 + self.ITH_H3 + self.ITH_B + self.RTH_H1 + self.RTH_H3 + self.RTH_B + self.ITH_H1_H3 + self.ITH_H1_B+ self.ITH_H3_H1+ self.ITH_H3_B+ self.ITH_B_H3+ self.ITH_B_H1+ self.RTH
-	self.NNL = self.SNL +  self.INL_H1 + self.INL_H3 + self.INL_B + self.RNL_H1 + self.RNL_H3 + self.RNL_B + self.INL_H1_H3 + self.INL_H1_B+ self.INL_H3_H1+ self.INL_H3_B+ self.INL_B_H3+ self.INL_B_H1+ self.RNL
-	self.NNH = self.SNH +  self.INH_H1 + self.INH_H3 + self.INH_B + self.RNH_H1 + self.RNH_H3 + self.RNH_B + self.INH_H1_H3 + self.INH_H1_B+ self.INH_H3_H1+ self.INH_H3_B+ self.INH_B_H3+ self.INH_B_H1+ self.RNH
+	self.NUL = self.SUL +  self.IUL_H1 + self.IUL_H3 + self.IUL_B + self.RUL_H1 +  self.RUL_H3 +  self.RUL_H3 + self.DUL_H1 +  self.DUL_H3 +  self.DUL_H3  
+	self.NUH = self.SUH +  self.IUH_H1 + self.IUH_H3 + self.IUH_B + self.RUH_H1 +  self.RUH_H3 +  self.RUH_H3 + self.DUH_H1 +  self.DUH_H3 +  self.DUH_H3 
+	self.NTL = self.STL +  self.ITL_H1 + self.ITL_H3 + self.ITL_B + self.RTL_H1 +  self.RTL_H3 +  self.RTL_H3 + self.DTL_H1 +  self.DTL_H3 +  self.DTL_H3 
+	self.NTH = self.STH +  self.ITH_H1 + self.ITH_H3 + self.ITH_B + self.RTH_H1 +  self.RTH_H3 +  self.RTH_H3 + self.DTH_H1 +  self.DTH_H3 +  self.DTH_H3 
+	self.NNL = self.SNL +  self.INL_H1 + self.INL_H3 + self.INL_B + self.RNL_H1 +  self.RNL_H3 +  self.RNL_H3 + self.DNL_H1 +  self.DNL_H3 +  self.DNL_H3 
+	self.NNH = self.SNH +  self.INH_H1 + self.INH_H3 + self.INH_B + self.RNH_H1 +  self.RNH_H3 +  self.RNH_H3 + self.DNH_H1 +  self.DNH_H3 +  self.DNH_H3 
 	
 	self.NU = self.NUL + self.NUH
 	self.NT = self.NTL + self.NTH
@@ -939,7 +790,21 @@ class run_Simulation:
 	self.infectionsNL = self.NNL[0,:] - self.SNL[-1,:]
 	self.infectionsNH = self.NNH[0,:] - self.SNH[-1,:]
 	
-	self.infectionsL_H1 = 
+	self.infectionsUL_H1 =  self.RUL_H1[-1,: ] + self.DUL_H1[-1,: ]
+	self.infectionsUL_H3 =  self.RUL_H3[-1,: ] + self.DUL_H3[-1,: ]
+	self.infectionsUL_B  =  self.RUL_B[-1,: ]  + self.DUL_B[-1,: ]
+	
+	self.infectionsVL_H1 =  self.RTL_H1[-1,: ] + self.RNL_H1[-1,: ] + self.DTL_H1[-1,: ] + self.DNL_H1[-1,: ]
+	self.infectionsVL_H3 =  self.RTL_H3[-1,: ] + self.RNL_H3[-1,: ] + self.DTL_H3[-1,: ] + self.DNL_H3[-1,: ]
+	self.infectionsVL_B  =  self.RTL_B[-1,: ]  + self.RNL_B[-1,: ]  + self.DTL_B[-1,: ] + self.DNL_B[-1,: ]
+	
+	self.infectionsUH_H1 =  self.RUH_H1[-1,: ] + self.DUH_H1[-1,: ]
+	self.infectionsUH_H3 =  self.RUH_H3[-1,: ] + self.DUH_H3[-1,: ]
+	self.infectionsUH_B  =  self.RUH_B[-1,: ]  + self.DUH_B[-1,: ]
+	
+	self.infectionsVH_H1 =  self.RTH_H1[-1,: ] + self.RNH_H1[-1,: ] + self.DTH_H1[-1,: ] + self.DNH_H1[-1,: ]
+	self.infectionsVH_H3 =  self.RTH_H3[-1,: ] + self.RNH_H3[-1,: ] + self.DTH_H3[-1,: ] + self.DNH_H3[-1,: ]
+	self.infectionsVH_B  =  self.RTH_B[-1,: ]  + self.RNH_B[-1,: ]  + self.DTH_B[-1,: ] + self.DNH_B[-1,: ]
 
         # Find duplicate times: these are where vaccination occurs
         #for i in numpy.arange(len(self.T)).compress(numpy.diff(self.T) == 0):
@@ -957,27 +822,47 @@ class run_Simulation:
 	self.infectionsV  = self.infectionsTL + self.infectionsTH + self.infectionsNL + self.infectionsNH        
 	self.infections  = self.infectionsU + self.infectionsV
         self.totalInfections = self.infections.sum()
+
+	self.hospitalizationsUL_H1 = self.infectionsUL_H1 * self.parameters.lowRiskcaseHospitalization_H1
+	self.hospitalizationsUL_H3 = self.infectionsUL_H3 * self.parameters.lowRiskcaseHospitalization_H3
+	self.hospitalizationsUL_B = self.infectionsUL_B * self.parameters.lowRiskcaseHospitalization_B
 	
-	"""
-	self.hospitalizationsL_H1 = self.infectionsL_H1 * self.parameters.lowRiskcaseHospitalization_H1
-	self.hospitalizationsL_H3 = self.infectionsL_H3 * self.parameters.lowRiskcaseHospitalization_H3
-	self.hospitalizationsL_B = self.infectionsL_B * self.parameters.lowRiskcaseHospitalization_B
+	self.hospitalizationsUH_H1 = self.infectionsUH_H1 * self.parameters.highRiskcaseHospitalization_H1
+	self.hospitalizationsUH_H3 = self.infectionsUH_H3 * self.parameters.highRiskcaseHospitalization_H3
+	self.hospitalizationsUH_B = self.infectionsUH_B * self.parameters.highRiskcaseHospitalization_B
 	
-	self.hospitalizationsH_H1 = self.infectionsH_H1 * self.parameters.highRiskcaseHospitalization_H1
-	self.hospitalizationsH_H3 = self.infectionsH_H3 * self.parameters.highRiskcaseHospitalization_H3
-	self.hospitalizationsH_B = self.infectionsH_B * self.parameters.highRiskcaseHospitalization_B
+	self.hospitalizationsVL_H1 = self.infectionsUL_H1 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H1) * self.parameters.lowRiskcaseHospitalization_H1
+	self.hospitalizationsVL_H3 = self.infectionsUL_H3 *  (1 - self.parameters.vaccineEfficacyVsHospitalization_H3) *self.parameters.lowRiskcaseHospitalization_H3
+	self.hospitalizationsVL_B = self.infectionsUL_B *  (1 - self.parameters.vaccineEfficacyVsHospitalization_B) *self.parameters.lowRiskcaseHospitalization_B
 	
-	self.hospitalizationsL  = self.hospitalizationsL_H1 + self.hospitalizationsL_H3 + self.hospitalizationsL_B
-	self.hospitalizationsH  = self.hospitalizationsH_H1 + self.hospitalizationsH_H3 + self.hospitalizationsH_B
+	self.hospitalizationsVH_H1 = self.infectionsUH_H1 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H1) *self.parameters.highRiskcaseHospitalization_H1
+	self.hospitalizationsVH_H3 = self.infectionsUH_H3 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H3) *self.parameters.highRiskcaseHospitalization_H3
+	self.hospitalizationsVH_B = self.infectionsUH_B * (1 - self.parameters.vaccineEfficacyVsHospitalization_B) *self.parameters.highRiskcaseHospitalization_B
+	
+	
+	
+	self.hospitalizationsL  = self.hospitalizationsUL_H1 + self.hospitalizationsUL_H3 + self.hospitalizationsUL_B + self.hospitalizationsVL_H1 + self.hospitalizationsVL_H3 + self.hospitalizationsVL_B
+	self.hospitalizationsH  = self.hospitalizationsUH_H1 + self.hospitalizationsUH_H3 + self.hospitalizationsUH_B + self.hospitalizationsVH_H1 + self.hospitalizationsVH_H3 + self.hospitalizationsVH_B
         self.hospitalizations = self.hospitalizationsL + self.hospitalizationsH
 	self.totalHospitalizations = self.hospitalizations.sum()
-        
-        self.deathsUL = self.NUL[0, :] - self.NUL[-1, :]
-	self.deathsUH = self.NUH[0, :] - self.NUH[-1, :]
-	self.deathsTL = self.NTL[0, :] - self.NTL[-1, :]
-	self.deathsTH = self.NTH[0, :] - self.NTH[-1, :]
-	self.deathsNL = self.NNL[0, :] - self.NNL[-1, :]
-	self.deathsNH = self.NNH[0, :] - self.NNH[-1, :]
+	
+	
+	self.deathsUL_H1 =   self.DUL_H1[-1,: ]
+	self.deathsUL_H3 =   self.DUL_H3[-1,: ]
+	self.deathsUL_B  =   self.DUL_B[-1,: ]
+	
+	self.deathsVL_H1 =   self.DTL_H1[-1,: ] + self.DNL_H1[-1,: ]
+	self.deathsVL_H3 =   self.DTL_H3[-1,: ] + self.DNL_H3[-1,: ]
+	self.deathsVL_B  =   self.DTL_B[-1,: ] + self.DNL_B[-1,: ]
+	
+	self.deathsUH_H1 =   self.DUH_H1[-1,: ]
+	self.deathsUH_H3 =   self.DUH_H3[-1,: ]
+	self.deathsUH_B  =   self.DUH_B[-1,: ]
+	
+	self.deathsVH_H1 =   self.DTH_H1[-1,: ] + self.DNH_H1[-1,: ]
+	self.deathsVH_H3 =   self.DTH_H3[-1,: ] + self.DNH_H3[-1,: ]
+	self.deathsVH_B  =   self.DTH_B[-1,: ] + self.DNH_B[-1,: ]
+	
 	
         # Find duplicate times: these are where vaccination occurs
         #for i in numpy.arange(len(self.T)).compress(numpy.diff(self.T) == 0):
@@ -990,11 +875,11 @@ class run_Simulation:
 	#    self.deathsNH += self.NNH[i + 1, :] - self.NNH[i, :]
 
 
-	self.deathsL = self.deathsUL + self.deathsTL + self.deathsNL
-	self.deathsH = self.deathsUH + self.deathsTH + self.deathsNH
-	self.deathsU = self.deathsUL + self.deathsUH
-	self.deathsV = self.deathsTL + self.deathsTH + self.deathsNL + self.deathsNH
-        self.deaths  = self.deathsL + self.deathsH
+	self.deathsUL = self.deathsUL_H1 + self.deathsUL_H3 + self.deathsUL_B
+	self.deathsUH = self.deathsUH_H1 + self.deathsUH_H3 + self.deathsUH_B
+	self.deathsVL = self.deathsVL_H1 + self.deathsVL_H3 + self.deathsVL_B 
+	self.deathsVH = self.deathsVH_H1 + self.deathsVH_H3 + self.deathsVH_B 
+        self.deaths   = self.deathsUL + self.deathsUH + self.deathsVL + self.deathsVH
         self.totalDeaths = self.deaths.sum()
 
 	self.YLL = numpy.multiply(self.parameters.expectationOfLife, self.deaths)
@@ -1041,7 +926,7 @@ class run_Simulation:
 	self.DALY = (self.YLL + self.YLD)
 	self.totalDALY = self.DALY.sum()
 	
-	"""
+
         
         
     def simulate(self):
@@ -1059,10 +944,6 @@ class run_Simulation:
                 (nVacTypes,
                  self.parameters.proportionVaccinatedLLength + self.parameters.proportionVaccinatedHLength))
 
-
-	#remove age group zero from all sections here
-	population_highrisk = [(a*b) for (a,b) in zip(self.parameters.population[1:] , self.parameters.proportionHighRisk[1:])]
-        population_lowrisk = self.parameters.population[1:] - population_highrisk
 	
 	## raw coverage among age groups
 	proportionVaccinatedTL = PVPWVal[0][: self.parameters.proportionVaccinatedLLength]
@@ -1072,10 +953,10 @@ class run_Simulation:
 	
 	
 	#raw dose uptake among age groups
-	dosesVaccinatedTL =  [(a*b) for a, b in zip(proportionVaccinatedTL, population_lowrisk)]
-	dosesVaccinatedTH =  [(a*b) for a, b in zip(proportionVaccinatedTH, population_highrisk)]
-	dosesVaccinatedNL =  [(a*b) for a, b in zip(proportionVaccinatedNL, population_lowrisk)]
-	dosesVaccinatedNH =  [(a*b) for a, b in zip(proportionVaccinatedNH, population_highrisk)]
+	dosesVaccinatedTL =  [(a*b) for a, b in zip(proportionVaccinatedTL, self.parameters.population_lowrisk[1:])]
+	dosesVaccinatedTH =  [(a*b) for a, b in zip(proportionVaccinatedTH, self.parameters.population_highrisk[1:])]
+	dosesVaccinatedNL =  [(a*b) for a, b in zip(proportionVaccinatedNL, self.parameters.population_lowrisk[1:])]
+	dosesVaccinatedNH =  [(a*b) for a, b in zip(proportionVaccinatedNH, self.parameters.population_highrisk[1:])]
 	
 	
 	
@@ -1102,7 +983,7 @@ class run_Simulation:
 	self.parameters.proportionVaccinatedNHPW.values = [(a/(1.*b)) for a,b in zip(doses_NH,  self.parameters.population_highrisk[1:])]
 
 	## extend to full ages groups. Proportions calculated by multiplying PVPWVal 
-	##values with the matrix defined in S.142
+	##values with the matrix defined in S.160
 	
 	
 	self.parameters.proportionVaccinatedTL = self.parameters.proportionVaccinatedTLPW.full(self.parameters.ages)
@@ -1151,16 +1032,16 @@ class run_Simulation:
 
 	import matplotlib.pyplot as plt
 	times = [num for num in xrange(tEnd+1)]
-	plt.plot(times, (self.IUL_H3+ self.IUL_H1+ self.IUL_B).sum(axis=1), color = "red", linestyle= "-")
-	plt.plot(times, (self.IUH_H3+ self.IUH_H1+ self.IUH_B).sum(axis=1), color = "red", linestyle= "--")
-	plt.plot(times, (self.ITL_H3+ self.ITL_H1+ self.ITL_B).sum(axis=1), color = "blue", linestyle = "-")
-	plt.plot(times, (self.ITH_H3+ self.ITH_H1+ self.ITH_B).sum(axis=1), color = "blue", linestyle = "--")
-	plt.plot(times, (self.INL_H3+ self.INL_H1+ self.INL_B).sum(axis=1), color = "green", linestyle = "-")
-	plt.plot(times, (self.INH_H3+ self.INH_H1+ self.INH_B).sum(axis=1), color = "green", linestyle = "--")
+	plt.plot(times, (self.DUL_H3+ self.DUL_H1+ self.DUL_B).sum(axis=1), color = "red", linestyle= "-")
+	plt.plot(times, (self.DUH_H3+ self.DUH_H1+ self.DUH_B).sum(axis=1), color = "red", linestyle= "--")
+	plt.plot(times, (self.DTL_H3+ self.DTL_H1+ self.DTL_B).sum(axis=1), color = "blue", linestyle = "-")
+	plt.plot(times, (self.DTH_H3+ self.DTH_H1+ self.DTH_B).sum(axis=1), color = "blue", linestyle = "--")
+	plt.plot(times, (self.DNL_H3+ self.DNL_H1+ self.DNL_B).sum(axis=1), color = "green", linestyle = "-")
+	plt.plot(times, (self.DNH_H3+ self.DNH_H1+ self.DNH_B).sum(axis=1), color = "green", linestyle = "--")
 
 	
 		 
-	plt.show()
+	#plt.show()
 
 
         self.updateStats()
