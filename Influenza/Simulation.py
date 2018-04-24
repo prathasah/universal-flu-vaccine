@@ -819,21 +819,21 @@ class run_Simulation:
 	self.infections  = self.infectionsU + self.infectionsV
         self.totalInfections = self.infections.sum()
 
-	self.hospitalizationsUL_H1 = self.infectionsUL_H1 * self.parameters.lowRiskcaseHospitalization_H1
-	self.hospitalizationsUL_H3 = self.infectionsUL_H3 * self.parameters.lowRiskcaseHospitalization_H3
-	self.hospitalizationsUL_B = self.infectionsUL_B * self.parameters.lowRiskcaseHospitalization_B
+	self.hospitalizationsUL_H1 = self.infectionsUL_H1 * self.parameters.lowRiskhospitalizationRate_H1
+	self.hospitalizationsUL_H3 = self.infectionsUL_H3 * self.parameters.lowRiskhospitalizationRate_H3
+	self.hospitalizationsUL_B = self.infectionsUL_B * self.parameters.lowRiskhospitalizationRate_B
 	
-	self.hospitalizationsUH_H1 = self.infectionsUH_H1 * self.parameters.highRiskcaseHospitalization_H1
-	self.hospitalizationsUH_H3 = self.infectionsUH_H3 * self.parameters.highRiskcaseHospitalization_H3
-	self.hospitalizationsUH_B = self.infectionsUH_B * self.parameters.highRiskcaseHospitalization_B
+	self.hospitalizationsUH_H1 = self.infectionsUH_H1 * self.parameters.highRiskhospitalizationRate_H1
+	self.hospitalizationsUH_H3 = self.infectionsUH_H3 * self.parameters.highRiskhospitalizationRate_H3
+	self.hospitalizationsUH_B = self.infectionsUH_B * self.parameters.highRiskhospitalizationRate_B
 	
-	self.hospitalizationsVL_H1 = self.infectionsUL_H1 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H1) * self.parameters.lowRiskcaseHospitalization_H1
-	self.hospitalizationsVL_H3 = self.infectionsUL_H3 *  (1 - self.parameters.vaccineEfficacyVsHospitalization_H3) *self.parameters.lowRiskcaseHospitalization_H3
-	self.hospitalizationsVL_B = self.infectionsUL_B *  (1 - self.parameters.vaccineEfficacyVsHospitalization_B) *self.parameters.lowRiskcaseHospitalization_B
+	self.hospitalizationsVL_H1 = self.infectionsUL_H1 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H1) * self.parameters.lowRiskhospitalizationRate_H1
+	self.hospitalizationsVL_H3 = self.infectionsUL_H3 *  (1 - self.parameters.vaccineEfficacyVsHospitalization_H3) *self.parameters.lowRiskhospitalizationRate_H3
+	self.hospitalizationsVL_B = self.infectionsUL_B *  (1 - self.parameters.vaccineEfficacyVsHospitalization_B) *self.parameters.lowRiskhospitalizationRate_B
 	
-	self.hospitalizationsVH_H1 = self.infectionsUH_H1 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H1) *self.parameters.highRiskcaseHospitalization_H1
-	self.hospitalizationsVH_H3 = self.infectionsUH_H3 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H3) *self.parameters.highRiskcaseHospitalization_H3
-	self.hospitalizationsVH_B = self.infectionsUH_B * (1 - self.parameters.vaccineEfficacyVsHospitalization_B) *self.parameters.highRiskcaseHospitalization_B
+	self.hospitalizationsVH_H1 = self.infectionsUH_H1 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H1) *self.parameters.highRiskhospitalizationRate_H1
+	self.hospitalizationsVH_H3 = self.infectionsUH_H3 * (1 - self.parameters.vaccineEfficacyVsHospitalization_H3) *self.parameters.highRiskhospitalizationRate_H3
+	self.hospitalizationsVH_B = self.infectionsUH_B * (1 - self.parameters.vaccineEfficacyVsHospitalization_B) *self.parameters.highRiskhospitalizationRate_B
 	
 	
 	

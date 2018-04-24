@@ -139,38 +139,26 @@ class Parameters:
 	self.vaccineEfficacyVsInfectionUniversal_H1 = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_H1
 	self.vaccineEfficacyVsInfectionUniversal_H3 = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_H3
 	self.vaccineEfficacyVsInfectionUniversal_B = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_B
+    
 	
-	# Death probability for low risk **vacccinated** individuals
-        self.caseMortalityVL_H1 = self.lowRiskcaseMortality_H1 * (1 - self.vaccineEfficacyVsDeath_H1)
-	self.caseMortalityVL_H3 = self.lowRiskcaseMortality_H3 * (1 - self.vaccineEfficacyVsDeath_H3)
-	self.caseMortalityVL_B = self.lowRiskcaseMortality_B * (1 - self.vaccineEfficacyVsDeath_B)
-	
-	# Death probability for high risk **vacccinated** individuals
-        self.caseMortalityVH_H1 = self.highRiskcaseMortality_H1 * (1 - self.highRiskvaccineEfficacyVsDeath_H1)
-	self.caseMortalityVH_H3 = self.highRiskcaseMortality_H3 * (1 - self.highRiskvaccineEfficacyVsDeath_H3)
-	self.caseMortalityVH_B = self.highRiskcaseMortality_B * (1 - self.highRiskvaccineEfficacyVsDeath_B)
-	
-	##equation S1.7. Death rate of low-risk unvaccinated individuals
-        self.deathRateUL_H1 = self.recoveryRate  * self.lowRiskcaseMortality_H1/ (1 - self.lowRiskcaseMortality_H1)
-	self.deathRateUL_H3 = self.recoveryRate  * self.lowRiskcaseMortality_H3/ (1 - self.lowRiskcaseMortality_H3)
-	self.deathRateUL_B = self.recoveryRate  * self.lowRiskcaseMortality_B/ (1 - self.lowRiskcaseMortality_B)
+        self.deathRateUL_H1 =  self.lowRiskdeathRate_H1
+	self.deathRateUL_H3 =  self.lowRiskdeathRate_H3
+	self.deathRateUL_B =   self.lowRiskdeathRate_B
 	
 	##Death rate of high-risk unvaccinated individuals
-        self.deathRateUH_H1 = self.recoveryRate  * self.highRiskcaseMortality_H1 / (1 - self.highRiskcaseMortality_H1)
-	self.deathRateUH_H3 = self.recoveryRate  * self.highRiskcaseMortality_H3 / (1 - self.highRiskcaseMortality_H3)
-	self.deathRateUH_B = self.recoveryRate  * self.highRiskcaseMortality_B / (1 - self.highRiskcaseMortality_B)
+        self.deathRateUH_H1 = self.highRiskdeathRate_H1
+	self.deathRateUH_H3 = self.highRiskdeathRate_H3 
+	self.deathRateUH_B = self.highRiskdeathRate_B
 	
 	##Death rate of low-risk vaccinated individuals
-        self.deathRateVL_H1 = self.recoveryRate  * self.caseMortalityVL_H1 / (1 - self.caseMortalityVL_H1)
-	self.deathRateVL_H3 = self.recoveryRate  * self.caseMortalityVL_H3 / (1 - self.caseMortalityVL_H3)
-	self.deathRateVL_B = self.recoveryRate  * self.caseMortalityVL_B / (1 - self.caseMortalityVL_B)
-	
-
+        self.deathRateVL_H1 = self.lowRiskdeathRate_H1 * (1 - self.vaccineEfficacyVsDeath_H1)
+	self.deathRateVL_H3 = self.lowRiskdeathRate_H3 * (1 - self.vaccineEfficacyVsDeath_H3)
+	self.deathRateVL_B =  self.lowRiskdeathRate_B * (1 - self.vaccineEfficacyVsDeath_B)
 	
 	##Death rate of high-risk vaccinated individuals
-        self.deathRateVH_H1 = self.recoveryRate  * self.caseMortalityVH_H1  / (1 - self.caseMortalityVH_H1)
-	self.deathRateVH_H3 = self.recoveryRate  * self.caseMortalityVH_H3  / (1 - self.caseMortalityVH_H3)
-	self.deathRateVH_B = self.recoveryRate  * self.caseMortalityVH_B  / (1 - self.caseMortalityVH_B)
+        self.deathRateVH_H1 = self.highRiskdeathRate_H1 * (1 - self.highRiskvaccineEfficacyVsDeath_H1)
+	self.deathRateVH_H3 = self.highRiskdeathRate_H3 * (1 - self.highRiskvaccineEfficacyVsDeath_H3)
+	self.deathRateVH_B =  self.highRiskdeathRate_B * (1 - self.highRiskvaccineEfficacyVsDeath_B)
 	
 	
         # Set up proportion vaccinated vectors
