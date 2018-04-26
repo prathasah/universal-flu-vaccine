@@ -6,7 +6,7 @@ sys.path.insert(0, r'./Influenza/Parameters')
 import Parameters
         
 class run_Simulation:
-    def __init__(self, options = None, tMin=0 , tMax = 365, paramValues = {}, index=None):
+    def __init__(self, options = None, tMin=0 , tMax = 365, paramValues = {}, index=None, calibration = False):
         self.tMax = tMax
 	self.tMin = tMin
 
@@ -20,7 +20,7 @@ class run_Simulation:
         # Must wait until after options, where RNG seed is set
        # Parameters = __import__('Parameters', globals())
 	
-        self.parameters = Parameters.Parameters(index, **paramValues)
+        self.parameters = Parameters.Parameters(index, calibration, **paramValues)
 
         # Initial condition
         self.Y0 = numpy.zeros(60 * self.parameters.ages.size)
@@ -74,15 +74,21 @@ class run_Simulation:
 	    ## vaccination uptake in 2016 + adjustment to ensure total vaccines = 150million
 	    ##assuming vaccination coverage of high risk age group = 70% ------- TO CHANGE
 	    
-	
-	    vaccination_coverage = [ 0.70,  0.56,  0.56, 0.5152, 0.34, 0.34,0.34,0.34,0.34,0.34,
-				   0.46,  0.46, 0.46, 0.653, 0.653, 0.653] +[0.6]*16
+	    # length of vaccine coverage = 32. First 16 is for low risk people and last sixteen is for high risk people
+	    ## vaccination rate of high risk groups is 1.34 times higher than low risk groups on an average (see data)
+	    vaccination_coverage_low_risk = [ 0.70,  0.56,  0.56, 0.5152, 0.34, 0.34,0.34,0.34,0.34,0.34,
+				   0.46,  0.46, 0.46, 0.653, 0.653, 0.653]
+	    
+	    vaccination_coverage_high_risk = [1.32* num for num in vaccination_coverage_low_risk]
+	    
+	    vaccination_coverage = vaccination_coverage_low_risk + vaccination_coverage_high_risk
 
+	    # assume same vaccination rates for typical and universal vaccine
 	    return vaccination_coverage + vaccination_coverage
 	    
 
-    def computeR0(self):
-        return self.parameters.computeR0()
+    #def computeR0(self):
+    #    return self.parameters.computeR0()
 
     def getLastValues(self):
         return (self.SUL[-1, :], self.IUL_H1[-1, :], self.IUL_H3[-1, :], self.IUL_B[-1, :], self.RUL_H1[-1, :], self.RUL_H3[-1, :], self.RUL_B[-1, :], self.DUL_H1[-1, :], self.DUL_H3[-1, :], self.DUL_B[-1, :], 
@@ -114,34 +120,34 @@ class run_Simulation:
 	
             # I: Add a single infectious person in each age
 	    # IUL_H1, IUL_H3, IUL_B
-	    self.Y0[ 1: : 60] = numpy.full(self.parameters.ages.size,1000)
-	    self.Y0[ 2: : 60] = numpy.full(self.parameters.ages.size,1000)
-	    self.Y0[ 3: : 60] = numpy.full(self.parameters.ages.size,1000)
+	    self.Y0[ 1: : 60] = numpy.full(self.parameters.ages.size,10)
+	    self.Y0[ 2: : 60] = numpy.full(self.parameters.ages.size,10)
+	    self.Y0[ 3: : 60] = numpy.full(self.parameters.ages.size,10)
 	    
 	    # IUH_H1, IUH_H3, IUH_B
-            self.Y0[ 11: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 12: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 13: : 60] = numpy.full(self.parameters.ages.size, 1000)
+            self.Y0[ 11: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 12: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 13: : 60] = numpy.full(self.parameters.ages.size, 10)
 	    
 	    # ITL_H1, ITL_H3, ITL_B
-	    self.Y0[ 21: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 22: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 23: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 21: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 22: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 23: : 60] = numpy.full(self.parameters.ages.size, 10)
 	    
 	    # ITH_H1, ITH_H3, ITH_B
-	    self.Y0[ 31: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 32: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 33: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 31: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 32: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 33: : 60] = numpy.full(self.parameters.ages.size, 10)
 	    
 	    # INL_H1, INL_H3, INL_B
-	    self.Y0[ 41: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 42: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 43: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 41: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 42: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 43: : 60] = numpy.full(self.parameters.ages.size, 10)
 	    
 	    # INH_H1, INH_H3, INH_B
-	    self.Y0[ 51: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 52: : 60] = numpy.full(self.parameters.ages.size, 1000)
-	    self.Y0[ 53: : 60] = numpy.full(self.parameters.ages.size, 1000)
+	    self.Y0[ 51: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 52: : 60] = numpy.full(self.parameters.ages.size, 10)
+	    self.Y0[ 53: : 60] = numpy.full(self.parameters.ages.size, 10)
 
             # S: Remove those new infectious people from the susceptibles
             self.Y0[ 0: : 60] -= (self.Y0[ 1: : 60] + self.Y0[ 2: : 60] + self.Y0[ 3: : 60])
@@ -407,11 +413,11 @@ class run_Simulation:
 	dDUH_B  = self.parameters.deathRateUH_B * IUH_B
 	
 	#TL
-	dSTL = - ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STL
+	dSTL = - ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STL
 
-        dITL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * ITL_H1
-	dITL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * ITL_H3
-	dITL_B  = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * ITL_B
+        dITL_H1 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * ITL_H1
+	dITL_H3 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * ITL_H3
+	dITL_B  = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B * STL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * ITL_B
 	dRTL_H1    = self.parameters.recoveryRate * ITL_H1
 	dRTL_H3    = self.parameters.recoveryRate * ITL_H3
 	dRTL_B    = self.parameters.recoveryRate * ITL_B
@@ -420,11 +426,11 @@ class run_Simulation:
 	dDTL_B   = self.parameters.deathRateVL_B * ITL_B
 	
 	#TH
-	dSTH =- ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STH
+	dSTH =- ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STH
 	
-        dITH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * ITH_H1
-	dITH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * ITH_H3
-	dITH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionTypical_B) * Lambda_B * STH) - (self.parameters.recoveryRate +  self.parameters.deathRateVH_B) * ITH_B
+        dITH_H1 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * ITH_H1
+	dITH_H3 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * ITH_H3
+	dITH_B = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B * STH) - (self.parameters.recoveryRate +  self.parameters.deathRateVH_B) * ITH_B
 	dRTH_H1    = self.parameters.recoveryRate * ITH_H1
 	dRTH_H3    = self.parameters.recoveryRate * ITH_H3
 	dRTH_B    = self.parameters.recoveryRate * ITH_B
@@ -433,11 +439,11 @@ class run_Simulation:
 	dDTH_B    = self.parameters.deathRateVH_B * ITH_B
 	
 	#NL
-	dSNL = - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNL
+	dSNL = - ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNL
 	
-        dINL_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * INL_H1
-	dINL_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * INL_H3
-	dINL_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * INL_B
+        dINL_H1 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H1) * INL_H1
+	dINL_H3 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_H3) * INL_H3
+	dINL_B = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) * Lambda_B * SNL) - (self.parameters.recoveryRate + self.parameters.deathRateVL_B) * INL_B
 	dRNL_H1    = self.parameters.recoveryRate * INL_H1
 	dRNL_H3    = self.parameters.recoveryRate * INL_H3
 	dRNL_B    = self.parameters.recoveryRate * INL_B
@@ -446,10 +452,10 @@ class run_Simulation:
 	dDNL_B  =   self.parameters.deathRateVL_B * INL_B
 	
 	#NH
-	dSNH =  - ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNH
-        dINH_H1 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * INH_H1
-	dINH_H3 = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * INH_H3
-	dINH_B = ((1 - self.parameters.vaccineEfficacyVsInfectionUniversal_B) *Lambda_B * SNH) - (self.parameters.recoveryRate +  self.parameters.deathRateVH_B) * INH_B
+	dSNH =  - ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNH
+        dINH_H1 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H1) * INH_H1
+	dINH_H3 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate + self.parameters.deathRateVH_H3) * INH_H3
+	dINH_B = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) *Lambda_B * SNH) - (self.parameters.recoveryRate +  self.parameters.deathRateVH_B) * INH_B
 	dRNH_H1    = self.parameters.recoveryRate * INH_H1
 	dRNH_H3    = self.parameters.recoveryRate * INH_H3
 	dRNH_B    = self.parameters.recoveryRate * INH_B
@@ -1016,34 +1022,19 @@ class run_Simulation:
         tEnd = self.tMax
 	tStart = self.tMin
 	self.solve(tStart = tStart, tEnd = tEnd)
+	
 	self.updateStats()
 	
-	unvax  = ((self.NUL[0,:].sum() + self.NUH[0,:].sum() - self.SUL[-1,:].sum() - self.SUH[-1,:].sum()))/1e6
-	typical = (self.NTL[0,:].sum() + self.NTH[0,:].sum() - self.STL[-1,:].sum() - self.STH[-1,:].sum())/1e6
-	universal = ((self.NNL[0,:].sum() + self.NNH[0,:].sum() - self.SNL[-1,:].sum() - self.SNH[-1,:].sum()))/1e6
-	print ("Unvax infected"), unvax
-	print ("Typical infected"), typical
-	print ("Universal infected"), universal
-	print ("total"), unvax + typical + universal
-	print ("check total"), (sum(self.infections_H1) + sum(self.infections_H3) + sum(self.infections_B))/1e6
-	print ("infections H1"), (sum(self.infections_H1) *100.)/(1e6*(unvax + typical + universal))
-	print ("infections H3"), (sum(self.infections_H3) *100.)/(1e6*(unvax + typical + universal))
-	print ("infections B"), (sum(self.infections_B) *100.)/(1e6 * (unvax + typical + universal))
-
 	#import matplotlib.pyplot as plt
 	#times = [num for num in xrange(tEnd+1)]
-	#plt.plot(times, (self.infections_H1).sum(axis=1), color = "red", linestyle= "-")
-	#plt.plot(times, (self.infections_H3).sum(axis=1), color = "blue", linestyle= "-")
-	#plt.plot(times, (self.infections_B).sum(axis=1), color = "green", linestyle = "-")
-
-	
-		 
+	#plt.plot(times, (self.IUL_H1).sum(axis=1), color = "red", linestyle= "-")
+	#plt.plot(times, (self.IUL_H3).sum(axis=1), color = "blue", linestyle= "-")
+	#plt.plot(times, (self.IUL_B).sum(axis=1), color = "green", linestyle = "-")	 
 	#plt.show()
+	
+        
 
-
-        self.updateStats()
-
-	return vacsUsedTypical, vacsUsedUniversal, self.parameters.proportionVaccinatedTypical, self.parameters.proportionVaccinatedUniversal 
+	return vacsUsedTypical, vacsUsedUniversal
     
     def outputInfo(self):
         print 'R0:\t\t\t %g' % self.parameters.R0
@@ -1065,6 +1056,23 @@ class run_Simulation:
 
     def short_output(self):
 	return list(self.infections), list(self.hospitalizations), list(self.deaths), list(self.DALY)
+    
+    def calibration_output(self):
+	
+	self.updateStats()
+	unvax  = ((self.NUL[0,:].sum() + self.NUH[0,:].sum() - self.SUL[-1,:].sum() - self.SUH[-1,:].sum()))/1e6
+	typical = (self.NTL[0,:].sum() + self.NTH[0,:].sum() - self.STL[-1,:].sum() - self.STH[-1,:].sum())/1e6
+	universal = ((self.NNL[0,:].sum() + self.NNH[0,:].sum() - self.SNL[-1,:].sum() - self.SNH[-1,:].sum()))/1e6
+	#print ("Unvax infected"), unvax
+	#print ("Typical infected"), typical
+	#print ("Universal infected"), universal
+	#print ("total"), unvax + typical + universal
+	incidence =  (sum(self.infections_H1) + sum(self.infections_H3) + sum(self.infections_B))
+	perc_H1 =  (sum(self.infections_H1) *100.)/(1e6*(unvax + typical + universal))
+	perc_H3 =  (sum(self.infections_H3) *100.)/(1e6*(unvax + typical + universal))
+	perc_B =  (sum(self.infections_B) *100.)/(1e6 * (unvax + typical + universal))
+	
+	return incidence, sum(self.infections_H1),  sum(self.infections_H3),  sum(self.infections_B), perc_H1, perc_H3, perc_B
 
     def debug_info(self):
 	return self.infectionsU.sum()

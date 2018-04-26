@@ -95,7 +95,7 @@ class Parameters:
 
 ##################################################################
 
-    def __init__(self, index, **paramValues):
+    def __init__(self, index, calibration, **paramValues):
 
 	self.passedParamValues = ParamDict(paramValues)	
 
@@ -132,13 +132,13 @@ class Parameters:
 			self.epi_setPWAttrFromPassedOrOther(epidemiology,p, index)
 
 	
-	self.vaccineEfficacyVsInfectionTypical_H1 = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection_H1
-	self.vaccineEfficacyVsInfectionTypical_H3 = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection_H3
-	self.vaccineEfficacyVsInfectionTypical_B = self.passedParamValues["vacEfficacy"] [0] * self.relative_vaccineEfficacyVsInfection_B
+	self.TypicalvaccineEfficacyVsInfectionTypical_H1 = self.passedParamValues["vacEfficacy"] [0] * self.relative_TypicalvaccineEfficacyVsInfection_H1
+	self.TypicalvaccineEfficacyVsInfectionTypical_H3 = self.passedParamValues["vacEfficacy"] [0] * self.relative_TypicalvaccineEfficacyVsInfection_H3
+	self.TypicalvaccineEfficacyVsInfectionTypical_B = self.passedParamValues["vacEfficacy"] [0] * self.relative_TypicalvaccineEfficacyVsInfection_B
 	
-	self.vaccineEfficacyVsInfectionUniversal_H1 = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_H1
-	self.vaccineEfficacyVsInfectionUniversal_H3 = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_H3
-	self.vaccineEfficacyVsInfectionUniversal_B = self.passedParamValues["vacEfficacy"] [1] * self.relative_vaccineEfficacyVsInfection_B
+	self.UniversalvaccineEfficacyVsInfectionUniversal_H1 = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_H1
+	self.UniversalvaccineEfficacyVsInfectionUniversal_H3 = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_H3
+	self.UniversalvaccineEfficacyVsInfectionUniversal_B = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_B
     
 	
         self.deathRateUL_H1 =  self.lowRiskdeathRate_H1
@@ -212,21 +212,29 @@ class Parameters:
             contactMatrixFile = os.path.join(modulePath, 'contactMatrix.p')
             self.contactMatrix = cPickle.load(open(contactMatrixFile))
 
-        # One last parameter to fit to R0
-        self.transmissionScaling_H1 = 1.0
-	self.transmissionScaling_H1 *=  self.R0 / self.computeR0_H1()
-	self.transmissionScaling_H3 = 1.0
-	self.transmissionScaling_H3 *=  self.R0 / self.computeR0_H3()
-	self.transmissionScaling_B = 1.0
-	self.transmissionScaling_B *=  self.R0 / self.computeR0_B()
+
+        #self.transmissionScaling_H1 = 1.0
+	#self.transmissionScaling_H1 *=  self.R0 / self.computeR0_H1()
+	#self.transmissionScaling_H3 = 1.0
+	#self.transmissionScaling_H3 *=  self.R0 / self.computeR0_H3()
+	#self.transmissionScaling_B = 1.0
+	#self.transmissionScaling_B *=  self.R0 / self.computeR0_B()
     
+	if calibration:
+	    self.transmissionScaling_H1 =  self.passedParamValues["betaList"][0]
+	    self.transmissionScaling_H3 =  self.passedParamValues["betaList"][1]
+	    self.transmissionScaling_B =   self.passedParamValues["betaList"][2]
 	
+	else:
+	    self.transmissionScaling_H1 = self.beta_H1
+	    self.transmissionScaling_H3 = self.beta_H3
+	    self.transmissionScaling_B =  self.beta_B
 	
-	print ("scaling H1 =========="), self.transmissionScaling_H1
-	print ("scaling H3 =========="), self.transmissionScaling_H3
-	print ("scaling B =========="), self.transmissionScaling_B
+	#print ("scaling H1 =========="), self.transmissionScaling_H1
+	#print ("scaling H3 =========="), self.transmissionScaling_H3
+	#print ("scaling B =========="), self.transmissionScaling_B
 	
-        
+    """    
     def computeR0_H1(self):
 	#normalized population size for each age groups
         s0 = self.population / sum(self.population)
@@ -379,4 +387,4 @@ class Parameters:
                "Complex maximal eigenvalue %s!" % LambdaMax
 
         return LambdaMax
-
+    """
