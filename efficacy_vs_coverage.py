@@ -3,20 +3,16 @@ import sys
 sys.path.insert(0, r'./Influenza')
 import numpy as np
 import Simulation 
-## typical vaccination proportions: [0.7012, 0.5514, 0.3264, 0.4528, 0.6532]
-##for age groups: 6m-4y, 5y - 17y,18y-49y,50y - 64y,65y+
-##typical_coverage = [0.7012, 0.5514, 0.3264, 0.4528, 0.6532]
-
 
 def run_efficacy_simulation(vacEfficacy, vacDoses, vaccination_type, sub_iter):
 	s = Simulation.run_Simulation(paramValues = {"vacEfficacy":vacEfficacy}, index = sub_iter)
-	if vaccination_type == "random": vaccineCoverage = s.comupte_random_vaccination(doses)
-	elif vaccination_type =="typical": vaccineCoverage = s.compute_typical_vaccination(doses)
+	if vaccination_type == "random": vaccineCoverage = s.comupte_random_vaccination(vacDoses)
+	elif vaccination_type =="typical": vaccineCoverage = s.compute_typical_vaccination(vacDoses)
 	vacsUsedTypical, vacsUsedUniversal = s.simulateWithVaccine(vaccineCoverage, vacEfficacy, vacDoses)
-	#infections, hospitalizations, mortality,DALY = s.short_output()
-	incidence, infections_H1, infections_H3, infections_B, perc_H1, perc_H3, perc_B = s.calibration_output()
-	list_prop_vax_low, list_prop_vax_high, list_total_vax_low, list_total_vax_high = s.vaccinated_output()
-	return vacsUsedTypical, vacsUsedUniversal, incidence, infections_H1, infections_H3, infections_B, perc_H1, perc_H3, perc_B
+	infectionsL, infectionsH, hospitalizationsL, hospitalizationsH,mortalityL, mortalityH = s.short_output()
+	#incidence, infections_H1, infections_H3, infections_B, perc_H1, perc_H3, perc_B = s.calibration_output()
+	prop_vax_TL, prop_vax_TH, prop_vax_NL, prop_vax_NH, doses_TL, doses_TH, doses_NL, doses_NH = s.vaccinated_output()
+	return infectionsL, infectionsH, hospitalizationsL, hospitalizationsH,mortalityL, mortalityH, prop_vax_TL, prop_vax_TH, prop_vax_NL, prop_vax_NL, prop_vax_NH, doses_TL, doses_TH, doses_NL, doses_NH
 		
 
 ######################################################################33

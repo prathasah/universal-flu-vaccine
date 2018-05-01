@@ -369,7 +369,9 @@ class run_Simulation:
 	    STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL_H1 + RTL_H3 + RTL_B + DTL_H1 + DTL_H3 + DTL_B +
 	    STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH_H1 + RTH_H3 + RTH_B + DTH_H1 + DTH_H3 + DTH_B + 
 	    SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B + DNL_H1 + DNL_H3 + DNL_B +  
-	    SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B + DNH_H1 + DNH_H3 + DNH_B) 
+	    SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B + DNH_H1 + DNH_H3 + DNH_B)
+	
+	#check lambda_H1, and N dims
       
         # The force of infection
         Lambda_H1 = self.parameters.transmissionScaling_H1 * self.parameters.susceptibility_H1\
@@ -842,6 +844,10 @@ class run_Simulation:
 	self.hospitalizationsVH_B = self.infectionsUH_B * (1 - self.parameters.vaccineEfficacyVsHospitalization_B) *self.parameters.highRiskhospitalizationRate_B
 	
 	
+	self.hospitalizations_H1 = self.hospitalizationsUL_H1 + self.hospitalizationsVL_H1 + self.hospitalizationsVL_H1 + self.hospitalizationsVH_H1
+	self.hospitalizations_H3 = self.hospitalizationsUL_H3 + self.hospitalizationsVL_H3 + self.hospitalizationsVL_H3 + self.hospitalizationsVH_H3
+	self.hospitalizations_B = self.hospitalizationsUL_B + self.hospitalizationsVL_B + self.hospitalizationsVL_B + self.hospitalizationsVH_B
+	
 	
 	self.hospitalizationsL  = self.hospitalizationsUL_H1 + self.hospitalizationsUL_H3 + self.hospitalizationsUL_B + self.hospitalizationsVL_H1 + self.hospitalizationsVL_H3 + self.hospitalizationsVL_B
 	self.hospitalizationsH  = self.hospitalizationsUH_H1 + self.hospitalizationsUH_H3 + self.hospitalizationsUH_B + self.hospitalizationsVH_H1 + self.hospitalizationsVH_H3 + self.hospitalizationsVH_B
@@ -876,19 +882,25 @@ class run_Simulation:
 	#    self.deathsNL += self.NNL[i + 1, :] - self.NNL[i, :]
 	#    self.deathsNH += self.NNH[i + 1, :] - self.NNH[i, :]
 
-
+	self.deaths_H1 = self.deathsUL_H1 + self.deathsVL_H1 + self.deathsVL_H1 + self.deathsVH_H1
+	self.deaths_H3 = self.deathsUL_H3 + self.deathsVL_H3 + self.deathsVL_H3 + self.deathsVH_H3
+	self.deaths_B = self.deathsUL_B + self.deathsVL_B + self.deathsVL_B + self.deathsVH_B 
 	self.deathsUL = self.deathsUL_H1 + self.deathsUL_H3 + self.deathsUL_B
 	self.deathsUH = self.deathsUH_H1 + self.deathsUH_H3 + self.deathsUH_B
 	self.deathsVL = self.deathsVL_H1 + self.deathsVL_H3 + self.deathsVL_B 
-	self.deathsVH = self.deathsVH_H1 + self.deathsVH_H3 + self.deathsVH_B 
-        self.deaths   = self.deathsUL + self.deathsUH + self.deathsVL + self.deathsVH
+	self.deathsVH = self.deathsVH_H1 + self.deathsVH_H3 + self.deathsVH_B
+	self.deathsL  = self.deathsUL + self.deathsVL
+	self.deathsH  = self.deathsUH + self.deathsVH
+        self.deaths   = self.deathsL + self.deathsH 
         self.totalDeaths = self.deaths.sum()
 
+	self.YLL_L = numpy.multiply(self.parameters.expectationOfLife, self.deathsL)
+	self.YLL_H = numpy.multiply(self.parameters.expectationOfLife, self.deathsH)
 	self.YLL = numpy.multiply(self.parameters.expectationOfLife, self.deaths)
 
 	#Years lived with disability
 	################################################################################
-	### Complications cases that are hospitalized
+	### Complications cases that are hospitalized. NOTE DALY to be updated with low and high risk groups
 	self._ARDS = numpy.multiply(self.infections, self.parameters.caseARDSfraction)
 	self.YLD_ARDS = self.parameters.disabilityWeightARDS * (numpy.multiply(self._ARDS, self.parameters.expectationOfLife))
 	
@@ -973,16 +985,16 @@ class run_Simulation:
 	xFac_N = vacDoses[1]/(1.*(sum(relative_coverage_NL)+ sum(relative_coverage_TH)))
 	
 	    
-	doses_TL = [xFac_T * num for num in relative_coverage_TL]
-	doses_TH = [xFac_T * num for num in relative_coverage_TH]
-	doses_NL = [xFac_N * num for num in relative_coverage_NL]
-	doses_NH = [xFac_N * num for num in relative_coverage_NH]
+	self.doses_TL = [xFac_T * num for num in relative_coverage_TL]
+	self.doses_TH = [xFac_T * num for num in relative_coverage_TH]
+	self.doses_NL = [xFac_N * num for num in relative_coverage_NL]
+	self.doses_NH = [xFac_N * num for num in relative_coverage_NH]
 	
 	    
-        self.parameters.proportionVaccinatedTLPW.values = [(a/(1.*b)) for a,b in zip(doses_TL,  self.parameters.population_lowrisk[1:])]
-	self.parameters.proportionVaccinatedTHPW.values = [(a/(1.*b)) for a,b in zip(doses_TH,  self.parameters.population_highrisk[1:])]
-	self.parameters.proportionVaccinatedNLPW.values = [(a/(1.*b)) for a,b in zip(doses_NL,  self.parameters.population_lowrisk[1:])]
-	self.parameters.proportionVaccinatedNHPW.values = [(a/(1.*b)) for a,b in zip(doses_NH,  self.parameters.population_highrisk[1:])]
+        self.parameters.proportionVaccinatedTLPW.values = [(a/(1.*b)) for a,b in zip(self.doses_TL,  self.parameters.population_lowrisk[1:])]
+	self.parameters.proportionVaccinatedTHPW.values = [(a/(1.*b)) for a,b in zip(self.doses_TH,  self.parameters.population_highrisk[1:])]
+	self.parameters.proportionVaccinatedNLPW.values = [(a/(1.*b)) for a,b in zip(self.doses_NL,  self.parameters.population_lowrisk[1:])]
+	self.parameters.proportionVaccinatedNHPW.values = [(a/(1.*b)) for a,b in zip(self.doses_NH,  self.parameters.population_highrisk[1:])]
 
 	## extend to full ages groups. Proportions calculated by multiplying PVPWVal 
 	##values with the matrix defined in S.160
@@ -995,18 +1007,14 @@ class run_Simulation:
 	
 	
 
-	vacsUsedTypical = sum(doses_TL + doses_TH)
-	vacsUsedUniversal = sum(doses_NL + doses_NH)
+	vacsUsedTypical = sum(self.doses_TL + self.doses_TH)
+	vacsUsedUniversal = sum(self.doses_NL + self.doses_NH)
 
 	   
         # Update initial condition for ODEs
         self.updateIC()
 
         return vacsUsedTypical, vacsUsedUniversal
-    
-    def vaccinated_output(self):
-        return list(self.parameters.proportionVaccinatedTypical), list(self.parameters.proportionVaccinatedUniversal), [(a*b) for (a,b) in zip(self.parameters.proportionVaccinatedTypical, self.parameters.population)],[(a*b) for (a,b) in zip(self.parameters.proportionVaccinatedUniversal, self.parameters.population)]
-    
     
         
     def simulateWithVaccine(self, PVPWVals, vacEfficacy, vacDoses):
@@ -1035,27 +1043,18 @@ class run_Simulation:
         
 
 	return vacsUsedTypical, vacsUsedUniversal
-    
-    def outputInfo(self):
-        print 'R0:\t\t\t %g' % self.parameters.R0
-        print ('Infections (in millions):'),  self.totalInfections/1000000.
-        print 'Deaths:\t\t\t %g' % self.totalDeaths
-        print 'Hospitalizations:\t %g' % self.totalHospitalizations
-        #print ('Age-specific infections:'), list(self.infections)
-	print ("unvaccinated"),self.infectionsU.sum()
-	print ("vaccinated"),self.infectionsV.sum()
-	print ("total pop size"), self.parameters.population.sum()
-	print ("total unvaccinated"),  ((1 - self.parameters.proportionVaccinatedTypical -  self.parameters.proportionVaccinatedUniversal) * self.parameters.population).sum()
-	print ("total vaccinated Typical"),  ((self.parameters.proportionVaccinatedTypical) * self.parameters.population).sum()
-	print ("total vaccinated Universal"),  ((self.parameters.proportionVaccinatedUniversal) * self.parameters.population).sum()
-
 
     def optimization_output(self):
 	return self.parameters.proportionVaccinatedTypical ,  self.parameters.proportionVaccinatedUniversal
 
+    def vaccinated_output(self):
+        return list(self.parameters.proportionVaccinatedTL), list(self.parameters.proportionVaccinatedTH),list(self.parameters.proportionVaccinatedNL), list(self.parameters.proportionVaccinatedNH), [0]+ list(self.doses_TL), [0]+ list(self.doses_TH), [0]+ list(self.doses_NL), [0]+ list(self.doses_NH)
 
     def short_output(self):
-	return list(self.infections), list(self.hospitalizations), list(self.deaths), list(self.DALY)
+	return list(self.infectionsL), list(self.infectionsH),  list(self.hospitalizationsL), list(self.hospitalizationsH), list(self.deathsL), list(self.deathsH)
+    
+    def strain_output(self):
+	return sum(list(self.infections_H1)), sum(list(self.infections_H3)), sum(list(self.infections_B)), sum(list(self.hospitalizations_H1)), sum(list(self.hospitalizations_H3)), sum(list(self.hospitalizations_B)), sum(list(self.deaths_H1)), sum(list(self.deaths_H3)), sum(list(self.deaths_B))
     
     def calibration_output(self):
 	
@@ -1076,9 +1075,4 @@ class run_Simulation:
 
     def debug_info(self):
 	return self.infectionsU.sum()
-	
-
-    #def vaccinated_output(self):
-    #    return self.parameters.population.sum(),((1 - self.parameters.proportionVaccinated) * self.parameters.population).sum(), ((self.parameters.proportionVaccinated) * self.parameters.population).sum(), self.infectionsU.sum(), self.infectionsV.sum()
-
 
