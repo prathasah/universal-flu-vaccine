@@ -1,11 +1,18 @@
 import csv
 import numpy
 import scipy.stats as stats
+import random
+#####################################
+def gamma_random_sample(mean, variance):
+    """Yields a list of random numbers following a gamma distribution defined by mean and variance"""
+    g_alpha = mean*mean/variance
+    g_beta = mean/variance
+    return random.gammavariate(g_alpha,1/g_beta)
 ######################################################################################		
 if __name__ == "__main__":
     
     
-    header = ["iter", "recovery_rate", "proportionHighRisk_0", "proportionHighRisk_2","proportionHighRisk_5","proportionHighRisk_19", "proportionHighRisk_25", "proportionHighRisk_50","proportionHighRisk_65", "susceptibility_H1_0", "susceptibility_H1_4", "susceptibility_H1_18", "susceptibility_H1_65", "susceptibility_H3_0", "susceptibility_H3_4", "susceptibility_H3_18", "susceptibility_H3_65","susceptibility_B_0", "susceptibility_B_4", "susceptibility_B_18", "susceptibility_B_65",
+    header = ["iter", "infectious_period", "proportionHighRisk_0", "proportionHighRisk_2","proportionHighRisk_5","proportionHighRisk_19", "proportionHighRisk_25", "proportionHighRisk_50","proportionHighRisk_65", "susceptibility_H1_0", "susceptibility_H1_4", "susceptibility_H1_18", "susceptibility_H1_65", "susceptibility_H3_0", "susceptibility_H3_4", "susceptibility_H3_18", "susceptibility_H3_65","susceptibility_B_0", "susceptibility_B_4", "susceptibility_B_18", "susceptibility_B_65",
               "relative_vaccineEfficacyVsInfection_H1_0", "relative_vaccineEfficacyVsInfection_H1_0.5",  "relative_vaccineEfficacyVsInfection_H1_5","relative_vaccineEfficacyVsInfection_H1_18","relative_vaccineEfficacyVsInfection_H1_50",
               "relative_vaccineEfficacyVsInfection_H3_0", "relative_vaccineEfficacyVsInfection_H3_0.5",  "relative_vaccineEfficacyVsInfection_H3_5","relative_vaccineEfficacyVsInfection_H3_18","relative_vaccineEfficacyVsInfection_H3_50",
               "relative_vaccineEfficacyVsInfection_B_0", "relative_vaccineEfficacyVsInfection_B_0.5",  "relative_vaccineEfficacyVsInfection_B_5","relative_vaccineEfficacyVsInfection_B_18","relative_vaccineEfficacyVsInfection_B_50",
@@ -18,14 +25,12 @@ if __name__ == "__main__":
               "highRiskvaccineEfficacyVsDeath_H1_0", "highRiskvaccineEfficacyVsDeath_H1_0.5", "highRiskvaccineEfficacyVsDeath_H1_18", "highRiskvaccineEfficacyVsDeath_H1_65",
               "highRiskvaccineEfficacyVsDeath_H3_0", "highRiskvaccineEfficacyVsDeath_H3_0.5", "highRiskvaccineEfficacyVsDeath_H3_18", "highRiskvaccineEfficacyVsDeath_H3_65",
               "highRiskvaccineEfficacyVsDeath_B_0", "highRiskvaccineEfficacyVsDeath_B_0.5", "highRiskvaccineEfficacyVsDeath_B_18", "highRiskvaccineEfficacyVsDeath_B_65",
-
-              "lowRiskdeathRate_H1_0","lowRiskdeathRate_H1_5","lowRiskdeathRate_H1_18","lowRiskdeathRate_H1_50","lowRiskdeathRate_H1_65", "lowRiskdeathRate_H1_75",
-              "lowRiskdeathRate_H3_0","lowRiskdeathRate_H3_5","lowRiskdeathRate_H3_18","lowRiskdeathRate_H3_50","lowRiskdeathRate_H3_65", "lowRiskdeathRate_H3_75",
-              "lowRiskdeathRate_B_0","lowRiskdeathRate_B_5","lowRiskdeathRate_B_18","lowRiskdeathRate_B_50","lowRiskdeathRate_B_65", "lowRiskdeathRate_B_75",
-              "highRiskdeathRate_H1_0","highRiskdeathRate_H1_5","highRiskdeathRate_H1_18","highRiskdeathRate_H1_50","highRiskdeathRate_H1_65", "highRiskdeathRate_H1_75",
-              "highRiskdeathRate_H3_0","highRiskdeathRate_H3_5","highRiskdeathRate_H3_18","highRiskdeathRate_H3_50","highRiskdeathRate_H3_65", "highRiskdeathRate_H3_75",
-              "highRiskdeathRate_B_0","highRiskdeathRate_B_5","highRiskdeathRate_B_18","highRiskdeathRate_B_50","highRiskdeathRate_B_65", "highRiskdeathRate_B_75",
-              
+                "prob_death_0", "prob_death_5", "prob_death_18", "prob_death_50", "prob_death_65",
+                "ratio_death_strain_H1_0", "ratio_death_strain_H1_5", "ratio_death_strain_H1_18", "ratio_death_strain_H1_50", "ratio_death_strain_H1_65", "ratio_death_strain_H1_75",
+                "ratio_death_strain_H3_0", "ratio_death_strain_H3_5", "ratio_death_strain_H3_18", "ratio_death_strain_H3_50", "ratio_death_strain_H3_65", "ratio_death_strain_H3_75",
+                "ratio_death_highrisk_0", "ratio_death_highrisk_5", "ratio_death_highrisk_18", "ratio_death_highrisk_50", "ratio_death_highrisk_65", "ratio_death_highrisk_75",
+              "prob_hosp_0", "prob_hosp_5", "prob_hosp_18", "prob_hosp_50", "prob_hosp_65", 
+              "ratio_hosp_highrisk_0", "ratio_hosp_highrisk_5", "ratio_hosp_highrisk_18", "ratio_hosp_highrisk_50", "ratio_hosp_highrisk_65","ratio_hosp_highrisk_75",
               "lowRiskhospitalizationRate_H1_0","lowRiskhospitalizationRate_H1_5","lowRiskhospitalizationRate_H1_18","lowRiskhospitalizationRate_H1_50","lowRiskhospitalizationRate_H1_65", "lowRiskhospitalizationRate_H1_75",
               "lowRiskhospitalizationRate_H3_0","lowRiskhospitalizationRate_H3_5","lowRiskhospitalizationRate_H3_18","lowRiskhospitalizationRate_H3_50","lowRiskhospitalizationRate_H3_65", "lowRiskhospitalizationRate_H3_75",
               "lowRiskhospitalizationRate_B_0","lowRiskhospitalizationRate_B_5","lowRiskhospitalizationRate_B_18","lowRiskhospitalizationRate_B_50","lowRiskhospitalizationRate_B_65", "lowRiskhospitalizationRate_B_75",
@@ -36,7 +41,8 @@ if __name__ == "__main__":
     writer.writerow(header)
     
     for num in xrange(1000):
-        rec_rate = 1. / numpy.random.triangular(0.9, 2.5, 4.6)
+        # infectious period from https://www.sciencedirect.com/science/article/pii/S175543651200031X
+        infectious_period = gamma_random_sample(2.9, 0.3025)
         prop_high_risk_0 = numpy.random.normal(0.0415, 0.0044)
         prop_high_risk_2 = numpy.random.normal(0.0883, 0.0051)
         prop_high_risk_5 = numpy.random.normal(0.1168, 0.0030)
@@ -89,7 +95,7 @@ if __name__ == "__main__":
         
         #############################
         ##vaccine efficacy against hospitalization
-        ## for 6mo - 5years: Table 3 of Vaccine effectiveness against laboratoryconfirmed influenza
+        ## for 6mo - 15years: Table 3 of Vaccine effectiveness against laboratoryconfirmed influenza
         ## hospitalizations among young children during the 2010-11 to 2013-14 influenza seasons in Ontario, Canada
         
         ## for 16-64 and 65+ : Table 2 of
@@ -150,103 +156,119 @@ if __name__ == "__main__":
         high_risk_vac_eff_death_B_18 = numpy.random.triangular(0.39, 0.78,0.92)
         high_risk_vac_eff_death_B_65 = numpy.random.triangular(0.22, 0.29, 0.34)
         ######################
-        
-        
-        #################
+        # probability of death from https://www.sciencedirect.com/science/article/pii/S0264410X07003854?via%3Dihub
+        prob_death_0 = min(max(numpy.random.normal(loc=0.00004, scale =0.00001),0),1)
+        prob_death_5 =  min(max(numpy.random.normal(loc=0.00001, scale = 0),0),1)
+        prob_death_18 = min(max(numpy.random.normal(loc=0.00009, scale = 0.00003),0),1)
+        prob_death_50 = min(max(numpy.random.normal(loc=0.00134, scale = 0.00045),0),1)
+        prob_death_65 = min(max(numpy.random.normal(loc=0.01170, scale = 0.00390),0),1)
+        ###########################################################
+         #################
         ##case mortality
-        ## rate calculated from Table 3 and 4 of
+        ## rate calculated from Table 5 of
         ##Estimates of mortality attributable to influenza and RSV in the United States during 1997-2009 by influenza type or subtype, age, cause of death, and risk status
         ## Goncalo Matias,Robert Taylor,Francois Haguinet, Cynthia Schuck-Paim, Roger Lustig, Vivek Shinde
         ##see mortality rate data sheet for calculations
-        low_risk_death_rate_H1_0 = numpy.random.uniform(0.00000052, 0.00000056)
-        low_risk_death_rate_H1_5 = numpy.random.uniform(0.00000020, 0.00000024)
-        low_risk_death_rate_H1_18 = numpy.random.uniform(0.00000034, 0.00000038)
-        low_risk_death_rate_H1_50 = numpy.random.uniform(0.00000000, 0.00000002)
-        low_risk_death_rate_H1_65 =numpy.random.uniform(0.00000000, 0.00000002)
-        low_risk_death_rate_H1_75 = numpy.random.uniform(0.00000000, 0.00000002)
         
-        low_risk_death_rate_H3_0 = numpy.random.uniform(0.00000153, 0.00000157)
-        low_risk_death_rate_H3_5 = numpy.random.uniform(0.00000041, 0.00000045)
-        low_risk_death_rate_H3_18 = numpy.random.uniform(0.00000240, 0.00000244)
-        low_risk_death_rate_H3_50 = numpy.random.uniform(0.00001220, 0.00001224)
-        low_risk_death_rate_H3_65 =numpy.random.uniform(0.00004622, 0.00004626)
-        low_risk_death_rate_H3_75 = numpy.random.uniform(0.00035179, 0.00035183)
+        ratio_death_strain_H1_0 = 0.444
+        ratio_death_strain_H1_5 = 0.5882
+        ratio_death_strain_H1_18 = 0.1245
+        ratio_death_strain_H1_50 = 0.0277
+        ratio_death_strain_H1_65 = 0.0016
+        ratio_death_strain_H1_75 = 0
         
-        low_risk_death_rate_B_0 = numpy.random.uniform(0.00000089, 0.00000093)
-        low_risk_death_rate_B_5 = numpy.random.uniform(0.00000033, 0.00000037)
-        low_risk_death_rate_B_18 = numpy.random.uniform(0.00000121, 0.00000123)
-        low_risk_death_rate_B_50 = numpy.random.uniform(0.00000476, 0.00000480)
-        low_risk_death_rate_B_65 =numpy.random.uniform(0.00001274, 0.00001278)
-        low_risk_death_rate_B_75 = numpy.random.uniform(0.00012317, 0.00012321)
+        ratio_death_strain_H3_0 = 1.333
+        ratio_death_strain_H3_5 = 0.8823
+        ratio_death_strain_H3_18 = 1.5897
+        ratio_death_strain_H3_50 = 2.7944
+        ratio_death_strain_H3_65 = 3.1693
+        ratio_death_strain_H3_75 = 1.4822
         
-        
-        high_risk_death_rate_H1_0 = numpy.random.uniform(0.00000018, 0.00000022)
-        high_risk_death_rate_H1_5 = numpy.random.uniform(0.00000022, 0.00000026)
-        high_risk_death_rate_H1_18 = numpy.random.uniform(0.00000050, 0.00000054)
-        high_risk_death_rate_H1_50 = numpy.random.uniform(0.00000005, 0.00000009)
-        high_risk_death_rate_H1_65 =numpy.random.uniform(0.00000010, 0.00000014)
-        high_risk_death_rate_H1_75 = numpy.random.uniform(0.00000004, 0.00000008)
-        
-        high_risk_death_rate_H3_0 = numpy.random.uniform(0.00000057, 0.00000061)
-        high_risk_death_rate_H3_5 = numpy.random.uniform(0.00000044, 0.00000048)
-        high_risk_death_rate_H3_18 = numpy.random.uniform(0.00000349, 0.00000353)
-        high_risk_death_rate_H3_50 = numpy.random.uniform(0.00004544, 0.00004548)
-        high_risk_death_rate_H3_65 =numpy.random.uniform(0.00027000, 0.00027004)
-        high_risk_death_rate_H3_75 = numpy.random.uniform(0.00096745, 0.00096749)
-        
-        high_risk_death_rate_B_0 = numpy.random.uniform(0.00000033, 0.00000035)
-        high_risk_death_rate_B_5 = numpy.random.uniform(0.00000036, 0.00000040)
-        high_risk_death_rate_B_18 = numpy.random.uniform(0.00000176, 0.00000180)
-        high_risk_death_rate_B_50 = numpy.random.uniform(0.00001776, 0.00001780)
-        high_risk_death_rate_B_65 =numpy.random.uniform(0.00007452, 0.00007456)
-        high_risk_death_rate_B_75 = numpy.random.uniform(0.00033876, 0.00033880)
-        ###################
+
+        ratio_death_highrisk_0 = 0.38
+        ratio_death_highrisk_5 = 1.09
+        ratio_death_highrisk_18 = 1.45
+        ratio_death_highrisk_50 = 3.72
+        ratio_death_highrisk_65 = 5.84
+        ratio_death_highrisk_75 = 2.75
         
         ##################
+       
+        
+        prob_hosp_0 = min(max(numpy.random.normal(loc=0.0141, scale =0.0047),0),1)
+        prob_hosp_5 =  min(max(numpy.random.normal(loc=0.0006, scale = 0.0002),0),1)
+        prob_hosp_18 = min(max(numpy.random.normal(loc=0.00042, scale = 0.0014),0),1)
+        prob_hosp_50 = min(max(numpy.random.normal(loc=0.0193, scale = 0.0064),0),1)
+        prob_hosp_65 = min(max(numpy.random.normal(loc=0.0421, scale = 0.0140 ),0),1)
+        ###########################################################
+        
+        ratio_hosp_highrisk_0 = 0.2
+        ratio_hosp_highrisk_5 = 0.6
+        ratio_hosp_highrisk_18 = 5.5
+        ratio_hosp_highrisk_50 = 8.9
+        ratio_hosp_highrisk_65 = 7.2
+        ratio_hosp_highrisk_75 = 4.9
+
+        ############################################################
         #case hospitalization
         ##ref Table 4 of Estimates of hospitalization attributable to influenza and RSV in the US during 1997-2009, by age and risk status
         # Goncalo Matias, Robert Taylor, Francois Haguinet, Cynthia Schuck-Paim, Roger Lustig and Vivek Shinde
-        low_risk_hosp_H1_0 = numpy.random.triangular(0.00000, 0.00008, 0.00023)
-        low_risk_hosp_H1_5 = numpy.random.triangular(0.00000, 0.00003, 0.00009)
-        low_risk_hosp_H1_18 = numpy.random.triangular(0.00000, 0.00001, 0.00003)
-        low_risk_hosp_H1_50 = numpy.random.triangular(0.00000, 0.00001, 0.00001)
-        low_risk_hosp_H1_65 = 0
-        low_risk_hosp_H1_75 = 0
+        #######################################
+        #Relative risk of high vs low risk 
+        #       | H1N1   | H3N2  |   B
+        # 0-4   | 0.125 |
+        # 5-17  | 1
+        # 18-49 | 9
+        # 50-64 | 10
+        # 65-74 |
+        # 75+   |
+        ######################################
         
-        low_risk_hosp_H3_0 = numpy.random.triangular(0.00001, 0.00061, 0.00124)
-        low_risk_hosp_H3_5 = numpy.random.triangular(0.00000, 0.00008, 0.00017)
-        low_risk_hosp_H3_18 = numpy.random.triangular(0.00000, 0.00010, 0.00020)
-        low_risk_hosp_H3_50 = numpy.random.triangular(0.00000, 0.00017, 0.00035)
-        low_risk_hosp_H3_65 = numpy.random.triangular(0.00001, 0.00039, 0.00080)
-        low_risk_hosp_H3_75 = numpy.random.triangular(0.00003, 0.00117, 0.00235)
         
-        low_risk_hosp_B_0 = numpy.random.triangular(0.00002, 0.00041, 0.00086)
-        low_risk_hosp_B_5 = numpy.random.triangular(0.00000, 0.00008, 0.00015)
-        low_risk_hosp_B_18 = numpy.random.triangular(0.00000, 0.00006, 0.00011)
-        low_risk_hosp_B_50 = numpy.random.triangular(0.00000, 0.00007, 0.00015)
-        low_risk_hosp_B_65 = numpy.random.triangular(0.00000, 0.00009, 0.00018)
-        low_risk_hosp_B_75 = numpy.random.triangular(0.00001, 0.00040, 0.00080)
+        low_risk_hosp_rate_H1_0 = numpy.random.triangular(0,8,23)
+        low_risk_hosp_rate_H1_5 = numpy.random.triangular(0,3,9)
+        low_risk_hosp_rate_H1_18 = numpy.random.triangular(0,1,3)
+        low_risk_hosp_rate_H1_50 =numpy.random.triangular(0,1,1)
+        low_risk_hosp_rate_H1_65 = 0
+        low_risk_hosp_rate_H1_75 = 0
         
-        high_risk_hosp_H1_0 = 0
-        high_risk_hosp_H1_5 = numpy.random.triangular(0.00000, 0.00003, 0.00009)
-        high_risk_hosp_H1_18 = numpy.random.triangular(0.00000, 0.00009, 0.00030)
-        high_risk_hosp_H1_50 = numpy.random.triangular(0.00000, 0.00010, 0.00033)
-        high_risk_hosp_H1_65 = numpy.random.triangular(0.00000, 0.00020, 0.00081)
-        high_risk_hosp_H1_75 = numpy.random.triangular(0.00000, 0.00021, 0.00086)
+        low_risk_hosp_rate_H3_0 = numpy.random.triangular(1,61,124)
+        low_risk_hosp_rate_H3_5 = numpy.random.triangular(0,8,17)
+        low_risk_hosp_rate_H3_18 =numpy.random.triangular(0,10,20)
+        low_risk_hosp_rate_H3_50 = numpy.random.triangular(0,17,35)
+        low_risk_hosp_rate_H3_65 = numpy.random.triangular(1,39,80)
+        low_risk_hosp_rate_H3_75 =numpy.random.triangular(3,117,235)
         
-        high_risk_hosp_H3_0 = numpy.random.triangular(0.00000, 0.00011, 0.00026)
-        high_risk_hosp_H3_5 = numpy.random.triangular(0.00000, 0.00004, 0.00008)
-        high_risk_hosp_H3_18 = numpy.random.triangular(0.00001, 0.00052, 0.00110)
-        high_risk_hosp_H3_50 = numpy.random.triangular(0.00003, 0.00149, 0.00313)
-        high_risk_hosp_H3_65 = numpy.random.triangular(0.00006, 0.00286, 0.00591)
-        high_risk_hosp_H3_75 = numpy.random.triangular(0.00012, 0.00587, 0.01198)
+        low_risk_hosp_rate_B_0 = numpy.random.triangular(2,41,86)
+        low_risk_hosp_rate_B_5 = numpy.random.triangular(0,8,15)
+        low_risk_hosp_rate_B_18 = numpy.random.triangular(0,6,11)
+        low_risk_hosp_rate_B_50 = numpy.random.triangular(0,7,15)
+        low_risk_hosp_rate_B_65 = numpy.random.triangular(0,9,18)
+        low_risk_hosp_rate_B_75 =numpy.random.triangular(1,40,80)
         
-        high_risk_hosp_B_0 = numpy.random.triangular(0.00000, 0.00010, 0.00024)
-        high_risk_hosp_B_5 = numpy.random.triangular(0.00000, 0.00003, 0.00007)
-        high_risk_hosp_B_18 = numpy.random.triangular(0.00001, 0.00030, 0.00064)
-        high_risk_hosp_B_50 = numpy.random.triangular(0.00002, 0.00060, 0.00134)
-        high_risk_hosp_B_65 = numpy.random.triangular(0.00001, 0.00044, 0.00105)
-        high_risk_hosp_B_75 = numpy.random.triangular(0.00004, 0.00161, 0.00380)
+        high_risk_hosp_rate_H1_0 = 0
+        high_risk_hosp_rate_H1_5 = numpy.random.triangular(0,3,9)
+        high_risk_hosp_rate_H1_18 = numpy.random.triangular(0,9,30)
+        high_risk_hosp_rate_H1_50 = numpy.random.triangular(0,10,33)
+        high_risk_hosp_rate_H1_65 = numpy.random.triangular(0,20,81)
+        high_risk_hosp_rate_H1_75 = numpy.random.triangular(0,21,86)
+        ## the parameter realistically cannot be zero, so compute value based on highrisk/lowrisk ratio
+        low_risk_hosp_rate_H1_65 = high_risk_hosp_rate_H1_65/7.9
+        low_risk_hosp_rate_H1_75 = high_risk_hosp_rate_H1_65/4.9
+        
+        high_risk_hosp_rate_H3_0 = numpy.random.triangular(0,11,26)
+        high_risk_hosp_rate_H3_5 = numpy.random.triangular(0,4,8)
+        high_risk_hosp_rate_H3_18 = numpy.random.triangular(1,52,110)
+        high_risk_hosp_rate_H3_50 =numpy.random.triangular(3,149,313)
+        high_risk_hosp_rate_H3_65 = numpy.random.triangular(6,286,591)
+        high_risk_hosp_rate_H3_75 = numpy.random.triangular(12,587,1198)
+        
+        high_risk_hosp_rate_B_0 =numpy.random.triangular(0,10,24)
+        high_risk_hosp_rate_B_5 = numpy.random.triangular(0,3,7)
+        high_risk_hosp_rate_B_18 =numpy.random.triangular(1,30,64)
+        high_risk_hosp_rate_B_50 = numpy.random.triangular(2,60,134)
+        high_risk_hosp_rate_B_65 =numpy.random.triangular(1,44,105)
+        high_risk_hosp_rate_B_75 = numpy.random.triangular(4,161,380)
         ##################
         ## from http://rsif.royalsocietypublishing.org/content/early/2011/06/22/rsif.2011.0309#F7
         #cross_immunity = numpy.random.uniform(0.2, 0.6)
@@ -254,7 +276,7 @@ if __name__ == "__main__":
         beta_H3 = 0.1
         beta_B = 0.0
         
-        elements = [num, rec_rate,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, susc_H1_0, susc_H1_4, susc_H1_18,  susc_H1_65, susc_H3_0, susc_H3_4, susc_H3_18,  susc_H3_65,susc_B_0, susc_B_4, susc_B_18,  susc_B_65,
+        elements = [num, infectious_period,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, susc_H1_0, susc_H1_4, susc_H1_18,  susc_H1_65, susc_H3_0, susc_H3_4, susc_H3_18,  susc_H3_65,susc_B_0, susc_B_4, susc_B_18,  susc_B_65,
                     vac_eff_inf_H1_0, vac_eff_inf_H1_6mo, vac_eff_inf_H1_5, vac_eff_inf_H1_18, vac_eff_inf_H1_50,
                     vac_eff_inf_H3_0, vac_eff_inf_H3_6mo, vac_eff_inf_H3_5, vac_eff_inf_H3_18, vac_eff_inf_H3_50,
                     vac_eff_inf_B_0, vac_eff_inf_B_6mo, vac_eff_inf_B_5, vac_eff_inf_B_18, vac_eff_inf_B_50,
@@ -271,20 +293,19 @@ if __name__ == "__main__":
                     vac_eff_death_H3_0, vac_eff_death_H3_6mo, vac_eff_death_H3_18, vac_eff_death_H3_65,
                     vac_eff_death_B_0, vac_eff_death_B_6mo, vac_eff_death_B_18, vac_eff_death_B_65,
 
+                    prob_death_0, prob_death_5, prob_death_18, prob_death_50, prob_death_65,
+                ratio_death_strain_H1_0, ratio_death_strain_H1_5, ratio_death_strain_H1_18, ratio_death_strain_H1_50, ratio_death_strain_H1_65, ratio_death_strain_H1_75,
+                ratio_death_strain_H3_0, ratio_death_strain_H3_5, ratio_death_strain_H3_18, ratio_death_strain_H3_50, ratio_death_strain_H3_65, ratio_death_strain_H3_75,
+                ratio_death_highrisk_0, ratio_death_highrisk_5, ratio_death_highrisk_18, ratio_death_highrisk_50, ratio_death_highrisk_65, ratio_death_highrisk_75,
                     
-                    low_risk_death_rate_H1_0, low_risk_death_rate_H1_5, low_risk_death_rate_H1_18, low_risk_death_rate_H1_50, low_risk_death_rate_H1_65, low_risk_death_rate_H1_75,
-                    low_risk_death_rate_H3_0, low_risk_death_rate_H3_5, low_risk_death_rate_H3_18, low_risk_death_rate_H3_50, low_risk_death_rate_H3_65, low_risk_death_rate_H3_75,
-                    low_risk_death_rate_B_0, low_risk_death_rate_B_5, low_risk_death_rate_B_18, low_risk_death_rate_B_50, low_risk_death_rate_B_65, low_risk_death_rate_B_75,
-                    high_risk_death_rate_H1_0, high_risk_death_rate_H1_5, high_risk_death_rate_H1_18, high_risk_death_rate_H1_50, high_risk_death_rate_H1_65, high_risk_death_rate_H1_75,
-                    high_risk_death_rate_H3_0, high_risk_death_rate_H3_5, high_risk_death_rate_H3_18, high_risk_death_rate_H3_50, high_risk_death_rate_H3_65, high_risk_death_rate_H3_75,
-                    high_risk_death_rate_B_0, high_risk_death_rate_B_5, high_risk_death_rate_B_18, high_risk_death_rate_B_50, high_risk_death_rate_B_65, high_risk_death_rate_B_75,
-                    
-                    low_risk_hosp_H1_0, low_risk_hosp_H1_5, low_risk_hosp_H1_18, low_risk_hosp_H1_50, low_risk_hosp_H1_65, low_risk_hosp_H1_75,
-                    low_risk_hosp_H3_0, low_risk_hosp_H3_5, low_risk_hosp_H3_18, low_risk_hosp_H3_50, low_risk_hosp_H3_65, low_risk_hosp_H3_75,
-                    low_risk_hosp_B_0, low_risk_hosp_B_5, low_risk_hosp_B_18, low_risk_hosp_B_50, low_risk_hosp_B_65, low_risk_hosp_B_75,
-                    high_risk_hosp_H1_0, high_risk_hosp_H1_5, high_risk_hosp_H1_18, high_risk_hosp_H1_50, high_risk_hosp_H1_65, high_risk_hosp_H1_75,
-                    high_risk_hosp_H3_0, high_risk_hosp_H3_5, high_risk_hosp_H3_18, high_risk_hosp_H3_50, high_risk_hosp_H3_65, high_risk_hosp_H3_75,
-                    high_risk_hosp_B_0, high_risk_hosp_B_5, high_risk_hosp_B_18, high_risk_hosp_B_50, high_risk_hosp_B_65, high_risk_hosp_B_75,                
+                    prob_hosp_0, prob_hosp_5, prob_hosp_18, prob_hosp_50, prob_hosp_65, 
+                    ratio_hosp_highrisk_0, ratio_hosp_highrisk_5, ratio_hosp_highrisk_18, ratio_hosp_highrisk_50, ratio_hosp_highrisk_65,ratio_hosp_highrisk_75,
+                    low_risk_hosp_rate_H1_0, low_risk_hosp_rate_H1_5, low_risk_hosp_rate_H1_18, low_risk_hosp_rate_H1_50, low_risk_hosp_rate_H1_65, low_risk_hosp_rate_H1_75,
+                    low_risk_hosp_rate_H3_0, low_risk_hosp_rate_H3_5, low_risk_hosp_rate_H3_18, low_risk_hosp_rate_H3_50, low_risk_hosp_rate_H3_65, low_risk_hosp_rate_H3_75,
+                    low_risk_hosp_rate_B_0, low_risk_hosp_rate_B_5, low_risk_hosp_rate_B_18, low_risk_hosp_rate_B_50, low_risk_hosp_rate_B_65, low_risk_hosp_rate_B_75,
+                    high_risk_hosp_rate_H1_0, high_risk_hosp_rate_H1_5, high_risk_hosp_rate_H1_18, high_risk_hosp_rate_H1_50, high_risk_hosp_rate_H1_65, high_risk_hosp_rate_H1_75,
+                    high_risk_hosp_rate_H3_0, high_risk_hosp_rate_H3_5, high_risk_hosp_rate_H3_18, high_risk_hosp_rate_H3_50, high_risk_hosp_rate_H3_65, high_risk_hosp_rate_H3_75,
+                    high_risk_hosp_rate_B_0, high_risk_hosp_rate_B_5, high_risk_hosp_rate_B_18, high_risk_hosp_rate_B_50, high_risk_hosp_rate_B_65, high_risk_hosp_rate_B_75,                
                     beta_H1, beta_H3, beta_B]
         writer.writerow(elements)
         

@@ -10,7 +10,7 @@ df  = pd.read_csv("/Users/prathasah/Dropbox (Bansal Lab)/Git-files/universal-flu
 
 def recoveryRatePW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "recovery_rate"]],
+    [1/(1.*df.at[index, "infectious_period"])],
     [0])
 
 
@@ -174,66 +174,62 @@ def highRiskvaccineEfficacyVsDeath_BPW(index):
     [0, 0.5, 18,65])
 
 
-def lowRiskdeathRate_H1PW(index):
+def prob_deathPW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "lowRiskdeathRate_H1_0"],
-     df.at[index, "lowRiskdeathRate_H1_5"],
-     df.at[index, "lowRiskdeathRate_H1_18"],
-     df.at[index, "lowRiskdeathRate_H1_50"],
-    df.at[index, "lowRiskdeathRate_H1_65"],
-    df.at[index, "lowRiskdeathRate_H1_75"]],
-    [0, 5, 18, 50, 65, 75])
+    [df.at[index, "prob_death_0"],
+     df.at[index, "prob_death_5"],
+     df.at[index, "prob_death_18"],
+     df.at[index, "prob_death_50"],
+    df.at[index, "prob_death_65"]],
+    [0, 5, 18, 50, 65])
 
-def lowRiskdeathRate_H3PW(index):
+def ratio_death_strain_H1PW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "lowRiskdeathRate_H3_0"],
-     df.at[index, "lowRiskdeathRate_H3_5"],
-     df.at[index, "lowRiskdeathRate_H3_18"],
-     df.at[index, "lowRiskdeathRate_H3_50"],
-    df.at[index, "lowRiskdeathRate_H3_65"],
-    df.at[index, "lowRiskdeathRate_H3_75"]],
-    [0, 5, 18, 50, 65, 75])
+    [df.at[index, "ratio_death_strain_H1_0"],
+     df.at[index, "ratio_death_strain_H1_5"],
+     df.at[index, "ratio_death_strain_H1_18"],
+     df.at[index, "ratio_death_strain_H1_50"],
+    df.at[index, "ratio_death_strain_H1_65"]],
+    [0, 5, 18, 50, 65])
 
-def lowRiskdeathRate_BPW(index):
+def ratio_death_strain_H3PW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "lowRiskdeathRate_B_0"],
-     df.at[index, "lowRiskdeathRate_B_5"],
-     df.at[index, "lowRiskdeathRate_B_18"],
-     df.at[index, "lowRiskdeathRate_B_50"],
-    df.at[index, "lowRiskdeathRate_B_65"],
-    df.at[index, "lowRiskdeathRate_B_75"]],
-    [0, 5, 18, 50, 65, 75])
+    [df.at[index, "ratio_death_strain_H3_0"],
+     df.at[index, "ratio_death_strain_H3_5"],
+     df.at[index, "ratio_death_strain_H3_18"],
+     df.at[index, "ratio_death_strain_H3_50"],
+    df.at[index, "ratio_death_strain_H3_65"]],
+    [0, 5, 18, 50, 65])
 
-def highRiskdeathRate_H1PW(index):
+def ratio_death_highriskPW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "highRiskdeathRate_H1_0"],
-     df.at[index, "highRiskdeathRate_H1_5"],
-     df.at[index, "highRiskdeathRate_H1_18"],
-     df.at[index, "highRiskdeathRate_H1_50"],
-    df.at[index, "highRiskdeathRate_H1_65"],
-    df.at[index, "highRiskdeathRate_H1_75"]],
-    [0, 5, 18, 50, 65, 75])
+    [df.at[index, "ratio_death_highrisk_0"],
+     df.at[index, "ratio_death_highrisk_5"],
+     df.at[index, "ratio_death_highrisk_18"],
+     df.at[index, "ratio_death_highrisk_50"],
+    df.at[index, "ratio_death_highrisk_65"]],
+    [0, 5, 18, 50, 65])
 
-def highRiskdeathRate_H3PW(index):
+def prob_hospPW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "highRiskdeathRate_H3_0"],
-     df.at[index, "highRiskdeathRate_H3_5"],
-     df.at[index, "highRiskdeathRate_H3_18"],
-     df.at[index, "highRiskdeathRate_H3_50"],
-    df.at[index, "highRiskdeathRate_H3_65"],
-    df.at[index, "highRiskdeathRate_H3_75"]],
-    [0, 5, 18, 50, 65, 75])
+    [df.at[index, "prob_hosp_0"],
+     df.at[index, "prob_hosp_5"],
+     df.at[index, "prob_hosp_18"],
+     df.at[index, "prob_hosp_50"],
+    df.at[index, "prob_hosp_65"]],
+    [0, 5, 18, 50, 65])
 
-def highRiskdeathRate_BPW(index):
+
+
+def ratio_hosp_highriskPW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "highRiskdeathRate_B_0"],
-     df.at[index, "highRiskdeathRate_B_5"],
-     df.at[index, "highRiskdeathRate_B_18"],
-     df.at[index, "highRiskdeathRate_B_50"],
-    df.at[index, "highRiskdeathRate_B_65"],
-    df.at[index, "highRiskdeathRate_B_75"]],
+    [df.at[index, "ratio_hosp_highrisk_0"],
+     df.at[index, "ratio_hosp_highrisk_5"],
+     df.at[index, "ratio_hosp_highrisk_18"],
+     df.at[index, "ratio_hosp_highrisk_50"],
+    df.at[index, "ratio_hosp_highrisk_65"],
+    df.at[index, "ratio_hosp_highrisk_75"]],
     [0, 5, 18, 50, 65, 75])
-
 
 def lowRiskhospitalizationRate_H1PW(index):
     return PiecewiseAgeRate(
