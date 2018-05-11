@@ -143,65 +143,7 @@ class Parameters:
 	self.UniversalvaccineEfficacyVsInfectionUniversal_H1 = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_H1
 	self.UniversalvaccineEfficacyVsInfectionUniversal_H3 = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_H3
 	self.UniversalvaccineEfficacyVsInfectionUniversal_B = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_B
-    
-	#hospitalization rate
-	
-	##internal parameters. Prevent divisions by zero
-	
-	# hospitalization given infection relative risk of high vs low risk age groups
-	
-	self._RR_H1 = 1
-	self._RR_H3 = [(a+b)/(1.*(c+d)) for (a,b,c,d) in zip(self.lowRiskhospitalizationRate_H3,self.highRiskhospitalizationRate_H3, self.lowRiskhospitalizationRate_H1,self.highRiskhospitalizationRate_H1)]
-	self._RR_B = [(a+b)/(1.*(c+d)) for (a,b,c,d) in zip(self.lowRiskhospitalizationRate_B,self.highRiskhospitalizationRate_B, self.lowRiskhospitalizationRate_H1,self.highRiskhospitalizationRate_H1)]
-	
-	x_fac_strain = [a/(1+b+c) for (a,b,c) in zip(self.prob_hosp, self._RR_H3, self._RR_B)]
 
-	self.prob_hosp_H1 = x_fac_strain
-	self.prob_hosp_H3 =  [a*b for (a,b) in zip(x_fac_strain , self._RR_H3)]
-	self.prob_hosp_B =  [a*b for (a,b) in zip(x_fac_strain , self._RR_B)]
-
-	
-	self.case_hospitalizationL_H1 = self.prob_hosp_H1/ ((1- self.proportionHighRisk) + self.ratio_hosp_highrisk*self.proportionHighRisk) 
-	self.case_hospitalizationH_H1 =  self.ratio_hosp_highrisk * self.case_hospitalizationL_H1
-	
-	self.case_hospitalizationL_H3 = self.prob_hosp_H3/ ((1- self.proportionHighRisk) + self.ratio_hosp_highrisk*self.proportionHighRisk) 
-	self.case_hospitalizationH_H3 = self.ratio_hosp_highrisk * self.case_hospitalizationL_H3
-	
-	self.case_hospitalizationL_B = self.prob_hosp_B/ ((1- self.proportionHighRisk) + self.ratio_hosp_highrisk*self.proportionHighRisk) 
-	self.case_hospitalizationH_B = self.ratio_hosp_highrisk * self.case_hospitalizationL_B
-	
-	
-	#####################
-	## case mortality
-	x_fac_strain_death = [a/(1+b+c) for (a,b,c) in zip(self.prob_death, self.ratio_death_strain_H1, self.ratio_death_strain_H3)]
-	
-	self.prob_hosp_H1 = [a*b for (a,b) in zip(x_fac_strain_death , self.ratio_death_strain_H1)]
-	self.prob_hosp_H3 =  [a*b for (a,b) in zip(x_fac_strain_death , self.ratio_death_strain_H3)]
-	self.prob_hosp_B =  x_fac_strain_death
-	
-	
-        self.deathRateUL_H1 =  self.prob_hosp_H1/ ((1- self.proportionHighRisk) + self.ratio_death_highrisk*self.proportionHighRisk) 
-	self.deathRateUL_H3 =   self.prob_hosp_H3/ ((1- self.proportionHighRisk) + self.ratio_death_highrisk*self.proportionHighRisk)
-	self.deathRateUL_B =    self.prob_hosp_B/ ((1- self.proportionHighRisk) + self.ratio_death_highrisk*self.proportionHighRisk)
-	
-	##Death rate of high-risk unvaccinated individuals
-        self.deathRateUH_H1 = self.ratio_death_highrisk *  self.deathRateUL_H1
-	self.deathRateUH_H3 = self.ratio_death_highrisk *  self.deathRateUL_H3
-	self.deathRateUH_B = self.ratio_death_highrisk *  self.deathRateUL_B
-	
-	##Death rate of low-risk vaccinated individuals
-	
-	##PS: remove vaccine efficacy in preventing death
-        self.deathRateVL_H1 = self.deathRateUL_H1 * (1 - self.vaccineEfficacyVsDeath_H1)
-	self.deathRateVL_H3 = self.deathRateUL_H3 * (1 - self.vaccineEfficacyVsDeath_H3)
-	self.deathRateVL_B =  self.deathRateUL_B * (1 - self.vaccineEfficacyVsDeath_B)
-	
-	##Death rate of high-risk vaccinated individuals
-        self.deathRateVH_H1 = self.deathRateUH_H1 * (1 - self.highRiskvaccineEfficacyVsDeath_H1)
-	self.deathRateVH_H3 = self.deathRateUH_H3 * (1 - self.highRiskvaccineEfficacyVsDeath_H3)
-	self.deathRateVH_B =  self.deathRateUH_B * (1 - self.highRiskvaccineEfficacyVsDeath_B)
-	
-	
         # Set up proportion vaccinated vectors
         self.proportionVaccinatedTypicalLPW = PiecewiseAgeRate([0.0] * len(vaccinationAgesTypical),
             vaccinationAgesTypical)
@@ -261,14 +203,18 @@ class Parameters:
 	#self.transmissionScaling_B *=  self.R0 / self.computeR0_B()
     
 	if calibration:
-	    self.transmissionScaling_H1 =  self.passedParamValues["betaList"][0]
-	    self.transmissionScaling_H3 =  self.passedParamValues["betaList"][1]
-	    self.transmissionScaling_B =   self.passedParamValues["betaList"][2]
-	
-	else:
-	    self.transmissionScaling_H1 = self.beta_H1
-	    self.transmissionScaling_H3 = self.beta_H3
-	    self.transmissionScaling_B =  self.beta_B
+	    if "betaList" in self.passedParamValues:
+		self.transmissionScaling_H1 =  self.passedParamValues["betaList"][0]
+		self.transmissionScaling_H3 =  self.passedParamValues["betaList"][1]
+		self.transmissionScaling_B =   self.passedParamValues["betaList"][2]
+	    
+	    if "vac_eff_hospitalization" in self.passedParamValues: 
+		self.vac_eff_hospitalization = self.passedParamValues["vac_eff_hospitalization"]
+	    
+	    if "vac_eff_mortality" in self.passedParamValues: 
+		self.vac_eff_mortality = self.passedParamValues["vac_eff_mortality"]
+
+	    
 	
 	#print ("scaling H1 =========="), self.transmissionScaling_H1
 	#print ("scaling H3 =========="), self.transmissionScaling_H3
