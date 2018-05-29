@@ -679,7 +679,7 @@ class run_Simulation:
 	self.prob_hosp_H1 = [a/(b+ c*d + e*f) for (a,b,c,d,e,f) in zip(self.parameters.prob_hosp, self._proportion_infections_H1,self._RR_H3, self._proportion_infections_H3, self._RR_B,self._proportion_infections_B)]
 	self.prob_hosp_H3 = [(a*b) for (a,b) in zip(self._RR_H3, self.prob_hosp_H1)]
 	self.prob_hosp_B = [(a*b) for (a,b) in zip(self._RR_B, self.prob_hosp_H1)]
-
+	
 	self.case_hospitalizationL_H1 = self.prob_hosp_H1/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk) 
 	self.case_hospitalizationH_H1 =  self.parameters.ratio_hosp_highrisk * self.case_hospitalizationL_H1
 	
@@ -931,9 +931,9 @@ class run_Simulation:
 	universal = ((self.NNL[0,:].sum() + self.NNH[0,:].sum() - self.SNL[-1,:].sum() - self.SNH[-1,:].sum()))/1e6
 	incidence =  sum(list(self.infectionsL)) + sum(list(self.infectionsH)) 
 
-	perc_H1 =  (sum(self.infections_H1) *100.)/(1e6*(unvax + typical + universal))
-	perc_H3 =  (sum(self.infections_H3) *100.)/(1e6*(unvax + typical + universal))
-	perc_B =  (sum(self.infections_B) *100.)/(1e6 * (unvax + typical + universal))
+	perc_H1 =  (sum(self.infections_H1) *100.)/(1.*incidence)
+	perc_H3 =  (sum(self.infections_H3) *100.)/(1.*incidence)
+	perc_B =  (sum(self.infections_B) *100.)/(1.*incidence)
 	
 	return list(self.infectionsL), list(self.infectionsH),  sum(self.infections_H1),  sum(self.infections_H3),  sum(self.infections_B), perc_H1, perc_H3, perc_B, list(self.hospitalizationsL), list(self.hospitalizationsH), list(self.deathsL), list(self.deathsH)
     

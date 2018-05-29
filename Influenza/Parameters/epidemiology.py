@@ -10,8 +10,9 @@ df  = pd.read_csv("/Users/prathasah/Dropbox (Bansal Lab)/Git-files/universal-flu
 
 def recoveryRatePW(index):
     return PiecewiseAgeRate(
-    [1/(1.*df.at[index, "infectious_period"])],
-    [0])
+    [1/(1.*df.at[index, "infectious_period_0"]),
+     1/(1.*df.at[index, "infectious_period_15"])],
+    [0,15])
 
 
 def proportionHighRiskPW(index):
@@ -292,13 +293,13 @@ def highRiskhospitalizationRate_BPW(index):
     df.at[index, "highRiskhospitalizationRate_B_75"]],
     [0, 5, 18, 50, 65, 75])
 
-def beta_H1(index):
+def transmissionScaling_H1(index):
     return df.at[index, "beta_H1"]
 
-def beta_H3(index):
+def transmissionScaling_H3(index):
     return df.at[index, "beta_H3"]
 
-def beta_B(index):
+def transmissionScaling_B(index):
     return df.at[index, "beta_B"]
 
 def vac_eff_hospitalization(index):

@@ -12,7 +12,7 @@ def gamma_random_sample(mean, variance):
 if __name__ == "__main__":
     
     
-    header = ["iter", "infectious_period", "proportionHighRisk_0", "proportionHighRisk_2","proportionHighRisk_5","proportionHighRisk_19", "proportionHighRisk_25", "proportionHighRisk_50","proportionHighRisk_65", "susceptibility_H1_0", "susceptibility_H1_4", "susceptibility_H1_18", "susceptibility_H1_65", "susceptibility_H3_0", "susceptibility_H3_4", "susceptibility_H3_18", "susceptibility_H3_65","susceptibility_B_0", "susceptibility_B_4", "susceptibility_B_18", "susceptibility_B_65",
+    header = ["iter", "infectious_period_0", "infectious_period_15", "proportionHighRisk_0", "proportionHighRisk_2","proportionHighRisk_5","proportionHighRisk_19", "proportionHighRisk_25", "proportionHighRisk_50","proportionHighRisk_65", "susceptibility_H1_0", "susceptibility_H1_4", "susceptibility_H1_18", "susceptibility_H1_65", "susceptibility_H3_0", "susceptibility_H3_4", "susceptibility_H3_18", "susceptibility_H3_65","susceptibility_B_0", "susceptibility_B_4", "susceptibility_B_18", "susceptibility_B_65",
               "relative_vaccineEfficacyVsInfection_H1_0", "relative_vaccineEfficacyVsInfection_H1_0.5",  "relative_vaccineEfficacyVsInfection_H1_5","relative_vaccineEfficacyVsInfection_H1_18","relative_vaccineEfficacyVsInfection_H1_50",
               "relative_vaccineEfficacyVsInfection_H3_0", "relative_vaccineEfficacyVsInfection_H3_0.5",  "relative_vaccineEfficacyVsInfection_H3_5","relative_vaccineEfficacyVsInfection_H3_18","relative_vaccineEfficacyVsInfection_H3_50",
               "relative_vaccineEfficacyVsInfection_B_0", "relative_vaccineEfficacyVsInfection_B_0.5",  "relative_vaccineEfficacyVsInfection_B_5","relative_vaccineEfficacyVsInfection_B_18","relative_vaccineEfficacyVsInfection_B_50",
@@ -41,8 +41,9 @@ if __name__ == "__main__":
     writer.writerow(header)
     
     for num in xrange(1000):
-        # infectious period from https://www.sciencedirect.com/science/article/pii/S175543651200031X
-        infectious_period = gamma_random_sample(2.9, 0.3025)
+        # infectious period from https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1912
+        infectious_period_0 = numpy.random.triangular(2.3,3.6,5.2)
+        infectious_period_15 = numpy.random.triangular(3.2,3.9,4.9)
         prop_high_risk_0 = numpy.random.normal(0.0415, 0.0044)
         prop_high_risk_2 = numpy.random.normal(0.0883, 0.0051)
         prop_high_risk_5 = numpy.random.normal(0.1168, 0.0030)
@@ -193,7 +194,7 @@ if __name__ == "__main__":
         ratio_death_highrisk_75 = 2.75
         
         ##################
-       
+        # probability of hospitalizatio
         
         prob_hosp_0 = numpy.random.triangular(0.0049, 0.0141,0.0233)
         prob_hosp_5 =  numpy.random.triangular(0.0002, 0.0006,0.001)
@@ -214,15 +215,6 @@ if __name__ == "__main__":
         ##ref Table 4 of Estimates of hospitalization attributable to influenza and RSV in the US during 1997-2009, by age and risk status
         # Goncalo Matias, Robert Taylor, Francois Haguinet, Cynthia Schuck-Paim, Roger Lustig and Vivek Shinde
         #######################################
-        #Relative risk of high vs low risk 
-        #       | H1N1   | H3N2  |   B
-        # 0-4   | 0.125 |
-        # 5-17  | 1
-        # 18-49 | 9
-        # 50-64 | 10
-        # 65-74 |
-        # 75+   |
-        ######################################
         
         
         low_risk_hosp_rate_H1_0 = numpy.random.triangular(0,8,23)
@@ -278,7 +270,7 @@ if __name__ == "__main__":
         vac_eff_hospitalization = 0.1
         vac_eff_mortality = 0.2
         
-        elements = [num, infectious_period,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, susc_H1_0, susc_H1_4, susc_H1_18,  susc_H1_65, susc_H3_0, susc_H3_4, susc_H3_18,  susc_H3_65,susc_B_0, susc_B_4, susc_B_18,  susc_B_65,
+        elements = [num, infectious_period_0,  infectious_period_15,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, susc_H1_0, susc_H1_4, susc_H1_18,  susc_H1_65, susc_H3_0, susc_H3_4, susc_H3_18,  susc_H3_65,susc_B_0, susc_B_4, susc_B_18,  susc_B_65,
                     vac_eff_inf_H1_0, vac_eff_inf_H1_6mo, vac_eff_inf_H1_5, vac_eff_inf_H1_18, vac_eff_inf_H1_50,
                     vac_eff_inf_H3_0, vac_eff_inf_H3_6mo, vac_eff_inf_H3_5, vac_eff_inf_H3_18, vac_eff_inf_H3_50,
                     vac_eff_inf_B_0, vac_eff_inf_B_6mo, vac_eff_inf_B_5, vac_eff_inf_B_18, vac_eff_inf_B_50,

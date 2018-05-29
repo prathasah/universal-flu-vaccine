@@ -20,9 +20,9 @@ if __name__ == "__main__":
 	
 	incidence = []
 	hosp = []
-	total_doses = 141.35e6
+	total_doses = 141.5e6
 	mort = []
-	for sub_index in xrange(100):
+	for sub_index in xrange(1000):
 		print sub_index
 		scenario = 0
 		dose2 = scenario * total_doses
@@ -30,16 +30,13 @@ if __name__ == "__main__":
 		doses = [dose1, dose2]
 		#print ("doses"), doses, total_doses
 		infectionsL, infectionsH, hospitalizationsL, hospitalizationsH,mortalityL, mortalityH, prop_vax_TL, prop_vax_TH, prop_vax_NL, prop_vax_NL, prop_vax_NH, doses_TL, doses_TH, doses_NL, doses_NH = run_efficacy_simulation([0.48,0], doses, "typical", sub_index)
-		incidence.append(sum(infectionsL))
-		incidence.append(sum(infectionsH))
-		hosp.append(sum(hospitalizationsL))
-		hosp.append(sum(hospitalizationsH))
-		mort.append(sum(mortalityL))
-		mort.append(sum(mortalityH))
+		incidence.append(sum(infectionsL) + sum(infectionsH))
+		hosp.append(sum(hospitalizationsL) + sum(hospitalizationsH))
+		mort.append(sum(mortalityL) + sum(mortalityH))
 		#print [round(a/1e3,2) + round(b/1e3,2) for (a,b) in zip(infectionsL, infectionsH)]
-		#print ("----->"), sum(infectionsL)/1e6 + sum(infectionsH)/1e6
+		print ("----->"), sum(infectionsL)/1e6 + sum(infectionsH)/1e6
 		
-	print ("infections"), np.median(incidence)/1e6
-	print ("hospitalizations"), np.median(hosp)/1e3
-	print ("mortality"), np.median(mort)/1e3
+	print ("infections"), np.mean(incidence)/1e6, np.median(incidence)/1e3
+	print ("hospitalizations"), np.mean(hosp)/1e3, np.median(hosp)/1e3
+	print ("mortality"), np.mean(mort)/1e3, np.median(mort)/1e3
 	

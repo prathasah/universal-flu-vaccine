@@ -121,7 +121,7 @@ class Parameters:
 		    
 	    
         for p in dir(epidemiology):
-	    #if module returns a numbers, then..
+	    #if module returns a number, then..
 	
 	    func = getattr(epidemiology, p)
 	    if isinstance(func,types.FunctionType):  
@@ -213,6 +213,9 @@ class Parameters:
 	    
 	    if "vac_eff_mortality" in self.passedParamValues: 
 		self.vac_eff_mortality = self.passedParamValues["vac_eff_mortality"]
+		
+	
+
 
 	    
 	

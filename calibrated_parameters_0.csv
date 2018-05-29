@@ -1,0 +1,4 @@
+year,doses(millions),vacEFficacy,incidence(millions),perc_H1,perc_H3,perc_B,hospitalizations(thousands),mortality(thousands),beta_H1,beta_H3,beta_B,vac_eff_hospitalization,vac_eff_mortality
+2010-11,155000000.0,0.6,21.096749,25.48464535,41.39414802,33.12120663,282.0,13.541,0.059414211673943174,0.05674399878367725,0.06803849576583715,1.0,1.0
+year,doses(millions),vacEFficacy,incidence(millions),perc_H1,perc_H3,perc_B,hospitalizations(thousands),mortality(thousands),beta_H1,beta_H3,beta_B,vac_eff_hospitalization,vac_eff_mortality
+2010-11,155000000.0,0.6,21.096749,25.48464535,41.39414802,33.12120663,282.0,13.541,0.059414211673943174,0.05674399878367725,0.06803849576583715,1.0,1.0
