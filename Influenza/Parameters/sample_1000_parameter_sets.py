@@ -37,7 +37,7 @@ if __name__ == "__main__":
               "highRiskhospitalizationRate_H1_0","highRiskhospitalizationRate_H1_5","highRiskhospitalizationRate_H1_18","highRiskhospitalizationRate_H1_50","highRiskhospitalizationRate_H1_65", "highRiskhospitalizationRate_H1_75",
               "highRiskhospitalizationRate_H3_0","highRiskhospitalizationRate_H3_5","highRiskhospitalizationRate_H3_18","highRiskhospitalizationRate_H3_50","highRiskhospitalizationRate_H3_65", "highRiskhospitalizationRate_H3_75",
               "highRiskhospitalizationRate_B_0","highRiskhospitalizationRate_B_5","highRiskhospitalizationRate_B_18","highRiskhospitalizationRate_B_50","highRiskhospitalizationRate_B_65", "highRiskhospitalizationRate_B_75", "beta_H1", "beta_H3", "beta_B", "vac_eff_hospitalization", "vac_eff_mortality"]
-    writer = csv.writer(open('sampled_parameter_set.csv','wb'))
+    writer = csv.writer(open('sampled_parameter_set_EXTRA.csv','wb'))
     writer.writerow(header)
     
     for num in xrange(1000):
@@ -194,13 +194,16 @@ if __name__ == "__main__":
         ratio_death_highrisk_75 = 2.75
         
         ##################
-        # probability of hospitalizatio
+        # probability of hospitalization https://onlinelibrary.wiley.com/doi/full/10.1111/irv.12359
         
-        prob_hosp_0 = numpy.random.triangular(0.0049, 0.0141,0.0233)
-        prob_hosp_5 =  numpy.random.triangular(0.0002, 0.0006,0.001)
-        prob_hosp_18 = numpy.random.triangular( 0.0015, 0.0042,0.0069)
-        prob_hosp_50 = numpy.random.triangular( 0.00676, 0.0193,0.0318)
-        prob_hosp_65 = numpy.random.triangular(0.0147, 0.0421,0.0695)
+        prob_hosp_0 = numpy.random.triangular(0.00708, 0.01410 ,0.02027)
+        prob_hosp_5 =  numpy.random.triangular(0.0003,0.0006,0.0008)
+        prob_hosp_18 =  numpy.random.triangular(0.002,0.00420,0.005)
+        prob_hosp_50 =  numpy.random.triangular(0.00973,0.01930,0.02050)
+        prob_hosp_65 = numpy.random.triangular(0.02118,0.04210,0.05037)
+        
+        
+  
         ###########################################################
         
         ratio_hosp_highrisk_0 = numpy.random.triangular(5,21,42)/numpy.random.triangular(39,110,147)
@@ -270,7 +273,7 @@ if __name__ == "__main__":
         vac_eff_hospitalization = 0.1
         vac_eff_mortality = 0.2
         
-        elements = [num, infectious_period_0,  infectious_period_15,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, susc_H1_0, susc_H1_4, susc_H1_18,  susc_H1_65, susc_H3_0, susc_H3_4, susc_H3_18,  susc_H3_65,susc_B_0, susc_B_4, susc_B_18,  susc_B_65,
+        elements = [num,  infectious_period_0, infectious_period_15,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, susc_H1_0, susc_H1_4, susc_H1_18,  susc_H1_65, susc_H3_0, susc_H3_4, susc_H3_18,  susc_H3_65,susc_B_0, susc_B_4, susc_B_18,  susc_B_65,
                     vac_eff_inf_H1_0, vac_eff_inf_H1_6mo, vac_eff_inf_H1_5, vac_eff_inf_H1_18, vac_eff_inf_H1_50,
                     vac_eff_inf_H3_0, vac_eff_inf_H3_6mo, vac_eff_inf_H3_5, vac_eff_inf_H3_18, vac_eff_inf_H3_50,
                     vac_eff_inf_B_0, vac_eff_inf_B_6mo, vac_eff_inf_B_5, vac_eff_inf_B_18, vac_eff_inf_B_50,
@@ -293,7 +296,7 @@ if __name__ == "__main__":
                 ratio_death_strain_H3_0, ratio_death_strain_H3_5, ratio_death_strain_H3_18, ratio_death_strain_H3_50, ratio_death_strain_H3_65, ratio_death_strain_H3_75,
                 ratio_death_highrisk_0, ratio_death_highrisk_5, ratio_death_highrisk_18, ratio_death_highrisk_50, ratio_death_highrisk_65, ratio_death_highrisk_75,
                     
-                    prob_hosp_0, prob_hosp_5, prob_hosp_18, prob_hosp_50, prob_hosp_65, 
+                    prob_hosp_0, prob_hosp_5,  prob_hosp_18,  prob_hosp_50,  prob_hosp_65, 
                     ratio_hosp_highrisk_0, ratio_hosp_highrisk_5, ratio_hosp_highrisk_18, ratio_hosp_highrisk_50, ratio_hosp_highrisk_65,ratio_hosp_highrisk_75,
                     low_risk_hosp_rate_H1_0, low_risk_hosp_rate_H1_5, low_risk_hosp_rate_H1_18, low_risk_hosp_rate_H1_50, low_risk_hosp_rate_H1_65, low_risk_hosp_rate_H1_75,
                     low_risk_hosp_rate_H3_0, low_risk_hosp_rate_H3_5, low_risk_hosp_rate_H3_18, low_risk_hosp_rate_H3_50, low_risk_hosp_rate_H3_65, low_risk_hosp_rate_H3_75,

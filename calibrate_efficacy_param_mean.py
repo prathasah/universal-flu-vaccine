@@ -97,10 +97,7 @@ def evaluateObjective_incidence(paramList, vacEfficacy, vacDoses, data):
 	## only incidence, H1 and H3 perc and not B because perc B = 100 - (perc_H1+H3)
 	deviation = (np.mean(vax_incidence) - data_incidence)**2 + (np.mean(vax_perc_H1) - data_perc_H1)**2 + (np.mean(vax_perc_H3) - data_perc_H3)**2
 	
-	if (np.mean(vax_incidence) <5): deviation+= 5000
-	if (np.mean(vax_perc_H1) < 5): deviation+= 5000
-	if (np.mean(vax_perc_H3) < 5):deviation+=5000
-	if (np.mean(vax_perc_B) < 5): deviation+=5000
+	if (np.mean(vax_perc_H1) < 5) or (np.mean(vax_perc_H3) < 5) or (np.mean(vax_perc_B) < 5): deviation+=5000
 	
 	print ("betalist"), paramList, deviation
 	print ("param fit --"), np.mean(vax_incidence), np.mean(vax_perc_H1), np.mean(vax_perc_H3), 100 - np.mean(vax_perc_H1) - np.mean(vax_perc_H3)
@@ -128,7 +125,10 @@ def evaluateObjective_burden(paramList, vacEfficacy, vacDoses, data):
 		
 	[data_hopitalization, data_mortality] = data[3:]
 	deviation = (np.mean(vax_hosp) - data_hospitalization)**2 + (np.mean(vax_mortality) - data_mortality)**2
-		
+	print ("efficacy param list"), paramList, deviation
+	print ("param fit --"), np.mean(vax_hosp), np.mean(vax_mortality)
+	print ("data"), data
+	
 	return deviation
 ######################################################################33
 class MyBounds_incidence(object):
@@ -162,11 +162,11 @@ if __name__ == "__main__":
 	#########################
 	## create csv for calibrated parameters
 	header = ["year", "doses(millions)", "vacEFficacy", "incidence(millions)", "perc_H1", "perc_H3", "perc_B", "hospitalizations(thousands)", "mortality(thousands)", "beta_H1", "beta_H3", "beta_B", "vac_eff_hospitalization", "vac_eff_mortality"]
-	writer = csv.writer(open('results_calibrated_parameters_mean.csv','wb'))
+	writer = csv.writer(open('results_calibrated_efficacy_parameters_mean.csv','wb'))
 	writer.writerow(header)
 	
 	
-	BL0_incidence = [0.02245943,  0.05793087,  0.05943181]
+	BL0_incidence = [0.05, 0.05, 0.04]
 	BL0_burden = [0, 0]
 	
 	year = df.at[0,'year']
@@ -188,14 +188,11 @@ if __name__ == "__main__":
 	cons = (lambda x:  x[0], lambda x:  x[1], lambda x:  x[2])		
 	bounds_incidence = [(0.00001, 1.), (0.00001,1.), (0.00001,1.)]
 
-	minimizer_kwargs = {"method": "TNC", 'bounds': bounds_incidence, "args": (vacEfficacy, vacDoses, data_incidence,)}
-	mybounds = MyBounds_incidence()
-	beta_list_opt = basinhopping(evaluateObjective_incidence, BL0_incidence, minimizer_kwargs=minimizer_kwargs, niter=10, stepsize=0.05, disp = True,niter_success=3)
-	print ("final beta ================"), beta_list_opt["x"]
+	betalist = [0.03151545,	0.0331094,0.03539491]
 
 	
 	bounds_burden = [(0,1), (0,1)]
-	data_burden = list(beta_list_opt["x"]) + [data_hospitalization, data_mortality]
+	data_burden = betalist + [data_hospitalization, data_mortality]
 	print data_burden
 	mybounds = MyBounds_burden()
 	minimizer_kwargs = {"method": "TNC", 'bounds': bounds_burden , "args": (vacEfficacy, vacDoses, data_burden,)}

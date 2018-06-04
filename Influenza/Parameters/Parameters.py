@@ -121,8 +121,7 @@ class Parameters:
 		    
 	    
         for p in dir(epidemiology):
-	    #if module returns a number, then..
-	
+	    #if module returns a numbers, then..
 	    func = getattr(epidemiology, p)
 	    if isinstance(func,types.FunctionType):  
 		if isinstance(func(index),(float, int)):

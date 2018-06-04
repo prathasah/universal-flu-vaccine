@@ -95,15 +95,15 @@ def evaluateObjective_incidence(paramList, vacEfficacy, vacDoses, data):
 		
 	[data_incidence, data_perc_H1, data_perc_H3, data_perc_B] = data
 	## only incidence, H1 and H3 perc and not B because perc B = 100 - (perc_H1+H3)
-	deviation = (np.mean(vax_incidence) - data_incidence)**2 + (np.mean(vax_perc_H1) - data_perc_H1)**2 + (np.mean(vax_perc_H3) - data_perc_H3)**2
+	deviation = (np.median(vax_incidence) - data_incidence)**2 + (np.median(vax_perc_H1) - data_perc_H1)**2 + (np.median(vax_perc_H3) - data_perc_H3)**2
 	
-	if (np.mean(vax_incidence) <5): deviation+= 5000
-	if (np.mean(vax_perc_H1) < 5): deviation+= 5000
-	if (np.mean(vax_perc_H3) < 5):deviation+=5000
-	if (np.mean(vax_perc_B) < 5): deviation+=5000
+	if (np.median(vax_incidence) <5): deviation+= 5000
+	if (np.median(vax_perc_H1) < 5): deviation+= 5000
+	if (np.median(vax_perc_H3) < 5):deviation+=5000
+	if (np.median(vax_perc_B) < 5): deviation+=5000
 	
 	print ("betalist"), paramList, deviation
-	print ("param fit --"), np.mean(vax_incidence), np.mean(vax_perc_H1), np.mean(vax_perc_H3), 100 - np.mean(vax_perc_H1) - np.mean(vax_perc_H3)
+	print ("param fit --"), np.median(vax_incidence), np.median(vax_perc_H1), np.median(vax_perc_H3), 100 - np.median(vax_perc_H1) - np.median(vax_perc_H3)
 	print ("data=="), data
 	return deviation
 
@@ -127,7 +127,7 @@ def evaluateObjective_burden(paramList, vacEfficacy, vacDoses, data):
 	vax_mortality = [item for sublist in vax_mortality for item in sublist]
 		
 	[data_hopitalization, data_mortality] = data[3:]
-	deviation = (np.mean(vax_hosp) - data_hospitalization)**2 + (np.mean(vax_mortality) - data_mortality)**2
+	deviation = (np.median(vax_hosp) - data_hospitalization)**2 + (np.median(vax_mortality) - data_mortality)**2
 		
 	return deviation
 ######################################################################33
@@ -162,7 +162,7 @@ if __name__ == "__main__":
 	#########################
 	## create csv for calibrated parameters
 	header = ["year", "doses(millions)", "vacEFficacy", "incidence(millions)", "perc_H1", "perc_H3", "perc_B", "hospitalizations(thousands)", "mortality(thousands)", "beta_H1", "beta_H3", "beta_B", "vac_eff_hospitalization", "vac_eff_mortality"]
-	writer = csv.writer(open('results_calibrated_parameters_mean.csv','wb'))
+	writer = csv.writer(open('results_calibrated_parameters_median.csv','wb'))
 	writer.writerow(header)
 	
 	

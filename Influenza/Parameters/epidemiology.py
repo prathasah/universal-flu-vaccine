@@ -12,7 +12,7 @@ def recoveryRatePW(index):
     return PiecewiseAgeRate(
     [1/(1.*df.at[index, "infectious_period_0"]),
      1/(1.*df.at[index, "infectious_period_15"])],
-    [0,15])
+    [0, 15])
 
 
 def proportionHighRiskPW(index):
@@ -219,7 +219,7 @@ def prob_hospPW(index):
      df.at[index, "prob_hosp_18"],
      df.at[index, "prob_hosp_50"],
     df.at[index, "prob_hosp_65"]],
-    [0, 5, 18, 50, 65])
+    [0, 5, 18, 50,65])
 
 
 

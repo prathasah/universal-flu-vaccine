@@ -311,6 +311,7 @@ class run_Simulation:
 	    SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B )
 	
 	#check lambda_H1, and N dims
+	
       
         # The force of infection
         Lambda_H1 = self.parameters.transmissionScaling_H1 * self.parameters.susceptibility_H1\
@@ -680,13 +681,16 @@ class run_Simulation:
 	self.prob_hosp_H3 = [(a*b) for (a,b) in zip(self._RR_H3, self.prob_hosp_H1)]
 	self.prob_hosp_B = [(a*b) for (a,b) in zip(self._RR_B, self.prob_hosp_H1)]
 	
-	self.case_hospitalizationL_H1 = self.prob_hosp_H1/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk) 
+	#self.case_hospitalizationL_H1 = self.prob_hosp_H1/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk)
+	self.case_hospitalizationL_H1 = self.prob_hosp_H1
 	self.case_hospitalizationH_H1 =  self.parameters.ratio_hosp_highrisk * self.case_hospitalizationL_H1
 	
-	self.case_hospitalizationL_H3 = self.prob_hosp_H3/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk) 
+	#self.case_hospitalizationL_H3 = self.prob_hosp_H3/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk)
+	self.case_hospitalizationL_H3 = self.prob_hosp_H3
 	self.case_hospitalizationH_H3 = self.parameters.ratio_hosp_highrisk * self.case_hospitalizationL_H3
 	
-	self.case_hospitalizationL_B = self.prob_hosp_B/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk) 
+	#self.case_hospitalizationL_B = self.prob_hosp_B/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk)
+	self.case_hospitalizationL_B = self.prob_hosp_B
 	self.case_hospitalizationH_B = self.parameters.ratio_hosp_highrisk * self.case_hospitalizationL_B
 	################################################################################
 	self.hospitalizationsUL_H1 = self.infectionsUL_H1 * self.case_hospitalizationL_H1 
@@ -705,7 +709,7 @@ class run_Simulation:
 	self.hospitalizationsVH_H1 = [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_H1] *self.infectionsVH_H1 * self.case_hospitalizationH_H1
 	self.hospitalizationsVH_H3 =[(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_H3] *self.infectionsVH_H3  * self.case_hospitalizationH_H3
 	self.hospitalizationsVH_B = [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_B] *self.infectionsVH_B * self.case_hospitalizationH_B
-	#print ("------>"), [round(num,2) for num in [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_H1] *self.infectionsVL_H1  * self.case_hospitalizationL_H1][0], [round(num,2) for num in self.RTL_H1[-2,:]]
+	
 	#self.RTL_H1[-1,: ] + self.RNL_H1[-1,: ] + self.ITL_H1[-1,: ] + self.INL_H1[-1,: ]
 	
 	self.hospitalizations_H1 = self.hospitalizationsUL_H1 + self.hospitalizationsUH_H1 + self.hospitalizationsVL_H1 + self.hospitalizationsVH_H1
@@ -716,6 +720,7 @@ class run_Simulation:
 	self.hospitalizationsH  = self.hospitalizationsUH_H1 + self.hospitalizationsUH_H3 + self.hospitalizationsUH_B + self.hospitalizationsVH_H1 + self.hospitalizationsVH_H3 + self.hospitalizationsVH_B
 	self.hospitalizations = self.hospitalizationsL + self.hospitalizationsH
 	self.totalHospitalizations = self.hospitalizations.sum()
+	#print ("check!!!!"), [a/(1.*b) for (a,b) in zip(self.hospitalizations, self.infections)]
 	#######################################################
 	self.prob_death_B = [a/(b+ c*d + e*f) for (a,b,c,d,e,f) in zip(self.parameters.prob_death, self._proportion_infections_B ,self._proportion_infections_H1,self.parameters.ratio_death_strain_H1, self._proportion_infections_H3,self.parameters.ratio_death_strain_H3)]
 	self.prob_death_H1 = [(a*b) for (a,b) in zip(self.parameters.ratio_death_strain_H1, self.prob_death_B)]
