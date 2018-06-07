@@ -194,7 +194,8 @@ if __name__ == "__main__":
         ratio_death_highrisk_75 = 2.75
         
         ##################
-        # probability of hospitalization https://onlinelibrary.wiley.com/doi/full/10.1111/irv.12359
+        # probability of hospitalization https://bmcinfectdis.biomedcentral.com/articles/10.1186/s12879-015-1193-4 and
+        # https://www.sciencedirect.com/science/article/pii/S0264410X07003854
         
         prob_hosp_0 = numpy.random.triangular(0.00708, 0.01410 ,0.02027)
         prob_hosp_5 =  numpy.random.triangular(0.0003,0.0006,0.0008)

@@ -26,35 +26,6 @@ class run_Simulation:
         self.Y0 = numpy.zeros(42 * self.parameters.ages.size)
 
         self.hasSolution = False
-	
-    def comupte_random_vaccination(self, doses):
-	
-	    self.vacNumbers = doses
-	    typical_vax_doses_condition = False
-	    universal_vax_doses_condition = False
-	    ## chose a random between between 0 and min of (population size of subgroup and doses remaining). Reqd for when max doses = 0
-	    typical_vax_remaining = self.vacNumbers[0]
-	    vacsUsedTypical = {}
-	    ##randomize age groups that go first to avoid universal values chosen for initial age groups
-	    random_age_group_list = [num for num in range(1,17)]
-	    random.shuffle(random_age_group_list)
-	    for num in random_age_group_list:
-		vacsUsedTypical[num] = random.randint(0, min(self.parameters.population[num], typical_vax_remaining))
-		##find the last value by substracting the sum of vacsUsedTypical
-		typical_vax_remaining = self.vacNumbers[0] - sum(vacsUsedTypical.values())
-	    population_unvaccinated = [self.parameters.population[0]] + [(a-b) for (a,b) in zip(self.parameters.population[1:], [vacsUsedTypical[age] for age in range(1,17)])]
-	   
-	    
-	    universal_vax_remaining = self.vacNumbers[1]
-	    vacsUsedUniversal = {}
-	    random.shuffle(random_age_group_list)
-	    for num in random_age_group_list:
-		vacsUsedUniversal[num] = random.randint(0, min(population_unvaccinated[num],universal_vax_remaining))
-		##find the last value by substracting the sum of vacsUsedTypical
-		universal_vax_remaining = self.vacNumbers[1] - sum(vacsUsedUniversal.values())
-		
-	    
-	    return [a/(1.*b) for (a,b) in zip([vacsUsedTypical[age] for age in range(1,17)], self.parameters.population[1:])] +  [a/(1.*b) for (a,b) in zip([vacsUsedUniversal[age] for age in range(1,17)], self.parameters.population[1:])]
 	    
     def compute_typical_vaccination(self, doses):
 	
