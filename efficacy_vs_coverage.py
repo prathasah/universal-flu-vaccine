@@ -9,6 +9,7 @@ def run_efficacy_simulation(vacEfficacy, vacDoses, vaccination_type, sub_iter):
 	if vaccination_type == "random": vaccineCoverage = s.comupte_random_vaccination(vacDoses)
 	elif vaccination_type =="typical": vaccineCoverage = s.compute_typical_vaccination(vacDoses)
 	vacsUsedTypical, vacsUsedUniversal = s.simulateWithVaccine(vaccineCoverage, vacEfficacy, vacDoses)
+	print ("check seasonal, universal doses "), vacsUsedTypical, vacsUsedUniversal
 	incidenceL, incidenceH, infections_H1, infections_H3, infections_B, perc_H1, perc_H3, perc_B,hospitalizationsL, hospitalizationsH, deathsL, deathsH = s.calibration_output()
 	return incidenceL, incidenceH, infections_H1, infections_H3, infections_B, perc_H1, perc_H3, perc_B,hospitalizationsL, hospitalizationsH, deathsL, deathsH
 		

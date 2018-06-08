@@ -816,7 +816,6 @@ class run_Simulation:
 	dosesVaccinatedNH =  [(a*b) for a, b in zip(proportionVaccinatedNH, self.parameters.population_highrisk[1:])]
 	
 	
-	
 	##coverage RELATIVE to each other (based is age-group 0 for Low risk age groups)
 	relative_coverage_TL = [num/dosesVaccinatedTL[0] for num in dosesVaccinatedTL]
 	relative_coverage_TH = [num/dosesVaccinatedTL[0] for num in dosesVaccinatedTH]
@@ -825,7 +824,7 @@ class run_Simulation:
 	
 	#multiplication factor for final doses
 	xFac_T = vacDoses[0]/(1.*(sum(relative_coverage_TL)+ sum(relative_coverage_TH)))
-	xFac_N = vacDoses[1]/(1.*(sum(relative_coverage_NL)+ sum(relative_coverage_TH)))
+	xFac_N = vacDoses[1]/(1.*(sum(relative_coverage_NL)+ sum(relative_coverage_NH)))
 	
 	    
 	self.doses_TL = [xFac_T * num for num in relative_coverage_TL]
