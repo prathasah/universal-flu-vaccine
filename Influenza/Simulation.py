@@ -281,21 +281,22 @@ class run_Simulation:
 	    SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B + 
 	    SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B )
 	
-	#check lambda_H1, and N dims
+	N_age_specific = SUL+ IUL_H1+ IUL_H3+ IUL_B+ RUL_H1 + RUL_H3+ RUL_B + SUH+ IUH_H1+ IUH_H3+ IUH_B+ RUH_H1 + RUH_H3 + RUH_B +STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL_H1 + RTL_H3 + RTL_B +  STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH_H1 + RTH_H3 + RTH_B +  SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B +  SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B
 	
       
         # The force of infection
         Lambda_H1 = self.parameters.transmissionScaling_H1 * self.parameters.susceptibility_H1\
-		    * numpy.dot(self.parameters.contactMatrix, self.parameters.transmissibility * (IUL_H1 + IUH_H1 + ITL_H1 + ITH_H1+ INL_H1+ INH_H1)) / N
+		    * numpy.dot(self.parameters.contactMatrix, self.parameters.transmissibility * (IUL_H1 + IUH_H1 + ITL_H1 + ITH_H1+ INL_H1+ INH_H1)) / N_age_specific
 	
 	Lambda_H3 = self.parameters.transmissionScaling_H3 * self.parameters.susceptibility_H3 \
                  * numpy.dot(self.parameters.contactMatrix, 
-                             self.parameters.transmissibility * (IUL_H3 + IUH_H3 + ITL_H3 + ITH_H3 + INL_H3+ INH_H3)) / N
+                             self.parameters.transmissibility * (IUL_H3 + IUH_H3 + ITL_H3 + ITH_H3 + INL_H3+ INH_H3)) / N_age_specific
 		
 	Lambda_B = self.parameters.transmissionScaling_B * self.parameters.susceptibility_B \
                  * numpy.dot(self.parameters.contactMatrix,
-                             self.parameters.transmissibility * (IUL_B + IUH_B + ITL_B + ITH_B+ INL_B+ INH_B)) / N
+                             self.parameters.transmissibility * (IUL_B + IUH_B + ITL_B + ITH_B+ INL_B+ INH_B)) / N_age_specific
 	
+
 	
         
         # The right-hand sides
@@ -897,6 +898,9 @@ class run_Simulation:
     
     def strain_output(self):
 	return sum(list(self.infections_H1)), sum(list(self.infections_H3)), sum(list(self.infections_B)), sum(list(self.hospitalizations_H1)), sum(list(self.hospitalizations_H3)), sum(list(self.hospitalizations_B)), sum(list(self.deaths_H1)), sum(list(self.deaths_H3)), sum(list(self.deaths_B))
+    
+    def detailed_strain_output(self):
+	return list(self.infections_H1), list(self.infections_H3), list(self.infections_B), list(self.hospitalizations_H1), list(self.hospitalizations_H3), list(self.hospitalizations_B), list(self.deaths_H1), list(self.deaths_H3), list(self.deaths_B)
     
     def calibration_output(self):
 	
