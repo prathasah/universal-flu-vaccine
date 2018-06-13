@@ -914,7 +914,7 @@ class run_Simulation:
 	perc_H3 =  (sum(self.infections_H3) *100.)/(1.*incidence)
 	perc_B =  (sum(self.infections_B) *100.)/(1.*incidence)
 	
-	return list(self.infectionsL), list(self.infectionsH),  sum(self.infections_H1),  sum(self.infections_H3),  sum(self.infections_B), perc_H1, perc_H3, perc_B, list(self.hospitalizationsL), list(self.hospitalizationsH), list(self.deathsL), list(self.deathsH)
+	return list(self.infectionsL), list(self.infectionsH),  (self.infections_H1),  (self.infections_H3),  (self.infections_B), perc_H1, perc_H3, perc_B, list(self.hospitalizationsL), list(self.hospitalizationsH), list(self.deathsL), list(self.deathsH)
     
 
     def debug_info(self):
