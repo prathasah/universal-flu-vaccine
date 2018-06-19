@@ -146,7 +146,7 @@ def evaluateObjective_incidence(paramList, vacEfficacy, vacDoses, data):
 		
 	[data_incidence, data_perc_H1, data_perc_H3, data_perc_B, data_incidence_H1_0, data_incidence_H1_5, data_incidence_H1_25, data_incidence_H1_65, data_incidence_H3_0, data_incidence_H3_5, data_incidence_H3_25, data_incidence_H3_65, data_incidence_B_0, data_incidence_B_5, data_incidence_B_25, data_incidence_B_65] = data
 	## only incidence, H1 and H3 perc and not B because perc B = 100 - (perc_H1+H3)
-	deviation = (np.mean(vax_incidence) - data_incidence)**2 + (np.mean(vax_perc_H1) - data_perc_H1)**2 + (np.mean(vax_perc_H3) - data_perc_H3)**2 + (np.mean(vax_incidence_H1_0) - data_incidence_H1_0)**2  + (np.mean(vax_incidence_H1_5) - data_incidence_H1_5)**2 +(np.mean(vax_incidence_H1_25) - data_incidence_H1_25)**2 +  (np.mean(vax_incidence_H3_0) - data_incidence_H3_0)**2  + (np.mean(vax_incidence_H3_5) - data_incidence_H3_5)**2 +(np.mean(vax_incidence_H3_25) - data_incidence_H3_25)**2 + (np.mean(vax_incidence_B_0) - data_incidence_B_0)**2  + (np.mean(vax_incidence_B_5) - data_incidence_B_5)**2 +(np.mean(vax_incidence_B_25) - data_incidence_B_25)**2 
+	deviation = ((np.mean(vax_incidence) - data_incidence)**2)**2 + ((np.mean(vax_perc_H1) - data_perc_H1)**2)**2 + (np.mean(vax_perc_H3) - data_perc_H3)**2 + (np.mean(vax_incidence_H1_0) - data_incidence_H1_0)**2  + (np.mean(vax_incidence_H1_5) - data_incidence_H1_5)**2 +(np.mean(vax_incidence_H1_25) - data_incidence_H1_25)**2 + (np.mean(vax_incidence_H1_65) - data_incidence_H1_65)**2 + (np.mean(vax_incidence_H3_0) - data_incidence_H3_0)**2  + (np.mean(vax_incidence_H3_5) - data_incidence_H3_5)**2 +(np.mean(vax_incidence_H3_25) - data_incidence_H3_25)**2 + (np.mean(vax_incidence_H3_65) - data_incidence_H3_65)**2 + (np.mean(vax_incidence_B_0) - data_incidence_B_0)**2  + (np.mean(vax_incidence_B_5) - data_incidence_B_5)**2 +(np.mean(vax_incidence_B_25) - data_incidence_B_25)**2 +(np.mean(vax_incidence_B_65) - data_incidence_B_65)**2 
 	
 	#if (np.mean(vax_incidence) <5): deviation+= 5000
 	#if (np.mean(vax_perc_H1) < 5): deviation+= 5000
@@ -208,7 +208,7 @@ if __name__ == "__main__":
 	writer = {}
 	elements = {}
 	
-	df  = pd.read_csv("calibration_data_median.csv")
+	df  = pd.read_csv("calibration_data_mean.csv")
 	
 	#########################
 	## create csv for calibrated parameters
@@ -217,11 +217,14 @@ if __name__ == "__main__":
 	writer.writerow(header)
 	
 	  
-	initial_beta = [0.00132432, 0.00218735,  0.00191035]
-	initial_susc_H1 = [0.961538, 0.714286, 0.42623,0.176471]
-	initial_susc_H3 = [0.730769, 0.214286, 0.704928, 0.235294]
-	initial_susc_B = [0.884615, 0.714286, 0.295082, 0.235294]
-	BL0_incidence = initial_beta + initial_susc_H1 + initial_susc_H3 + initial_susc_B
+	#initial_beta = [0.00132432, 0.00218735,  0.00191035]
+	#initial_susc_H1 = [0.961538, 0.714286, 0.42623,0.176471]
+	#initial_susc_H3 = [0.730769, 0.214286, 0.704928, 0.235294]
+	#initial_susc_B = [0.884615, 0.714286, 0.295082, 0.235294]
+	#BL0_incidence = initial_beta + initial_susc_H1 + initial_susc_H3 + initial_susc_B
+	BL0_incidence =  [ 0.00211349,  0.00244007 , 0.00236158 , 0.90698489 , 0.51646039,  0.5357374,
+  0.24396797 , 0.90990159,  0.44187988 , 0.27836253 , 0.99945511 , 0.87766619,
+  0.54046506 , 0.29602931 , 0.38330808]
 	BL0_burden = [0, 0]
 	
 	year = df.at[0,'year']

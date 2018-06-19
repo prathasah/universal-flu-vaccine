@@ -29,26 +29,26 @@ def proportionHighRiskPW(index):
 def susceptibility_H1PW(index):
     return PiecewiseAgeRate(
     [df.at[index, "susceptibility_H1_0"],
-     df.at[index, "susceptibility_H1_4"],
-     df.at[index, "susceptibility_H1_18"],
+     df.at[index, "susceptibility_H1_5"],
+     df.at[index, "susceptibility_H1_25"],
      df.at[index, "susceptibility_H1_65"]],
-    [0, 4, 18, 65])
+    [0, 5, 25, 65])
 
 def susceptibility_H3PW(index):
     return PiecewiseAgeRate(
     [df.at[index, "susceptibility_H3_0"],
-     df.at[index, "susceptibility_H3_4"],
-     df.at[index, "susceptibility_H3_18"],
+     df.at[index, "susceptibility_H3_5"],
+     df.at[index, "susceptibility_H3_25"],
      df.at[index, "susceptibility_H3_65"]],
-    [0, 4, 18, 65])
+    [0, 5, 25, 65])
 
 def susceptibility_BPW(index):
     return PiecewiseAgeRate(
     [df.at[index, "susceptibility_B_0"],
-     df.at[index, "susceptibility_B_4"],
-     df.at[index, "susceptibility_B_18"],
+     df.at[index, "susceptibility_B_5"],
+     df.at[index, "susceptibility_B_25"],
      df.at[index, "susceptibility_B_65"]],
-    [0, 4, 18, 65])
+    [0, 5, 25, 65])
 
 def relative_UniversalvaccineEfficacyVsInfection_H1PW(index):
     return PiecewiseAgeRate(

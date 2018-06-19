@@ -214,9 +214,9 @@ class Parameters:
 		self.vac_eff_mortality = self.passedParamValues["vac_eff_mortality"]
 		
 	    if "susceptibility_H1" in self.passedParamValues:
-		susceptibility_H1PW = PiecewiseAgeRate(self.passedParamValues["susceptibility_H1"], [0,5,25,60])
-		susceptibility_H3PW = PiecewiseAgeRate(self.passedParamValues["susceptibility_H3"], [0,5,25,60])
-		susceptibility_BPW = PiecewiseAgeRate(self.passedParamValues["susceptibility_B"], [0,5,25,60])
+		susceptibility_H1PW = PiecewiseAgeRate(self.passedParamValues["susceptibility_H1"], [0,5,25,65])
+		susceptibility_H3PW = PiecewiseAgeRate(self.passedParamValues["susceptibility_H3"], [0,5,25,65])
+		susceptibility_BPW = PiecewiseAgeRate(self.passedParamValues["susceptibility_B"], [0,5,25,65])
 		setattr(self, "susceptibility_H1",susceptibility_H1PW.full(self.ages))
 		setattr(self, "susceptibility_H3", susceptibility_H3PW.full(self.ages))
 		setattr(self,"susceptibility_B", susceptibility_BPW.full(self.ages))
