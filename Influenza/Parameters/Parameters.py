@@ -141,9 +141,9 @@ class Parameters:
 	
 	self.UniversalvaccineEfficacyVsInfectionUniversal_H1 = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_H1
 	self.UniversalvaccineEfficacyVsInfectionUniversal_H3 = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_H3
-	self.UniversalvaccineEfficacyVsInfectionUniversal_B = self.passedParamValues["vacEfficacy"] [1] * self.relative_UniversalvaccineEfficacyVsInfection_B
+	self.UniversalvaccineEfficacyVsInfectionUniversal_B = self.passedParamValues["vacEfficacy"] [0] * self.relative_UniversalvaccineEfficacyVsInfection_B
 
-        # Set up proportion vaccinated vectors
+	# Set up proportion vaccinated vectors
         self.proportionVaccinatedTypicalLPW = PiecewiseAgeRate([0.0] * len(vaccinationAgesTypical),
             vaccinationAgesTypical)
 	self.proportionVaccinatedTypicalHPW = PiecewiseAgeRate([0.0] * len(vaccinationAgesTypical),
@@ -220,6 +220,13 @@ class Parameters:
 		setattr(self, "susceptibility_H1",susceptibility_H1PW.full(self.ages))
 		setattr(self, "susceptibility_H3", susceptibility_H3PW.full(self.ages))
 		setattr(self,"susceptibility_B", susceptibility_BPW.full(self.ages))
+		
+		
+	    if "prob_hosp_scaling" in self.passedParamValues:
+		self.prob_hosp_scaling = self.passedParamValues["prob_hosp_scaling"]
+		
+	    if "prob_death_scaling" in self.passedParamValues:
+		self.prob_death_scaling = self.passedParamValues["prob_death_scaling"]
 
 		
 	

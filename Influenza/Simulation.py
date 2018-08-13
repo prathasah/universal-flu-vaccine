@@ -3,6 +3,8 @@ import random
 import numpy
 import sys
 sys.path.insert(0, r'./Influenza/Parameters')
+sys.path.insert(0, r'../Influenza/Parameters')
+sys.path.insert(0, r'../../Influenza/Parameters')
 import Parameters
         
 class run_Simulation:
@@ -227,64 +229,69 @@ class run_Simulation:
 
 	SUL    = Y[ 0 : : 42]
         IUL_H1 = Y[ 1 : : 42]
-	IUL_H3 = Y[ 2 : : 42]
-	IUL_B  = Y[ 3 : : 42]
-	RUL_H1 = Y[ 4 : : 42]
-	RUL_H3 = Y[ 5 : : 42]
-	RUL_B =  Y[ 6 : : 42]
-	
-	SUH    = Y[ 7 : : 42]
+        IUL_H3 = Y[ 2 : : 42]
+        IUL_B  = Y[ 3 : : 42]
+        RUL_H1 = Y[ 4 : : 42]
+        RUL_H3 = Y[ 5 : : 42]
+        RUL_B =  Y[ 6 : : 42]
+            
+        SUH    = Y[ 7 : : 42]
         IUH_H1 = Y[ 8 : : 42]
-	IUH_H3 = Y[ 9 : : 42]
-	IUH_B  = Y[ 10 : : 42]
-	RUH_H1 = Y[ 11 : : 42]
-	RUH_H3 = Y[ 12 : : 42]
-	RUH_B =  Y[ 13 : : 42]
-	
-	STL    = Y[ 14 : : 42]
+        IUH_H3 = Y[ 9 : : 42]
+        IUH_B  = Y[ 10 : : 42]
+        RUH_H1 = Y[ 11 : : 42]
+        RUH_H3 = Y[ 12 : : 42]
+        RUH_B =  Y[ 13 : : 42]
+            
+        STL    = Y[ 14 : : 42]
         ITL_H1 = Y[ 15 : : 42]
-	ITL_H3 = Y[ 16 : : 42]
-	ITL_B  = Y[ 17 : : 42]
-	RTL_H1 = Y[ 18 : : 42]
-	RTL_H3 = Y[ 19 : : 42]
-	RTL_B =  Y[ 20 : : 42]
-	
-	STH    = Y[ 21 : : 42]
+        ITL_H3 = Y[ 16 : : 42]
+        ITL_B  = Y[ 17 : : 42]
+        RTL_H1 = Y[ 18 : : 42]
+        RTL_H3 = Y[ 19 : : 42]
+        RTL_B =  Y[ 20 : : 42]
+            
+        STH    = Y[ 21 : : 42]
         ITH_H1 = Y[ 22 : : 42]
-	ITH_H3 = Y[ 23 : : 42]
-	ITH_B  = Y[ 24 : : 42]
-	RTH_H1 = Y[ 25 : : 42]
-	RTH_H3 = Y[ 26 : : 42]
-	RTH_B =  Y[ 27 : : 42]
-	
-	SNL    = Y[ 28 : : 42]
+        ITH_H3 = Y[ 23 : : 42]
+        ITH_B  = Y[ 24 : : 42]
+        RTH_H1 = Y[ 25 : : 42]
+        RTH_H3 = Y[ 26 : : 42]
+        RTH_B =  Y[ 27 : : 42]
+            
+        SNL    = Y[ 28 : : 42]
         INL_H1 = Y[ 29 : : 42]
-	INL_H3 = Y[ 30 : : 42]
-	INL_B  = Y[ 31 : : 42]
-	RNL_H1 = Y[ 32 : : 42]
-	RNL_H3 = Y[ 33 : : 42]
-	RNL_B =  Y[ 34 : : 42]
-	
-	SNH    = Y[ 35 : : 42]
+        INL_H3 = Y[ 30 : : 42]
+        INL_B  = Y[ 31 : : 42]
+        RNL_H1 = Y[ 32 : : 42]
+        RNL_H3 = Y[ 33 : : 42]
+        RNL_B =  Y[ 34 : : 42]
+            
+        SNH    = Y[ 35 : : 42]
         INH_H1 = Y[ 36 : : 42]
-	INH_H3 = Y[ 37 : : 42]
-	INH_B  = Y[ 38 : : 42]
-	RNH_H1 = Y[ 39 : : 42]
-	RNH_H3 = Y[ 40 : : 42]
-	RNH_B =  Y[ 41 : : 42]
+        INH_H3 = Y[ 37 : : 42]
+        INH_B  = Y[ 38 : : 42]
+        RNH_H1 = Y[ 39 : : 42]
+        RNH_H3 = Y[ 40 : : 42]
+        RNH_B =  Y[ 41 : : 42]
 	
 	
         N =  sum(SUL+ IUL_H1+ IUL_H3+ IUL_B+ RUL_H1 + RUL_H3 + RUL_B + 
-	    SUH+ IUH_H1+ IUH_H3+ IUH_B+ RUH_H1 + RUH_H3 + RUH_B +
-	    STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL_H1 + RTL_H3 + RTL_B + 
-	    STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH_H1 + RTH_H3 + RTH_B + 
-	    SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B + 
-	    SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B )
-	
-	N_age_specific = SUL+ IUL_H1+ IUL_H3+ IUL_B+ RUL_H1 + RUL_H3+ RUL_B + SUH+ IUH_H1+ IUH_H3+ IUH_B+ RUH_H1 + RUH_H3 + RUH_B +STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL_H1 + RTL_H3 + RTL_B +  STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH_H1 + RTH_H3 + RTH_B +  SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B +  SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B
-	
-      
+                SUH+ IUH_H1+ IUH_H3+ IUH_B+ RUH_H1 + RUH_H3 + RUH_B +
+                STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL_H1 + RTL_H3 + RTL_B + 
+                STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH_H1 + RTH_H3 + RTH_B + 
+                SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B + 
+                SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B )
+            
+        N_age_specific = SUL+ IUL_H1+ IUL_H3+ IUL_B+ RUL_H1 + RUL_H3+ RUL_B + SUH+ IUH_H1+ IUH_H3+ IUH_B+ RUH_H1 + RUH_H3 + RUH_B +STL+ ITL_H1+ ITL_H3+ ITL_B+ RTL_H1 + RTL_H3 + RTL_B +  STH+ ITH_H1+ ITH_H3+ ITH_B+ RTH_H1 + RTH_H3 + RTH_B +  SNL+ INL_H1+ INL_H3+ INL_B+ RNL_H1 + RNL_H3 + RNL_B +  SNH+ INH_H1+ INH_H3+ INH_B+ RNH_H1 + RNH_H3 + RNH_B
+            
+          
         # The force of infection
+	#print ("check!!!"), self.parameters.transmissionScaling_H1, self.parameters.transmissionScaling_H3 ,self.parameters.transmissionScaling_B 
+	#print self.parameters.susceptibility_H1
+	#print self.parameters.susceptibility_H3
+	#print self.parameters.susceptibility_B
+	
         Lambda_H1 = self.parameters.transmissionScaling_H1 * self.parameters.susceptibility_H1\
 		    * numpy.dot(self.parameters.contactMatrix, self.parameters.transmissibility * (IUL_H1 + IUH_H1 + ITL_H1 + ITH_H1+ INL_H1+ INH_H1)) / N_age_specific
 	
@@ -637,10 +644,15 @@ class run_Simulation:
         self.infectionsH  = self.infectionsUH_H1 + self.infectionsUH_H3 + self.infectionsUH_B  + self.infectionsVH_H1 + self.infectionsVH_H3 + self.infectionsVH_B
 
 	self.infectionsU =  self.infectionsUL_H1 + self.infectionsUL_H3 + self.infectionsUL_B  + self.infectionsUH_H1 + self.infectionsUH_H3 + self.infectionsUH_B
-	self.infectionsV  = self.infectionsVL_H1 + self.infectionsVL_H3 + self.infectionsVL_B  + self.infectionsVH_H1 + self.infectionsVH_H3 + self.infectionsVH_B 
+	self.infectionsV  = self.infectionsVL_H1 + self.infectionsVL_H3 + self.infectionsVL_B  + self.infectionsVH_H1 + self.infectionsVH_H3 + self.infectionsVH_B
+	self.infectionsUL =  self.infectionsUL_H1 + self.infectionsUL_H3 + self.infectionsUL_B
+	self.infectionsUH = self.infectionsUH_H1 + self.infectionsUH_H3 + self.infectionsUH_B
+	self.infectionsVL =  self.infectionsVL_H1 + self.infectionsVL_H3 + self.infectionsVL_B
+	self.infectionsVH = self.infectionsVH_H1 + self.infectionsVH_H3 + self.infectionsVH_B
+	
 	self.infections  = self.infectionsU + self.infectionsV
         self.totalInfections = self.infections.sum()
-
+	
 	#################################
 	self._RR_H3 = [(a+b)/(1.*(c+d)) for (a,b,c,d) in zip(self.parameters.lowRiskhospitalizationRate_H3,self.parameters.highRiskhospitalizationRate_H3, self.parameters.lowRiskhospitalizationRate_H1,self.parameters.highRiskhospitalizationRate_H1)]
 	self._RR_B = [(a+b)/(1.*(c+d)) for (a,b,c,d) in zip(self.parameters.lowRiskhospitalizationRate_B,self.parameters.highRiskhospitalizationRate_B, self.parameters.lowRiskhospitalizationRate_H1,self.parameters.highRiskhospitalizationRate_H1)]
@@ -649,38 +661,66 @@ class run_Simulation:
 	self._proportion_infections_B = [c/(1.*(a+b+c)) for (a,b,c) in zip(self.infections_H1, self.infections_H3, self.infections_B)]
 	
 	
-	self.prob_hosp_H1 = [a/(b+ c*d + e*f) for (a,b,c,d,e,f) in zip(self.parameters.prob_hosp, self._proportion_infections_H1,self._RR_H3, self._proportion_infections_H3, self._RR_B,self._proportion_infections_B)]
-	self.prob_hosp_H3 = [(a*b) for (a,b) in zip(self._RR_H3, self.prob_hosp_H1)]
-	self.prob_hosp_B = [(a*b) for (a,b) in zip(self._RR_B, self.prob_hosp_H1)]
+	self._prop_vaccinated = self.infectionsV/self.infections
+	self._prop_unvaccinated = 1 - self._prop_vaccinated
 	
-	#self.case_hospitalizationL_H1 = self.prob_hosp_H1/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk)
-	self.case_hospitalizationL_H1 = self.prob_hosp_H1
-	self.case_hospitalizationH_H1 =  self.parameters.ratio_hosp_highrisk * self.case_hospitalizationL_H1
 	
-	#self.case_hospitalizationL_H3 = self.prob_hosp_H3/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk)
-	self.case_hospitalizationL_H3 = self.prob_hosp_H3
-	self.case_hospitalizationH_H3 = self.parameters.ratio_hosp_highrisk * self.case_hospitalizationL_H3
+	self.prob_hosp = self.parameters.prob_hosp_scaling * self.parameters.relative_prob_hosp
 	
-	#self.case_hospitalizationL_B = self.prob_hosp_B/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_hosp_highrisk*self.parameters.proportionHighRisk)
-	self.case_hospitalizationL_B = self.prob_hosp_B
-	self.case_hospitalizationH_B = self.parameters.ratio_hosp_highrisk * self.case_hospitalizationL_B
+	self.prob_hospU_H1 = [a/(b+ c*d + e*f) for (a,b,c,d,e,f) in zip(self.prob_hosp, self._proportion_infections_H1,self._RR_H3, self._proportion_infections_H3, self._RR_B,self._proportion_infections_B)]
+	self.prob_hospU_H3 = [(a*b) for (a,b) in zip(self._RR_H3, self.prob_hospU_H1)]
+	self.prob_hospU_B = [(a*b) for (a,b) in zip(self._RR_B, self.prob_hospU_H1)]
+	
+	self.prob_hospV_H1 = [a*(1- min(self.parameters.vac_eff_hospitalization*c,1)) for (a,c) in zip(self.prob_hospU_H1, self.parameters.relative_vaccineEfficacyVsHospitalization_H1)]
+	self.prob_hospV_H3 = [a*(1- min(self.parameters.vac_eff_hospitalization*c,1)) for (a,c) in zip(self.prob_hospU_H3,  self.parameters.relative_vaccineEfficacyVsHospitalization_H3)]
+	self.prob_hospV_B =[a*(1- min(self.parameters.vac_eff_hospitalization*c,1)) for (a,c) in zip(self.prob_hospU_B, self.parameters.relative_vaccineEfficacyVsHospitalization_B)]
+	
+	
+	self.ratio_hosp_highriskU_H1 = [a/(b + (1-min(self.parameters.vac_eff_hospitalization*d,1))*e) for (a,b,d,e) in zip(self.parameters.ratio_hosp_highrisk_H1, self._prop_unvaccinated, self.parameters.relative_vaccineEfficacyVsHospitalization_H1,self._prop_vaccinated)]
+	self.ratio_hosp_highriskU_H3 = [a/(b + (1-min(self.parameters.vac_eff_hospitalization*d,1))*e) for (a,b,d,e) in zip(self.parameters.ratio_hosp_highrisk_H3, self._prop_unvaccinated, self.parameters.relative_vaccineEfficacyVsHospitalization_H3,self._prop_vaccinated)]
+	self.ratio_hosp_highriskU_B = [a/(b + (1-min(self.parameters.vac_eff_hospitalization*d,1))*e) for (a,b,d,e) in zip(self.parameters.ratio_hosp_highrisk_B, self._prop_unvaccinated, self.parameters.relative_vaccineEfficacyVsHospitalization_B,self._prop_vaccinated)]
+	
+	self.ratio_hosp_highriskV_H1 = [a*(1- min(self.parameters.vac_eff_hospitalization*c,1)) for (a,c) in zip(self.ratio_hosp_highriskU_H1, self.parameters.relative_vaccineEfficacyVsHospitalization_H1)]
+	self.ratio_hosp_highriskV_H3 = [a*(1- min(self.parameters.vac_eff_hospitalization*c,1)) for (a,c) in zip(self.ratio_hosp_highriskU_H3, self.parameters.relative_vaccineEfficacyVsHospitalization_H3)]
+	self.ratio_hosp_highriskV_B = [a*(1- min(self.parameters.vac_eff_hospitalization*c,1)) for (a,c) in zip(self.ratio_hosp_highriskU_B, self.parameters.relative_vaccineEfficacyVsHospitalization_B)]
+	
+
+	self.case_hospitalizationUL_H1 = self.prob_hospU_H1
+	self.case_hospitalizationUH_H1 =  [(a*b) for (a,b) in zip(self.ratio_hosp_highriskU_H1 , self.case_hospitalizationUL_H1)]
+	
+
+	self.case_hospitalizationUL_H3 = self.prob_hospU_H3
+	self.case_hospitalizationUH_H3 =   [(a*b) for (a,b) in zip(self.ratio_hosp_highriskU_H3 , self.case_hospitalizationUL_H3)]
+	
+	self.case_hospitalizationUL_B = self.prob_hospU_B
+	self.case_hospitalizationUH_B =   [(a*b) for (a,b) in zip(self.ratio_hosp_highriskU_B , self.case_hospitalizationUL_B)]
+	
+	self.hospitalizationsUL_H1 = self.infectionsUL_H1 * self.case_hospitalizationUL_H1 
+	self.hospitalizationsUL_H3 = self.infectionsUL_H3 * self.case_hospitalizationUL_H3 
+	self.hospitalizationsUL_B = self.infectionsUL_B * self.case_hospitalizationUL_B 
+	
+	self.hospitalizationsUH_H1 = self.infectionsUH_H1 * self.case_hospitalizationUH_H1 
+	self.hospitalizationsUH_H3 = self.infectionsUH_H3 * self.case_hospitalizationUH_H3 
+	self.hospitalizationsUH_B = self.infectionsUH_B * self.case_hospitalizationUH_B
+	
 	################################################################################
-	self.hospitalizationsUL_H1 = self.infectionsUL_H1 * self.case_hospitalizationL_H1 
-	self.hospitalizationsUL_H3 = self.infectionsUL_H3 * self.case_hospitalizationL_H3 
-	self.hospitalizationsUL_B = self.infectionsUL_B * self.case_hospitalizationL_B 
+	self.case_hospitalizationVL_H1 = self.prob_hospV_H1
+	self.case_hospitalizationVH_H1 =    [(a*b) for (a,b) in zip(self.ratio_hosp_highriskV_H1, self.case_hospitalizationVL_H1)]
 	
-	self.hospitalizationsUH_H1 = self.infectionsUH_H1 * self.case_hospitalizationH_H1 
-	self.hospitalizationsUH_H3 = self.infectionsUH_H3 * self.case_hospitalizationH_H3 
-	self.hospitalizationsUH_B = self.infectionsUH_B * self.case_hospitalizationH_B 
+	self.case_hospitalizationVL_H3 = self.prob_hospV_H3
+	self.case_hospitalizationVH_H3 =   [(a*b) for (a,b) in zip(self.ratio_hosp_highriskV_H3, self.case_hospitalizationVL_H3)]
+	
+	self.case_hospitalizationVL_B = self.prob_hospV_B
+	self.case_hospitalizationVH_B =   [(a*b) for (a,b) in zip(self.ratio_hosp_highriskV_B, self.case_hospitalizationVL_B)]
 	
 	
-	self.hospitalizationsVL_H1 =  [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_H1] *self.infectionsVL_H1  * self.case_hospitalizationL_H1
-	self.hospitalizationsVL_H3 = [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_H3] *self.infectionsVL_H3 * self.case_hospitalizationL_H3
-	self.hospitalizationsVL_B = [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_B] *self.infectionsVL_B * self.case_hospitalizationL_B
+	self.hospitalizationsVL_H1 =  self.infectionsVL_H1  * self.case_hospitalizationVL_H1
+	self.hospitalizationsVL_H3 = self.infectionsVL_H3  * self.case_hospitalizationVL_H3
+	self.hospitalizationsVL_B = self.infectionsVL_B  * self.case_hospitalizationVL_B
 	
-	self.hospitalizationsVH_H1 = [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_H1] *self.infectionsVH_H1 * self.case_hospitalizationH_H1
-	self.hospitalizationsVH_H3 =[(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_H3] *self.infectionsVH_H3  * self.case_hospitalizationH_H3
-	self.hospitalizationsVH_B = [(1- min(num,1)) for num in self.parameters.vac_eff_hospitalization* self.parameters.relative_vaccineEfficacyVsHospitalization_B] *self.infectionsVH_B * self.case_hospitalizationH_B
+	self.hospitalizationsVH_H1 = self.infectionsVH_H1 * self.case_hospitalizationVH_H1
+	self.hospitalizationsVH_H3 = self.infectionsVH_H3  * self.case_hospitalizationVH_H3
+	self.hospitalizationsVH_B = self.infectionsVH_B * self.case_hospitalizationVH_B
 	
 	#self.RTL_H1[-1,: ] + self.RNL_H1[-1,: ] + self.ITL_H1[-1,: ] + self.INL_H1[-1,: ]
 	
@@ -690,40 +730,73 @@ class run_Simulation:
 	
 	self.hospitalizationsL  = self.hospitalizationsUL_H1 + self.hospitalizationsUL_H3 + self.hospitalizationsUL_B + self.hospitalizationsVL_H1 + self.hospitalizationsVL_H3 + self.hospitalizationsVL_B
 	self.hospitalizationsH  = self.hospitalizationsUH_H1 + self.hospitalizationsUH_H3 + self.hospitalizationsUH_B + self.hospitalizationsVH_H1 + self.hospitalizationsVH_H3 + self.hospitalizationsVH_B
+	self.hospitalizationsU = self.hospitalizationsUL_H1 + self.hospitalizationsUH_H1 + self.hospitalizationsUL_H3 + self.hospitalizationsUH_H3 + self.hospitalizationsUL_B + self.hospitalizationsUH_B
+	self.hospitalizationsV = self.hospitalizationsVL_H1 + self.hospitalizationsVH_H1 + self.hospitalizationsVL_H3 + self.hospitalizationsVH_H3 + self.hospitalizationsVL_B + self.hospitalizationsVH_B
+	self.hospitalizationsUH =  self.hospitalizationsUH_H1 + self.hospitalizationsUH_H3 + self.hospitalizationsUH_B
+	self.hospitalizationsUL =  self.hospitalizationsUL_H1 + self.hospitalizationsUL_H3 + self.hospitalizationsUL_B
+	self.hospitalizationsVH =  self.hospitalizationsVH_H1 + self.hospitalizationsVH_H3 + self.hospitalizationsVH_B
+	self.hospitalizationsVL =  self.hospitalizationsVL_H1 + self.hospitalizationsVL_H3 + self.hospitalizationsVL_B
+	
 	self.hospitalizations = self.hospitalizationsL + self.hospitalizationsH
 	self.totalHospitalizations = self.hospitalizations.sum()
-	#print ("check!!!!"), [a/(1.*b) for (a,b) in zip(self.hospitalizations, self.infections)]
+	
+	#print ("!!!!!!"), sum(self.hospitalizationsV)/1e3 <  sum(self.hospitalizationsU)/1e3
 	#######################################################
-	self.prob_death_B = [a/(b+ c*d + e*f) for (a,b,c,d,e,f) in zip(self.parameters.prob_death, self._proportion_infections_B ,self._proportion_infections_H1,self.parameters.ratio_death_strain_H1, self._proportion_infections_H3,self.parameters.ratio_death_strain_H3)]
-	self.prob_death_H1 = [(a*b) for (a,b) in zip(self.parameters.ratio_death_strain_H1, self.prob_death_B)]
-	self.prob_death_H3 = [(a*b) for (a,b) in zip(self.parameters.ratio_death_strain_H3, self.prob_death_B)]
+	self.prob_death = self.parameters.prob_death_scaling * self.parameters.relative_prob_death
+	
+	self.prob_deathU_B = [a/(b+ c*d + e*f) for (a,b,c,d,e,f) in zip(self.prob_death, self._proportion_infections_B ,self._proportion_infections_H1,self.parameters.ratio_death_strain_H1, self._proportion_infections_H3,self.parameters.ratio_death_strain_H3)]
+	self.prob_deathU_H1 = [(a*b) for (a,b) in zip(self.parameters.ratio_death_strain_H1, self.prob_deathU_B)]
+	self.prob_deathU_H3 = [(a*b) for (a,b) in zip(self.parameters.ratio_death_strain_H3, self.prob_deathU_B)]
+	
+	self.prob_deathV_H1 = [a*(1- min(self.parameters.vac_eff_mortality*c,1)) for (a,c) in zip(self.prob_deathU_H1, self.parameters.relative_vaccineEfficacyVsDeath_H1)]
+	self.prob_deathV_H3 = [a*(1- min(self.parameters.vac_eff_mortality*c,1)) for (a,c) in zip(self.prob_deathU_H3,  self.parameters.relative_vaccineEfficacyVsDeath_H3)]
+	self.prob_deathV_B =[a*(1- min(self.parameters.vac_eff_mortality*c,1)) for (a,c) in zip(self.prob_deathU_B, self.parameters.relative_vaccineEfficacyVsDeath_B)]
+	
+	
+	self.ratio_death_highriskU_H1 = [a/(b + (1-min(self.parameters.vac_eff_mortality*d,1))*e) for (a,b,d,e) in zip(self.parameters.ratio_death_highrisk_H1, self._prop_unvaccinated, self.parameters.relative_vaccineEfficacyVsDeath_H1,self._prop_vaccinated)]
+	self.ratio_death_highriskU_H3 = [a/(b + (1-min(self.parameters.vac_eff_mortality*d,1))*e) for (a,b,d,e) in zip(self.parameters.ratio_death_highrisk_H3, self._prop_unvaccinated, self.parameters.relative_vaccineEfficacyVsDeath_H3,self._prop_vaccinated)]
+	self.ratio_death_highriskU_B = [a/(b + (1-min(self.parameters.vac_eff_mortality*d,1))*e) for (a,b,d,e) in zip(self.parameters.ratio_death_highrisk_B, self._prop_unvaccinated, self.parameters.relative_vaccineEfficacyVsDeath_B,self._prop_vaccinated)]
+	
+	self.ratio_death_highriskV_H1 = [a*(1- min(self.parameters.vac_eff_mortality*c,1)) for (a,c) in zip(self.ratio_death_highriskU_H1, self.parameters.relative_vaccineEfficacyVsDeath_H1)]
+	self.ratio_death_highriskV_H3 = [a*(1- min(self.parameters.vac_eff_mortality*c,1)) for (a,c) in zip(self.ratio_death_highriskU_H3, self.parameters.relative_vaccineEfficacyVsDeath_H3)]
+	self.ratio_death_highriskV_B = [a*(1- min(self.parameters.vac_eff_mortality*c,1)) for (a,c) in zip(self.ratio_death_highriskU_B, self.parameters.relative_vaccineEfficacyVsDeath_B)]
 	
     	
-        self.deathRateL_H1 =  self.prob_death_H1/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_death_highrisk*self.parameters.proportionHighRisk) 
-	self.deathRateL_H3 =   self.prob_death_H3/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_death_highrisk*self.parameters.proportionHighRisk)
-	self.deathRateL_B =    self.prob_death_B/ ((1- self.parameters.proportionHighRisk) + self.parameters.ratio_death_highrisk*self.parameters.proportionHighRisk)
+        self.deathRateUL_H1 =  self.prob_deathU_H1/ ((1- self.parameters.proportionHighRisk) + self.ratio_death_highriskU_H1*self.parameters.proportionHighRisk) 
+	self.deathRateUL_H3 =   self.prob_deathU_H3/ ((1- self.parameters.proportionHighRisk) + self.ratio_death_highriskU_H3*self.parameters.proportionHighRisk)
+	self.deathRateUL_B =    self.prob_deathU_B/ ((1- self.parameters.proportionHighRisk) + self.ratio_death_highriskU_B*self.parameters.proportionHighRisk)
 	
 	##Death rate of high-risk unvaccinated individuals
-        self.deathRateH_H1 = self.parameters.ratio_death_highrisk *  self.deathRateL_H1
-	self.deathRateH_H3 = self.parameters.ratio_death_highrisk *  self.deathRateL_H3
-	self.deathRateH_B = self.parameters.ratio_death_highrisk *  self.deathRateL_B
+        self.deathRateUH_H1 = self.ratio_death_highriskU_H1 *  self.deathRateUL_H1
+	self.deathRateUH_H3 = self.ratio_death_highriskU_H3 *  self.deathRateUL_H3
+	self.deathRateUH_B = self.ratio_death_highriskU_B *  self.deathRateUL_B
+	
+	self.deathsUL_H1 =   self.infectionsUL_H1 *  self.deathRateUL_H1  
+	self.deathsUL_H3 =    self.infectionsUL_H3 *  self.deathRateUL_H3  
+	self.deathsUL_B  =    self.infectionsUL_B *  self.deathRateUL_B
+	
+	self.deathsUH_H1 =    self.infectionsUH_H1 *  self.deathRateUH_H1 
+	self.deathsUH_H3 =    self.infectionsUH_H3 *  self.deathRateUH_H3 
+	self.deathsUH_B  =    self.infectionsUH_B *  self.deathRateUH_B
+	
 	###########################################################
-	self.deathsUL_H1 =   self.infectionsUL_H1 *  self.deathRateL_H1  
-	self.deathsUL_H3 =    self.infectionsUL_H3 *  self.deathRateL_H3  
-	self.deathsUL_B  =    self.infectionsUL_B *  self.deathRateL_B
 	
-	self.deathsUH_H1 =    self.infectionsUH_H1 *  self.deathRateH_H1 
-	self.deathsUH_H3 =    self.infectionsUH_H3 *  self.deathRateH_H3 
-	self.deathsUH_B  =    self.infectionsUH_B *  self.deathRateH_B
+	self.deathRateVL_H1 =  self.prob_deathV_H1/ ((1- self.parameters.proportionHighRisk) + self.ratio_death_highriskV_H1*self.parameters.proportionHighRisk) 
+	self.deathRateVL_H3 =   self.prob_deathV_H3/ ((1- self.parameters.proportionHighRisk) + self.ratio_death_highriskV_H3*self.parameters.proportionHighRisk)
+	self.deathRateVL_B =    self.prob_deathV_B/ ((1- self.parameters.proportionHighRisk) + self.ratio_death_highriskV_B*self.parameters.proportionHighRisk)
 	
-	self.deathsVL_H1 = [(1- min(num,1)) for num in self.parameters.vac_eff_mortality* self.parameters.relative_vaccineEfficacyVsDeath_H1] *self.infectionsVL_H1 *  self.deathRateL_H1  
-	self.deathsVL_H3 = [(1- min(num,1)) for num in self.parameters.vac_eff_mortality* self.parameters.relative_vaccineEfficacyVsDeath_H3] *self.infectionsVL_H3 *  self.deathRateL_H3  
-	self.deathsVL_B  = [(1- min(num,1)) for num in self.parameters.vac_eff_mortality* self.parameters.relative_vaccineEfficacyVsDeath_B] *self.infectionsVL_B *  self.deathRateL_B  
+	##Death rate of high-risk unvaccinated individuals
+        self.deathRateVH_H1 = self.ratio_death_highriskV_H1 *  self.deathRateVL_H1
+	self.deathRateVH_H3 = self.ratio_death_highriskV_H3 *  self.deathRateVL_H3
+	self.deathRateVH_B = self.ratio_death_highriskV_B *  self.deathRateVL_B
 	
-	self.deathsVH_H1 = [(1- min(num,1)) for num in self.parameters.vac_eff_mortality* self.parameters.relative_vaccineEfficacyVsDeath_H1] * self.infectionsVH_H1 *  self.deathRateH_H1 
-	self.deathsVH_H3 = [(1- min(num,1)) for num in self.parameters.vac_eff_mortality* self.parameters.relative_vaccineEfficacyVsDeath_H3] *self.infectionsVH_H3 *  self.deathRateH_H3 
-	self.deathsVH_B  = [(1- min(num,1)) for num in self.parameters.vac_eff_mortality* self.parameters.relative_vaccineEfficacyVsDeath_B] *self.infectionsVH_B *  self.deathRateH_B
+	self.deathsVL_H1 =   self.infectionsVL_H1 *  self.deathRateVL_H1  
+	self.deathsVL_H3 =    self.infectionsVL_H3 *  self.deathRateVL_H3  
+	self.deathsVL_B  =    self.infectionsVL_B *  self.deathRateVL_B
 	
+	self.deathsVH_H1 =    self.infectionsVH_H1 *  self.deathRateVH_H1 
+	self.deathsVH_H3 =    self.infectionsVH_H3 *  self.deathRateVH_H3 
+	self.deathsVH_B  =    self.infectionsVH_B *  self.deathRateVH_B
 	
 	
 	self.deaths_H1 = self.deathsUL_H1 + self.deathsVL_H1 + self.deathsVL_H1 + self.deathsVH_H1
@@ -733,10 +806,21 @@ class run_Simulation:
 	self.deathsUH = self.deathsUH_H1 + self.deathsUH_H3 + self.deathsUH_B
 	self.deathsVL = self.deathsVL_H1 + self.deathsVL_H3 + self.deathsVL_B 
 	self.deathsVH = self.deathsVH_H1 + self.deathsVH_H3 + self.deathsVH_B
+	self.deathsV = self.deathsVL + self.deathsVH
+	self.deathsU = self.deathsUL + self.deathsUH
 	self.deathsL  = self.deathsUL + self.deathsVL
 	self.deathsH  = self.deathsUH + self.deathsVH
         self.deaths   = self.deathsL + self.deathsH 
         self.totalDeaths = self.deaths.sum()
+	
+	
+	#print ("total V vs U"), sum(self.deathsV)/1e3 <  sum(self.deathsU)/1e3, sum(self.deathsV)/1e3 ,  sum(self.deathsU)/1e3
+	#print ("VL vs UL"), sum(self.deathsVL)/1e3 <  sum(self.deathsUL)/1e3, sum(self.deathsVL)/1e3 ,  sum(self.deathsUL)/1e3
+	#print ("VH vs UH"), sum(self.deathsVH)/1e3 <  sum(self.deathsUH)/1e3, sum(self.deathsVH)/1e3 ,  sum(self.deathsUH)/1e3
+	#print ("H1"), sum(self.deathsVH_H1)/1e3 <  sum(self.deathsUH_H1)/1e3,  sum(self.deathRateVH_H1)/1e3 <  sum(self.deathRateUH_H1)/1e3, sum(self.deathRateVH_H1)/1e3 ,  sum(self.deathRateUH_H1)/1e3, sum(self.infectionsVH_H1)/1e6, sum(self.infectionsUH_H1)/1e6
+	#print ("H3"), sum(self.deathsVH_H3)/1e3 <  sum(self.deathsUH_H3)/1e3,  sum(self.deathRateVH_H3)/1e3 <  sum(self.deathRateUH_H3)/1e3,  sum(self.deathRateVH_H3)/1e3 ,  sum(self.deathRateUH_H3)/1e3, sum(self.infectionsVH_H3)/1e6, sum(self.infectionsUH_H3)/1e6
+	#print ("deatils"), self.deathRateVL_H3, self.prob_deathV_H3
+	#print ("B"), sum(self.deathsVH_B)/1e3 <  sum(self.deathsUH_B)/1e3,  sum(self.deathRateVH_B)/1e3 <  sum(self.deathRateUH_B)/1e3, sum(self.deathRateVH_B)/1e3 ,  sum(self.deathRateUH_B)/1e3, sum(self.infectionsVH_B)/1e6, sum(self.infectionsUH_B)/1e6
 
 	self.YLL_L = numpy.multiply(self.parameters.expectationOfLife, self.deathsL)
 	self.YLL_H = numpy.multiply(self.parameters.expectationOfLife, self.deathsH)
