@@ -10,6 +10,17 @@ transmissibilityPW = PiecewiseAgeRate(
     [0])
 
 
+ #inflation factor between 2013 and 2018 = 1.08 or 8.2% (https://www.usinflationcalculator.com/)
+        #cost reference:https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4690729/pdf/nihms-740344.pdf
+
+costOutpatientPW = PiecewiseAgeRate(
+    [78.46*1.08, 83.91*1.08, 105.59*1.08, 96.26*1.08, 92.74*1.08],
+    [0, 1, 18,45,65])
+
+costHospitalizationPW = PiecewiseAgeRate(
+    8.2%,
+    [0, 1, 18,45,65, 85])
+
 #Wielders et al., 2010
 caseARDSfractionPW =  PiecewiseAgeRate(
     [0.023 * 0.0721, 0.023 * 0.0259, 0.023 * 0.0766, 0.023 * 0.1217, 0.023 * 0.2873, 0.023 * 0.4163],

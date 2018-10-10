@@ -5,10 +5,10 @@ import numpy as np
 import Simulation
 import pandas as pd
 
-def run_efficacy_simulation(vacEfficacy, vacDoses, sub_iter):
-	s = Simulation.run_Simulation(paramValues = {"vacEfficacy":vacEfficacy}, index = sub_iter)
+def run_efficacy_simulation(vacEfficacy_universal, vacEfficacy_seasonal, vacDoses, sub_iter):
+	s = Simulation.run_Simulation(paramValues = {"vacEfficacy_universal":vacEfficacy_universal, "vacEfficacy_seasonal": vacEfficacy_seasonal}, index = sub_iter)
 	vaccineCoverage = s.compute_typical_vaccination(vacDoses)
-	vacsUsedTypical, vacsUsedUniversal = s.simulateWithVaccine(vaccineCoverage, vacEfficacy, vacDoses)
+	vacsUsedTypical, vacsUsedUniversal = s.simulateWithVaccine(vaccineCoverage, vacEfficacy_seasonal, vacEfficacy_universal, vacDoses)
 	#print ("check seasonal, universal doses "), vacsUsedTypical, vacsUsedUniversal
 	incidenceL, incidenceH, infections_H1, infections_H3, infections_B, perc_H1, perc_H3, perc_B,hospitalizationsL, hospitalizationsH, deathsL, deathsH = s.calibration_output()
 	return incidenceL, incidenceH, infections_H1, infections_H3, infections_B, hospitalizationsL, hospitalizationsH, deathsL, deathsH
@@ -63,7 +63,9 @@ if __name__ == "__main__":
 		dose1 = total_doses - dose2
 		doses = [dose1, dose2]
 		#print ("doses"), doses, total_doses
-		incidenceL, incidenceH, infections_H1, infections_H3, infections_B, hospitalizationsL, hospitalizationsH, deathsL, deathsH = run_efficacy_simulation([0.46,0], doses, sub_index)
+		universal_efficacy = [0,0]
+		seasonal_efficacy  = 0.46
+		incidenceL, incidenceH, infections_H1, infections_H3, infections_B, hospitalizationsL, hospitalizationsH, deathsL, deathsH = run_efficacy_simulation(universal_efficacy, seasonal_efficacy,  doses, sub_index)
 		
 		
 		hosp_raw = sum(hospitalizationsL) + sum(hospitalizationsH)

@@ -636,6 +636,13 @@ class run_Simulation:
 	self.infectionsVH_B  =  self.RTH_B[-1,: ]  + self.RNH_B[-1,: ]  + self.ITH_B[-1,: ] + self.INH_B[-1,: ]
 
 
+	self.infectionsL_H1 = self.infectionsUL_H1 + self.infectionsVL_H1
+	self.infectionsH_H1 = self.infectionsUH_H1 + self.infectionsVH_H1
+	self.infectionsL_H3 = self.infectionsUL_H3 + self.infectionsVL_H3
+	self.infectionsH_H3 = self.infectionsUH_H3 + self.infectionsVH_H3
+	self.infectionsL_B = self.infectionsUL_B + self.infectionsVL_B
+	self.infectionsH_B = self.infectionsUH_B + self.infectionsVH_B
+	
 	self.infections_H1 = self.infectionsUL_H1 + self.infectionsUH_H1 + self.infectionsVL_H1 + self.infectionsVH_H1 
 	self.infections_H3 = self.infectionsUL_H3 + self.infectionsUH_H3 + self.infectionsVL_H3 + self.infectionsVH_H3 
 	self.infections_B = self.infectionsUL_B + self.infectionsUH_B + self.infectionsVL_B + self.infectionsVH_B 
@@ -722,7 +729,14 @@ class run_Simulation:
 	self.hospitalizationsVH_H3 = self.infectionsVH_H3  * self.case_hospitalizationVH_H3
 	self.hospitalizationsVH_B = self.infectionsVH_B * self.case_hospitalizationVH_B
 	
-	#self.RTL_H1[-1,: ] + self.RNL_H1[-1,: ] + self.ITL_H1[-1,: ] + self.INL_H1[-1,: ]
+
+	
+	self.hospitalizationsL_H1 = self.hospitalizationsUL_H1 + self.hospitalizationsVL_H1
+	self.hospitalizationsH_H1 = self.hospitalizationsUH_H1 + self.hospitalizationsVH_H1
+	self.hospitalizationsL_H3 = self.hospitalizationsUL_H3 + self.hospitalizationsVL_H3
+	self.hospitalizationsH_H3 = self.hospitalizationsUH_H3 + self.hospitalizationsVH_H3
+	self.hospitalizationsL_B = self.hospitalizationsUL_B + self.hospitalizationsVL_B
+	self.hospitalizationsH_B = self.hospitalizationsUH_B + self.hospitalizationsVH_B
 	
 	self.hospitalizations_H1 = self.hospitalizationsUL_H1 + self.hospitalizationsUH_H1 + self.hospitalizationsVL_H1 + self.hospitalizationsVH_H1
 	self.hospitalizations_H3 = self.hospitalizationsUL_H3 + self.hospitalizationsUH_H3 + self.hospitalizationsVL_H3 + self.hospitalizationsVH_H3
@@ -813,15 +827,25 @@ class run_Simulation:
         self.deaths   = self.deathsL + self.deathsH 
         self.totalDeaths = self.deaths.sum()
 	
+	self._lowrisk_outpatients_H1 = self.parameters.lowRiskOutpatientProb * (self.infectionsL_H1 - self.hospitalizationsL_H1)
+	self._highrisk_outpatients_H1 = self.parameters.highRiskOutpatientProb * (self.infectionsH_H1 - self.hospitalizationsH_H1)
+	self._cost_outpatient_H1 = self.parameters.costOutpatient * (self._lowrisk_outpatients_H1 + self._highrisk_outpatients_H1)
+	self._cost_hospitalization_H1 = self.parameters.costHospitalization * self.hospitalizations_H1
+	self.totalCosts_H1 = self._cost_outpatient_H1 + self._cost_hospitalization_H1
 	
-	#print ("total V vs U"), sum(self.deathsV)/1e3 <  sum(self.deathsU)/1e3, sum(self.deathsV)/1e3 ,  sum(self.deathsU)/1e3
-	#print ("VL vs UL"), sum(self.deathsVL)/1e3 <  sum(self.deathsUL)/1e3, sum(self.deathsVL)/1e3 ,  sum(self.deathsUL)/1e3
-	#print ("VH vs UH"), sum(self.deathsVH)/1e3 <  sum(self.deathsUH)/1e3, sum(self.deathsVH)/1e3 ,  sum(self.deathsUH)/1e3
-	#print ("H1"), sum(self.deathsVH_H1)/1e3 <  sum(self.deathsUH_H1)/1e3,  sum(self.deathRateVH_H1)/1e3 <  sum(self.deathRateUH_H1)/1e3, sum(self.deathRateVH_H1)/1e3 ,  sum(self.deathRateUH_H1)/1e3, sum(self.infectionsVH_H1)/1e6, sum(self.infectionsUH_H1)/1e6
-	#print ("H3"), sum(self.deathsVH_H3)/1e3 <  sum(self.deathsUH_H3)/1e3,  sum(self.deathRateVH_H3)/1e3 <  sum(self.deathRateUH_H3)/1e3,  sum(self.deathRateVH_H3)/1e3 ,  sum(self.deathRateUH_H3)/1e3, sum(self.infectionsVH_H3)/1e6, sum(self.infectionsUH_H3)/1e6
-	#print ("deatils"), self.deathRateVL_H3, self.prob_deathV_H3
-	#print ("B"), sum(self.deathsVH_B)/1e3 <  sum(self.deathsUH_B)/1e3,  sum(self.deathRateVH_B)/1e3 <  sum(self.deathRateUH_B)/1e3, sum(self.deathRateVH_B)/1e3 ,  sum(self.deathRateUH_B)/1e3, sum(self.infectionsVH_B)/1e6, sum(self.infectionsUH_B)/1e6
-
+	self._lowrisk_outpatients_H3 = self.parameters.lowRiskOutpatientProb * (self.infectionsL_H3 - self.hospitalizationsL_H3)
+	self._highrisk_outpatients_H3 = self.parameters.highRiskOutpatientProb * (self.infectionsH_H3 - self.hospitalizationsH_H3)
+	self._cost_outpatient_H3 = self.parameters.costOutpatient * (self._lowrisk_outpatients_H3 + self._highrisk_outpatients_H3)
+	self._cost_hospitalization_H3 = self.parameters.costHospitalization * self.hospitalizations_H3
+	self.totalCosts_H3 = self._cost_outpatient_H3 + self._cost_hospitalization_H3
+	
+	self._lowrisk_outpatients_B = self.parameters.lowRiskOutpatientProb * (self.infectionsL_B - self.hospitalizationsL_B)
+	self._highrisk_outpatients_B = self.parameters.highRiskOutpatientProb * (self.infectionsH_B - self.hospitalizationsH_B)
+	self._cost_outpatient_B = self.parameters.costOutpatient * (self._lowrisk_outpatients_B + self._highrisk_outpatients_B)
+	self._cost_hospitalization_B = self.parameters.costHospitalization * self.hospitalizations_B
+	self.totalCosts_B = self._cost_outpatient_B + self._cost_hospitalization_B
+	
+	"""
 	self.YLL_L = numpy.multiply(self.parameters.expectationOfLife, self.deathsL)
 	self.YLL_H = numpy.multiply(self.parameters.expectationOfLife, self.deathsH)
 	self.YLL = numpy.multiply(self.parameters.expectationOfLife, self.deaths)
@@ -867,7 +891,7 @@ class run_Simulation:
 
 	self.DALY = (self.YLL + self.YLD)
 	self.totalDALY = self.DALY.sum()
-	
+	"""
 
         
         
@@ -944,9 +968,9 @@ class run_Simulation:
         return vacsUsedTypical, vacsUsedUniversal
     
         
-    def simulateWithVaccine(self, PVPWVals, vacEfficacy, vacDoses):
+    def simulateWithVaccine(self, PVPWVals, vacEfficacy_seasonal, vacEfficacy_universal, vacDoses):
 	
-        nVacTypes = len(vacEfficacy)
+        nVacTypes = 2
 
         self.resetSolution()
 
@@ -984,7 +1008,7 @@ class run_Simulation:
 	return sum(list(self.infections_H1)), sum(list(self.infections_H3)), sum(list(self.infections_B)), sum(list(self.hospitalizations_H1)), sum(list(self.hospitalizations_H3)), sum(list(self.hospitalizations_B)), sum(list(self.deaths_H1)), sum(list(self.deaths_H3)), sum(list(self.deaths_B))
     
     def detailed_strain_output(self):
-	return list(self.infections_H1), list(self.infections_H3), list(self.infections_B), list(self.hospitalizations_H1), list(self.hospitalizations_H3), list(self.hospitalizations_B), list(self.deaths_H1), list(self.deaths_H3), list(self.deaths_B)
+	return list(self.infections_H1), list(self.infections_H3), list(self.infections_B), list(self.hospitalizations_H1), list(self.hospitalizations_H3), list(self.hospitalizations_B), list(self.deaths_H1), list(self.deaths_H3), list(self.deaths_B), list(self.totalCosts_H1), list(self.totalCosts_H3), list(self.totalCosts_B)
     
     def calibration_output(self):
 	

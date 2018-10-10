@@ -343,6 +343,23 @@ def highRiskhospitalizationRate_BPW(index):
     df.at[index, "highRiskhospitalizationRate_B_75"]],
     [0, 5, 18, 50, 65, 75])
 
+
+def lowRiskOutpatientProbPW(index):
+    return PiecewiseAgeRate(
+    [df.at[index, "prob_outpatient_lowrisk_0"],
+     df.at[index, "prob_outpatient_lowrisk_5"],
+     df.at[index, "prob_outpatient_lowrisk_18"],
+    df.at[index, "prob_outpatient_lowrisk_65"]],
+    [0, 5, 18, 65])
+
+def highRiskOutpatientProbPW(index):
+    return PiecewiseAgeRate(
+    [df.at[index, "prob_outpatient_highrisk_0"],
+     df.at[index, "prob_outpatient_highrisk_5"],
+     df.at[index, "prob_outpatient_highrisk_18"],
+    df.at[index, "prob_outpatient_highrisk_65"]],
+    [0, 5, 18, 65])
+
 def transmissionScaling_H1(index):
     return df.at[index, "beta_H1"]
 

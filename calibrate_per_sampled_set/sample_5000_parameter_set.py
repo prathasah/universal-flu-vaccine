@@ -40,7 +40,9 @@ if __name__ == "__main__":
               "lowRiskhospitalizationRate_B_0","lowRiskhospitalizationRate_B_5","lowRiskhospitalizationRate_B_18","lowRiskhospitalizationRate_B_50","lowRiskhospitalizationRate_B_65", "lowRiskhospitalizationRate_B_75",
               "highRiskhospitalizationRate_H1_0","highRiskhospitalizationRate_H1_5","highRiskhospitalizationRate_H1_18","highRiskhospitalizationRate_H1_50","highRiskhospitalizationRate_H1_65", "highRiskhospitalizationRate_H1_75",
               "highRiskhospitalizationRate_H3_0","highRiskhospitalizationRate_H3_5","highRiskhospitalizationRate_H3_18","highRiskhospitalizationRate_H3_50","highRiskhospitalizationRate_H3_65", "highRiskhospitalizationRate_H3_75",
-              "highRiskhospitalizationRate_B_0","highRiskhospitalizationRate_B_5","highRiskhospitalizationRate_B_18","highRiskhospitalizationRate_B_50","highRiskhospitalizationRate_B_65", "highRiskhospitalizationRate_B_75", "vac_eff_hospitalization", "vac_eff_mortality"]
+              "highRiskhospitalizationRate_B_0","highRiskhospitalizationRate_B_5","highRiskhospitalizationRate_B_18","highRiskhospitalizationRate_B_50","highRiskhospitalizationRate_B_65", "highRiskhospitalizationRate_B_75", "vac_eff_hospitalization", "vac_eff_mortality",
+              "prob_outpatient_lowrisk_0","prob_outpatient_lowrisk_5","prob_outpatient_lowrisk_18" ,"prob_outpatient_lowrisk_65",
+                    "prob_outpatient_highrisk_0" ,"prob_outpatient_highrisk_5" ,"prob_outpatient_highrisk_18" ,"prob_outpatient_highrisk_65"]
     writer = csv.writer(open('DEBUG_sampled_parameter_5000_set_with_data_13July2018.csv','wb'))
     writer.writerow(header)
      
@@ -78,7 +80,6 @@ if __name__ == "__main__":
         vacEfficacy_2014 = numpy.random.triangular(10,19,27)
         vacEfficacy_2015 = numpy.random.triangular(41,48,55)
         
-        vacCoverage_2010_0 = numpy.random.triangular(39.3, 46.2, 53.1)
         
          
          
@@ -256,8 +257,9 @@ if __name__ == "__main__":
         ratio_death_highrisk_B_75 = 2968/990.
          
         ##################
-        # probability of hospitalization https://bmcinfectdis.biomedcentral.com/articles/10.1186/s12879-015-1193-4 and
-        # https://www.sciencedirect.com/science/article/pii/S0264410X07003854
+        # probability of hospitalization from  Molinari 2007
+        # https://www.sciencedirect.com/science/article/pii/S0264410X07003854 and
+        # de 2016 https://www.sciencedirect.com/science/article/pii/S1098301516305034?via%3Dihub        
          
         relative_prob_hosp_0 = 1
         relative_prob_hosp_5 =  numpy.random.triangular(0.0002,0.0006,0.001)/numpy.random.triangular(0.0049, 0.0141,0.0233)
@@ -265,32 +267,6 @@ if __name__ == "__main__":
         relative_prob_hosp_50 =  numpy.random.triangular(0.00676,0.0193,0.0318)/numpy.random.triangular(0.0049, 0.0141,0.0233)
         relative_prob_hosp_65 = numpy.random.triangular(0.0147,0.0421,0.0695)/numpy.random.triangular(0.0049, 0.0141,0.0233)
          
-         
-   
-        ###########################################################
-        # Table 4 of https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5359836/pdf/12889_2017_Article_4177.pdf
-        ratio_hosp_highrisk_H1_0 = 0/min(numpy.random.triangular(0,8,23),1)
-        ratio_hosp_highrisk_H1_5 = numpy.random.triangular(0,3,9)/max(numpy.random.triangular(0,3,9),1)
-        ratio_hosp_highrisk_H1_18 = numpy.random.triangular(0,9,30)/max(numpy.random.triangular(0,1,3),1)
-        ratio_hosp_highrisk_H1_50 = numpy.random.triangular(0,10,33)/max(numpy.random.triangular(0,1,1),1)
-        ratio_hosp_highrisk_H1_65 = numpy.random.triangular(0,20,81)/max(0,1)
-        ratio_hosp_highrisk_H1_75 = numpy.random.triangular(0,12,42)/max(numpy.random.triangular(0,2,5),1)
-        
-        
-        ratio_hosp_highrisk_H3_0 = numpy.random.triangular(0,11,26)/max(numpy.random.triangular(1,61,124),1)
-        ratio_hosp_highrisk_H3_5 = numpy.random.triangular(0,4,8)/max(numpy.random.triangular(0,8,17),1)
-        ratio_hosp_highrisk_H3_18 = numpy.random.triangular(1,52,110)/max(numpy.random.triangular(0,10,20),1)
-        ratio_hosp_highrisk_H3_50 = numpy.random.triangular(3, 149, 313)/max(numpy.random.triangular(0,17,35),1)
-        ratio_hosp_highrisk_H3_65 = numpy.random.triangular(6,286,591)/max(numpy.random.triangular(1,39,80),1)
-        ratio_hosp_highrisk_H3_75 = numpy.random.triangular(12,587,1198)/max(numpy.random.triangular(3,117,235),1)
-        
-        
-        ratio_hosp_highrisk_B_0 = numpy.random.triangular(0,10,24)/max(numpy.random.triangular(2,41,86),1)
-        ratio_hosp_highrisk_B_5 = numpy.random.triangular(0,3,7)/max(numpy.random.triangular(0,8,15),1)
-        ratio_hosp_highrisk_B_18 = numpy.random.triangular(1,30,64)/max(numpy.random.triangular(0,6,11),1)
-        ratio_hosp_highrisk_B_50 = numpy.random.triangular(2,60,134)/max(numpy.random.triangular(0,7,15),1)
-        ratio_hosp_highrisk_B_65 = numpy.random.triangular(1,44,105)/max(numpy.random.triangular(0,9,18),1)
-        ratio_hosp_highrisk_B_75 = numpy.random.triangular(4,161,380)/max(numpy.random.triangular(1,40,80),1)
  
         ############################################################
         #case hospitalization
@@ -327,8 +303,8 @@ if __name__ == "__main__":
         high_risk_hosp_rate_H1_65 = numpy.random.triangular(0,20,81)
         high_risk_hosp_rate_H1_75 = numpy.random.triangular(0,21,86)
         ## the parameter realistically cannot be zero, so compute value based on highrisk/lowrisk ratio
-        low_risk_hosp_rate_H1_65 = high_risk_hosp_rate_H1_65/7.9
-        low_risk_hosp_rate_H1_75 = high_risk_hosp_rate_H1_65/4.9
+        #low_risk_hosp_rate_H1_65 = high_risk_hosp_rate_H1_65/7.9
+        #low_risk_hosp_rate_H1_75 = high_risk_hosp_rate_H1_65/4.9
          
         high_risk_hosp_rate_H3_0 = numpy.random.triangular(0,11,26)
         high_risk_hosp_rate_H3_5 = numpy.random.triangular(0,4,8)
@@ -343,9 +319,51 @@ if __name__ == "__main__":
         high_risk_hosp_rate_B_50 = numpy.random.triangular(2,60,134)
         high_risk_hosp_rate_B_65 =numpy.random.triangular(1,44,105)
         high_risk_hosp_rate_B_75 = numpy.random.triangular(4,161,380)
+        
+        ratio_hosp_highrisk_H1_0 =  high_risk_hosp_rate_H1_0 /min(low_risk_hosp_rate_H1_0,1)
+        ratio_hosp_highrisk_H1_5 =  high_risk_hosp_rate_H1_5 /min(low_risk_hosp_rate_H1_5,1)
+        ratio_hosp_highrisk_H1_18 =  high_risk_hosp_rate_H1_18 /min(low_risk_hosp_rate_H1_18,1)
+        ratio_hosp_highrisk_H1_50 =  high_risk_hosp_rate_H1_50 /min(low_risk_hosp_rate_H1_50,1)
+        ratio_hosp_highrisk_H1_65 =  high_risk_hosp_rate_H1_65 /max(low_risk_hosp_rate_H1_65,1)
+        ratio_hosp_highrisk_H1_75 =  high_risk_hosp_rate_H1_75 /max(low_risk_hosp_rate_H1_75,1)
+        
+        
+        ratio_hosp_highrisk_H3_0 =  high_risk_hosp_rate_H3_0 /min(low_risk_hosp_rate_H3_0,1)
+        ratio_hosp_highrisk_H3_5 =  high_risk_hosp_rate_H3_5 /min(low_risk_hosp_rate_H3_5,1)
+        ratio_hosp_highrisk_H3_18 =  high_risk_hosp_rate_H3_18 /min(low_risk_hosp_rate_H3_18,1)
+        ratio_hosp_highrisk_H3_50 =  high_risk_hosp_rate_H3_50 /min(low_risk_hosp_rate_H3_50,1)
+        ratio_hosp_highrisk_H3_65 =  high_risk_hosp_rate_H3_65 /min(low_risk_hosp_rate_H3_65,1)
+        ratio_hosp_highrisk_H3_75 =  high_risk_hosp_rate_H3_75 /min(low_risk_hosp_rate_H3_75,1)
+        
+        
+        ratio_hosp_highrisk_B_0 =  high_risk_hosp_rate_B_0 /min(low_risk_hosp_rate_B_0,1)
+        ratio_hosp_highrisk_B_5 =  high_risk_hosp_rate_B_5 /min(low_risk_hosp_rate_B_5,1)
+        ratio_hosp_highrisk_B_18 =  high_risk_hosp_rate_B_18 /min(low_risk_hosp_rate_B_18,1)
+        ratio_hosp_highrisk_B_50 =  high_risk_hosp_rate_B_50 /min(low_risk_hosp_rate_B_50,1)
+        ratio_hosp_highrisk_B_65 =  high_risk_hosp_rate_B_65 /min(low_risk_hosp_rate_B_65,1)
+        ratio_hosp_highrisk_B_75 =  high_risk_hosp_rate_B_75 /min(low_risk_hosp_rate_B_75,1)
          
         vac_eff_hospitalization = 0
         vac_eff_mortality = 0
+        
+        #####################
+        ## economic costs
+        
+        #source: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3253949/pdf/IRV-6-167.pdf
+        prob_outpatient_lowrisk_0 = numpy.random.normal(0.455, 0.098)
+        prob_outpatient_lowrisk_5 = numpy.random.normal(0.318, 0.061)
+        prob_outpatient_lowrisk_18 = numpy.random.normal(0.313, 0.014)
+        prob_outpatient_lowrisk_65 = numpy.random.normal(0.620, 0.027)
+        
+        prob_outpatient_highrisk_0 = numpy.random.normal(0.910, 0.250)
+        prob_outpatient_highrisk_5 = numpy.random.normal(0.635, 0.167)
+        prob_outpatient_highrisk_18 = numpy.random.normal(0.625, 0.118)
+        prob_outpatient_highrisk_65 = numpy.random.normal(0.850, 0.093)
+        
+        
+       
+        
+        
         ##################
  
          
@@ -386,7 +404,9 @@ if __name__ == "__main__":
                     low_risk_hosp_rate_B_0, low_risk_hosp_rate_B_5, low_risk_hosp_rate_B_18, low_risk_hosp_rate_B_50, low_risk_hosp_rate_B_65, low_risk_hosp_rate_B_75,
                     high_risk_hosp_rate_H1_0, high_risk_hosp_rate_H1_5, high_risk_hosp_rate_H1_18, high_risk_hosp_rate_H1_50, high_risk_hosp_rate_H1_65, high_risk_hosp_rate_H1_75,
                     high_risk_hosp_rate_H3_0, high_risk_hosp_rate_H3_5, high_risk_hosp_rate_H3_18, high_risk_hosp_rate_H3_50, high_risk_hosp_rate_H3_65, high_risk_hosp_rate_H3_75,
-                    high_risk_hosp_rate_B_0, high_risk_hosp_rate_B_5, high_risk_hosp_rate_B_18, high_risk_hosp_rate_B_50, high_risk_hosp_rate_B_65, high_risk_hosp_rate_B_75, vac_eff_hospitalization, vac_eff_mortality]
+                    high_risk_hosp_rate_B_0, high_risk_hosp_rate_B_5, high_risk_hosp_rate_B_18, high_risk_hosp_rate_B_50, high_risk_hosp_rate_B_65, high_risk_hosp_rate_B_75, vac_eff_hospitalization, vac_eff_mortality,
+                    prob_outpatient_lowrisk_0 ,prob_outpatient_lowrisk_5 ,prob_outpatient_lowrisk_18 ,prob_outpatient_lowrisk_65,
+                    prob_outpatient_highrisk_0 ,prob_outpatient_highrisk_5 ,prob_outpatient_highrisk_18 ,prob_outpatient_highrisk_65]
         writer.writerow(elements)
          
         
