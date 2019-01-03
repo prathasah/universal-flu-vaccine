@@ -12,14 +12,19 @@ transmissibilityPW = PiecewiseAgeRate(
 
  #inflation factor between 2013 and 2018 = 1.08 or 8.2% (https://www.usinflationcalculator.com/)
         #cost reference:https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4690729/pdf/nihms-740344.pdf
+	
+# over the counter cost from Molinari 2007 (The annual impact of seasonal influenza in the US: Measuring disease burden and costs). $3 in 2003 adjusted with inflation factor
+costOverCounterMeds = 4.11
 
 costOutpatientPW = PiecewiseAgeRate(
     [78.46*1.08, 83.91*1.08, 105.59*1.08, 96.26*1.08, 92.74*1.08],
     [0, 1, 18,45,65])
 
 costHospitalizationPW = PiecewiseAgeRate(
-    8.2%,
+    [5650.47*1.08, 6824.13*1.08,8880.10*1.08,14703.65*1.08,9810.63*1.08,8953.97*1.08],
     [0, 1, 18,45,65, 85])
+
+
 
 #Wielders et al., 2010
 caseARDSfractionPW =  PiecewiseAgeRate(

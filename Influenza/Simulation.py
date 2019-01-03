@@ -45,7 +45,6 @@ class run_Simulation:
 	    #----------------------------------------------------------
 	    
 	    ## vaccination uptake in 2016 + adjustment to ensure total vaccines = 150million
-	    ##assuming vaccination coverage of high risk age group = 70% ------- TO CHANGE
 	    
 	    # length of vaccine coverage = 32. First 16 is for low risk people and last sixteen is for high risk people
 	    ## vaccination rate of high risk groups is 1.34 times higher than low risk groups on an average (see data)
@@ -829,21 +828,32 @@ class run_Simulation:
 	
 	self._lowrisk_outpatients_H1 = self.parameters.lowRiskOutpatientProb * (self.infectionsL_H1 - self.hospitalizationsL_H1)
 	self._highrisk_outpatients_H1 = self.parameters.highRiskOutpatientProb * (self.infectionsH_H1 - self.hospitalizationsH_H1)
+	self.outpatients_H1 = self._lowrisk_outpatients_H1+ self._highrisk_outpatients_H1
+	# not medically attended = all infection cases - outpatients - hospitalized -deaths
+	self._not_medically_attended_H1 = self.infections_H1 - self.outpatients_H1 - self.hospitalizations_H1 - self.deaths_H1
+	self._cost_overcounterMeds_H1 = self._not_medically_attended_H1 * self.parameters.costOverCounterMeds
 	self._cost_outpatient_H1 = self.parameters.costOutpatient * (self._lowrisk_outpatients_H1 + self._highrisk_outpatients_H1)
 	self._cost_hospitalization_H1 = self.parameters.costHospitalization * self.hospitalizations_H1
-	self.totalCosts_H1 = self._cost_outpatient_H1 + self._cost_hospitalization_H1
+	self.totalCosts_H1 = self._cost_overcounterMeds_H1 + self._cost_outpatient_H1 + self._cost_hospitalization_H1
 	
 	self._lowrisk_outpatients_H3 = self.parameters.lowRiskOutpatientProb * (self.infectionsL_H3 - self.hospitalizationsL_H3)
 	self._highrisk_outpatients_H3 = self.parameters.highRiskOutpatientProb * (self.infectionsH_H3 - self.hospitalizationsH_H3)
+	self.outpatients_H3 = self._lowrisk_outpatients_H3 + self._highrisk_outpatients_H3
+	self._not_medically_attended_H3 = self.infections_H3 - self.outpatients_H3 - self.hospitalizations_H3 - self.deaths_H3
+	self._cost_overcounterMeds_H3 = self._not_medically_attended_H3 * self.parameters.costOverCounterMeds
 	self._cost_outpatient_H3 = self.parameters.costOutpatient * (self._lowrisk_outpatients_H3 + self._highrisk_outpatients_H3)
 	self._cost_hospitalization_H3 = self.parameters.costHospitalization * self.hospitalizations_H3
-	self.totalCosts_H3 = self._cost_outpatient_H3 + self._cost_hospitalization_H3
+	self.totalCosts_H3 = self._cost_overcounterMeds_H3 + self._cost_outpatient_H3 + self._cost_hospitalization_H3
 	
 	self._lowrisk_outpatients_B = self.parameters.lowRiskOutpatientProb * (self.infectionsL_B - self.hospitalizationsL_B)
 	self._highrisk_outpatients_B = self.parameters.highRiskOutpatientProb * (self.infectionsH_B - self.hospitalizationsH_B)
+	self.outpatients_B = self._lowrisk_outpatients_B + self._highrisk_outpatients_B
+	self._not_medically_attended_B = self.infections_B - self.outpatients_B - self.hospitalizations_B - self.deaths_B
+	self._cost_overcounterMeds_B = self._not_medically_attended_B * self.parameters.costOverCounterMeds
 	self._cost_outpatient_B = self.parameters.costOutpatient * (self._lowrisk_outpatients_B + self._highrisk_outpatients_B)
 	self._cost_hospitalization_B = self.parameters.costHospitalization * self.hospitalizations_B
-	self.totalCosts_B = self._cost_outpatient_B + self._cost_hospitalization_B
+	self.totalCosts_B = self._cost_overcounterMeds_B + self._cost_outpatient_B + self._cost_hospitalization_B
+	
 	
 	"""
 	self.YLL_L = numpy.multiply(self.parameters.expectationOfLife, self.deathsL)
