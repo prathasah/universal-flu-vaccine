@@ -13,18 +13,16 @@ if __name__ == "__main__":
      
      
     header = ["iter", "year","data_incidence", "data_hospitalizations", "data_mortality", "data_vacEfficacy", "data_vacDoses", "data_H1_0", "data_H1_5", "data_H1_25", "data_H1_65", "data_H3_0", "data_H3_5", "data_H3_25", "data_H3_65", "data_B_0", "data_B_5", "data_B_25", "data_B_65", "infectious_period_0", "infectious_period_15", "proportionHighRisk_0", "proportionHighRisk_2","proportionHighRisk_5","proportionHighRisk_19", "proportionHighRisk_25", "proportionHighRisk_50","proportionHighRisk_65", 
-              "relative_vaccineEfficacyVsInfection_H1_0", "relative_vaccineEfficacyVsInfection_H1_0.5",  "relative_vaccineEfficacyVsInfection_H1_5","relative_vaccineEfficacyVsInfection_H1_18","relative_vaccineEfficacyVsInfection_H1_50",
-              "relative_vaccineEfficacyVsInfection_H3_0", "relative_vaccineEfficacyVsInfection_H3_0.5",  "relative_vaccineEfficacyVsInfection_H3_5","relative_vaccineEfficacyVsInfection_H3_18","relative_vaccineEfficacyVsInfection_H3_50",
-              "relative_vaccineEfficacyVsInfection_B_0", "relative_vaccineEfficacyVsInfection_B_0.5",  "relative_vaccineEfficacyVsInfection_B_5","relative_vaccineEfficacyVsInfection_B_18","relative_vaccineEfficacyVsInfection_B_50",
+              "age_specific_vaccineEfficacyVsInfection_H1_0", "age_specific_vaccineEfficacyVsInfection_H1_0.5",  "age_specific_vaccineEfficacyVsInfection_H1_5","age_specific_vaccineEfficacyVsInfection_H1_18","age_specific_vaccineEfficacyVsInfection_H1_50",
+              "age_specific_vaccineEfficacyVsInfection_H3_0", "age_specific_vaccineEfficacyVsInfection_H3_0.5",  "age_specific_vaccineEfficacyVsInfection_H3_5","age_specific_vaccineEfficacyVsInfection_H3_18","age_specific_vaccineEfficacyVsInfection_H3_50",
+              "age_specific_vaccineEfficacyVsInfection_B_0", "age_specific_vaccineEfficacyVsInfection_B_0.5",  "age_specific_vaccineEfficacyVsInfection_B_5","age_specific_vaccineEfficacyVsInfection_B_18","age_specific_vaccineEfficacyVsInfection_B_50",
+              "vaccineEfficacyVsInfection_age_adjusted_H1","vaccineEfficacyVsInfection_age_adjusted_H3","vaccineEfficacyVsInfection_age_adjusted_B",
                "relative_vaccineEfficacyVsHospitalization_H1_0", "relative_vaccineEfficacyVsHospitalization_H1_0.5", "relative_vaccineEfficacyVsHospitalization_H1_16", "relative_vaccineEfficacyVsHospitalization_H1_65",
               "relative_vaccineEfficacyVsHospitalization_H3_0", "relative_vaccineEfficacyVsHospitalization_H3_0.5", "relative_vaccineEfficacyVsHospitalization_H3_16", "relative_vaccineEfficacyVsHospitalization_H3_65",
               "relative_vaccineEfficacyVsHospitalization_B_0", "relative_vaccineEfficacyVsHospitalization_B_0.5", "relative_vaccineEfficacyVsHospitalization_B_16", "relative_vaccineEfficacyVsHospitalization_B_65",
               "relative_vaccineEfficacyVsDeath_H1_0", "relative_vaccineEfficacyVsDeath_H1_0.5", "relative_vaccineEfficacyVsDeath_H1_18", "relative_vaccineEfficacyVsDeath_H1_65",
               "relative_vaccineEfficacyVsDeath_H3_0", "relative_vaccineEfficacyVsDeath_H3_0.5", "relative_vaccineEfficacyVsDeath_H3_18", "relative_vaccineEfficacyVsDeath_H3_65",
               "relative_vaccineEfficacyVsDeath_B_0", "relative_vaccineEfficacyVsDeath_B_0.5", "relative_vaccineEfficacyVsDeath_B_18", "relative_vaccineEfficacyVsDeath_B_65",
-              "relative_highRiskvaccineEfficacyVsDeath_H1_0", "relative_highRiskvaccineEfficacyVsDeath_H1_0.5", "relative_highRiskvaccineEfficacyVsDeath_H1_18", "relative_highRiskvaccineEfficacyVsDeath_H1_65",
-              "relative_highRiskvaccineEfficacyVsDeath_H3_0", "relative_highRiskvaccineEfficacyVsDeath_H3_0.5", "relative_highRiskvaccineEfficacyVsDeath_H3_18", "relative_highRiskvaccineEfficacyVsDeath_H3_65",
-              "relative_highRiskvaccineEfficacyVsDeath_B_0", "relative_highRiskvaccineEfficacyVsDeath_B_0.5", "relative_highRiskvaccineEfficacyVsDeath_B_18", "relative_highRiskvaccineEfficacyVsDeath_B_65",
                 "relative_prob_death_0", "relative_prob_death_5", "relative_prob_death_18", "relative_prob_death_50", "relative_prob_death_65",
                 "ratio_death_strain_H1_0", "ratio_death_strain_H1_5", "ratio_death_strain_H1_18", "ratio_death_strain_H1_50", "ratio_death_strain_H1_65", "ratio_death_strain_H1_75",
                 "ratio_death_strain_H3_0", "ratio_death_strain_H3_5", "ratio_death_strain_H3_18", "ratio_death_strain_H3_50", "ratio_death_strain_H3_65", "ratio_death_strain_H3_75",
@@ -43,34 +41,45 @@ if __name__ == "__main__":
               "highRiskhospitalizationRate_B_0","highRiskhospitalizationRate_B_5","highRiskhospitalizationRate_B_18","highRiskhospitalizationRate_B_50","highRiskhospitalizationRate_B_65", "highRiskhospitalizationRate_B_75", "vac_eff_hospitalization", "vac_eff_mortality",
               "prob_outpatient_lowrisk_0","prob_outpatient_lowrisk_5","prob_outpatient_lowrisk_18" ,"prob_outpatient_lowrisk_65",
                     "prob_outpatient_highrisk_0" ,"prob_outpatient_highrisk_5" ,"prob_outpatient_highrisk_18" ,"prob_outpatient_highrisk_65"]
-    writer = csv.writer(open('DEBUG_sampled_parameter_5000_set_with_data_13July2018.csv','wb'))
+    writer = csv.writer(open('sampled_parameter_5000_set_with_data_20March2019.csv','wb'))
     writer.writerow(header)
      
     for num in xrange(5000):
         #############################
         ##data
          
-        #https://www.cdc.gov/flu/about/disease/2015-16.htm
-        incidence_2010 = numpy.random.triangular(17582319, 21096749 , 27698870)
-        incidence_2011 = numpy.random.triangular(7281179, 9231004, 13835345)
-        incidence_2012 = numpy.random.triangular(30113616, 35590424, 44250092)
-        incidence_2013 = numpy.random.triangular(24968054, 28445377, 33040119)
-        incidence_2014 = numpy.random.triangular(30332937, 34292299, 40051029)
-        incidence_2015 = numpy.random.triangular(21504826, 24577163,28626313)
+        #see supplement or data folder for raw data from CDC
+        incidence_2010 = numpy.random.triangular(20e6, 21e6 , 25e6)
+        incidence_2011 = numpy.random.triangular(8.7e6, 9.3e6, 12e6)
+        incidence_2012 = numpy.random.triangular(32e6, 34e6, 38e6)
+        incidence_2013 = numpy.random.triangular(28e6, 30e6, 33e6)
+        incidence_2014 = numpy.random.triangular(29e6, 30e6, 33e6)
+        incidence_2015 = numpy.random.triangular(24e6, 25e6,28e6)
+        incidence_2016 = numpy.random.triangular(28e6, 30e6,32e6)
+        incidence_2017 = numpy.random.triangular(46e6, 49e6,53e6)
+        incidence_2018 = numpy.random.uniform(25.5e6,29.3e6)
+        
          
-        hospitalizations_2010 = numpy.random.triangular(239000, 282000, 374000)
-        hospitalizations_2011 = numpy.random.triangular(116000, 139000, 206000)
-        hospitalizations_2012 = numpy.random.triangular(510000, 593000,733000)
-        hospitalizations_2013 = numpy.random.triangular(283000, 322000, 377000)
-        hospitalizations_2014 = numpy.random.triangular(624000, 707000, 839000)
-        hospitalizations_2015 = numpy.random.triangular(271000, 308000, 362000)
+        hospitalizations_2010 = numpy.random.triangular(270e3, 290e3, 370e3)
+        hospitalizations_2011 = numpy.random.triangular(130e3, 140e3, 190e3)
+        hospitalizations_2012 = numpy.random.triangular(530e3, 570e3,680e3)
+        hospitalizations_2013 = numpy.random.triangular(320e3, 350e3, 390e3)
+        hospitalizations_2014 = numpy.random.triangular(540e3, 590e3, 680e3)
+        hospitalizations_2015 = numpy.random.triangular(290e3, 310e3, 340e3)
+        hospitalizations_2016 = numpy.random.triangular(520e3,580e3,660e3)
+        hospitalizations_2017 = numpy.random.triangular(870e3,960e3, 1100e3)
+        hospitalizations_2018 = numpy.random.uniform(327e3,394e3)
+            
          
-        mortality_2010 = numpy.random.triangular(34283,39008,44986)
-        mortality_2011 = numpy.random.triangular(10638, 12182,14346)
-        mortality_2012 = numpy.random.triangular(50252,56102, 63709)
-        mortality_2013 = numpy.random.triangular(27832,31864, 37234)
-        #mortality_2014 = numpy.random.triangular(17718,19490,21740)
-        #mortality_2015 = numpy.random.triangular(10634,11995,13914)
+        mortality_2010 = numpy.random.triangular(32e3,37e3,51e3)
+        mortality_2011 = numpy.random.triangular(11e3, 12e3,23e3)
+        mortality_2012 = numpy.random.triangular(37e3,43e3, 57e3)
+        mortality_2013 = numpy.random.triangular(33e3,38e3, 50e3)
+        mortality_2014 = numpy.random.triangular(44e3,51e3,64e3)
+        mortality_2015 = numpy.random.triangular(21e3,25e3,31e3)
+        mortality_2016 = numpy.random.triangular(44e3,51e3,64e3)
+        mortality_2017 = numpy.random.triangular(69e3,79e3,99e3)
+        mortality_2018 = numpy.random.uniform(21.5,35.5)
          
         #https://www.cdc.gov/flu/professionals/vaccination/effectiveness-studies.htm
         vacEfficacy_2010 = numpy.random.triangular(53,60,66)
@@ -79,34 +88,40 @@ if __name__ == "__main__":
         vacEfficacy_2013 = numpy.random.triangular(44,52,59)
         vacEfficacy_2014 = numpy.random.triangular(10,19,27)
         vacEfficacy_2015 = numpy.random.triangular(41,48,55)
+        vacEfficacy_2016 = numpy.random.triangular(32,40,46)
+        vacEfficacy_2017 = numpy.random.triangular(31,38,43)
+        vacEfficacy_2018 = numpy.random.triangular(34,47,57)
         
         
          
          
-        incidence = numpy.mean([incidence_2010, incidence_2011, incidence_2012, incidence_2013, incidence_2014, incidence_2015])
-        hospitalizations = numpy.mean([hospitalizations_2010, hospitalizations_2011, hospitalizations_2012, hospitalizations_2013, hospitalizations_2014, hospitalizations_2015])
-        mortality = numpy.mean([mortality_2010, mortality_2011, mortality_2012, mortality_2013])
-        vacEfficacy = numpy.mean([vacEfficacy_2010, vacEfficacy_2011, vacEfficacy_2012, vacEfficacy_2013, vacEfficacy_2014, vacEfficacy_2015])
-        vacDoses = 141.95e6
+        incidence = numpy.mean([incidence_2010, incidence_2011, incidence_2012, incidence_2013, incidence_2014, incidence_2015, incidence_2016, incidence_2017, incidence_2018])
+        hospitalizations = numpy.mean([hospitalizations_2010, hospitalizations_2011, hospitalizations_2012, hospitalizations_2013, hospitalizations_2014, hospitalizations_2015, hospitalizations_2016, hospitalizations_2017, hospitalizations_2018])
+        mortality = numpy.mean([mortality_2010, mortality_2011, mortality_2012, mortality_2013, mortality_2014, mortality_2015, mortality_2016, mortality_2017, mortality_2018])
+        vacEfficacy = numpy.mean([vacEfficacy_2010, vacEfficacy_2011, vacEfficacy_2012, vacEfficacy_2013, vacEfficacy_2014, vacEfficacy_2015, vacEfficacy_2016, vacEfficacy_2017, vacEfficacy_2018])
+        ## see Table S3 of supplement
+        vacDoses = 146.78e6
          
  
-        H1_0 = 4.04
-        H1_5 = 8.88
-        H1_25 = 15.31
-        H1_65 = 3.06
-        H3_0 = 6.33
-        H3_5 = 14.25
-        H3_25 = 14.76
-        H3_65 = 14.64
-        B_0 = 2.35
-        B_5 =  8.11
-        B_25 = 5.70
-        B_65 = 2.56
+        H1_0 = 3.99
+        H1_5 = 8.42
+        H1_25 = 13.92
+        H1_65 = 3.43
+        H3_0 = 5.86
+        H3_5 = 15.17
+        H3_25 = 15.62
+        H3_65 = 16.61
+        B_0 = 1.83
+        B_5 =  6.62
+        B_25 = 5.33
+        B_65 = 3.20
  
         ######################
         # infectious period from https://onlinelibrary.wiley.com/doi/abs/10.1002/sim.1912
         infectious_period_0 = numpy.random.triangular(2.3,3.6,5.2)
         infectious_period_15 = numpy.random.triangular(3.2,3.9,4.9)
+        
+        # high risk proportion from Zimmerman et al., 2010
         prop_high_risk_0 = numpy.random.normal(0.0415, 0.0044)
         prop_high_risk_2 = numpy.random.normal(0.0883, 0.0051)
         prop_high_risk_5 = numpy.random.normal(0.1168, 0.0030)
@@ -138,6 +153,11 @@ if __name__ == "__main__":
         vac_eff_inf_B_5 = numpy.random.triangular(0.4, 0.52, 0.62)
         vac_eff_inf_B_18 = numpy.random.triangular(0.09, 0.33, 0.50)
         vac_eff_inf_B_50 = numpy.random.triangular(0.10, 0.37, 0.65)
+        
+        vac_eff_inf_age_adjusted_H1 = numpy.random.triangular(0.53, 0.63, 0.71)
+        vac_eff_inf_age_adjusted_H3 =numpy.random.triangular(0.31, 0.39, 0.46)
+        vac_eff_inf_age_adjusted_B =numpy.random.triangular(0.43, 0.50, 0.57)
+        
         ##################
          
         #############################
@@ -188,22 +208,21 @@ if __name__ == "__main__":
         relative_vac_eff_death_B_18 = numpy.random.uniform(0.7, 0.9)/numpy.random.triangular(0.43, 0.71,0.87)
         relative_vac_eff_death_B_65 = numpy.random.triangular(0.11, 0.21, 0.29)/numpy.random.triangular(0.43, 0.71,0.87)
          
-        relative_high_risk_vac_eff_death_H1_0 = 0
-        relative_high_risk_vac_eff_death_H1_6mo = 1
-        relative_high_risk_vac_eff_death_H1_18 = numpy.random.triangular(0.39, 0.78,0.92)/numpy.random.triangular(0.35, 0.59,0.74)
-        relative_high_risk_vac_eff_death_H1_65 = numpy.random.triangular(0.22, 0.29, 0.34)/numpy.random.triangular(0.35, 0.59,0.74)
+        ##################
+        # Rate of hospitalization given an infection from  Molinari 2007
+        # https://www.sciencedirect.com/science/article/pii/S0264410X07003854 and
+        # de 2016 https://www.sciencedirect.com/science/article/pii/S1098301516305034?via%3Dihub        
          
-        relative_high_risk_vac_eff_death_H3_0 = 0
-        relative_high_risk_vac_eff_death_H3_6mo = 1
-        relative_high_risk_vac_eff_death_H3_18 = numpy.random.triangular(0.39, 0.78,0.92)/numpy.random.triangular(0.35, 0.59,0.74)
-        relative_high_risk_vac_eff_death_H3_65 = numpy.random.triangular(0.22, 0.29, 0.34)/numpy.random.triangular(0.35, 0.59,0.74)
+        relative_prob_hosp_0 = 1
+        relative_prob_hosp_5 =  numpy.random.triangular(0.0002,0.0006,0.001)/numpy.random.triangular(0.0049, 0.0141,0.0233)
+        relative_prob_hosp_18 =  numpy.random.triangular(0.0015,0.0042,0.0069)/numpy.random.triangular(0.0049, 0.0141,0.0233)
+        relative_prob_hosp_50 =  numpy.random.triangular(0.00676,0.0193,0.0318)/numpy.random.triangular(0.0049, 0.0141,0.0233)
+        relative_prob_hosp_65 = numpy.random.triangular(0.0147,0.0421,0.0695)/numpy.random.triangular(0.0049, 0.0141,0.0233)
          
-        relative_high_risk_vac_eff_death_B_0 = 0
-        relative_high_risk_vac_eff_death_B_6mo = 1
-        relative_high_risk_vac_eff_death_B_18 = numpy.random.triangular(0.39, 0.78,0.92)/numpy.random.triangular(0.13, 0.35,0.63)
-        relative_high_risk_vac_eff_death_B_65 = numpy.random.triangular(0.22, 0.29, 0.34)/numpy.random.triangular(0.13, 0.35,0.63)
+ 
         ######################
-        # probability of death from https://www.sciencedirect.com/science/article/pii/S0264410X07003854?via%3Dihub and
+        # Rate of death given an infection
+        #from https://www.sciencedirect.com/science/article/pii/S0264410X07003854?via%3Dihub and
         #https://www.sciencedirect.com/science/article/pii/S1098301516305034
         relative_prob_death_0 = 1   
         relative_prob_death_5 =  numpy.random.triangular(0.000008, 0.00001 ,0.000012)/ numpy.random.triangular(0.00002, 0.00004 ,0.00006)
@@ -212,12 +231,13 @@ if __name__ == "__main__":
         relative_prob_death_65 = numpy.random.triangular(0.00406, 0.0117 ,0.0193)/ numpy.random.triangular(0.00002, 0.00004 ,0.00006)
         ###########################################################
          #################
-        ##case mortality
+        
         ## rate calculated from Table 5 of
         ##Estimates of mortality attributable to influenza and RSV in the United States during 1997-2009 by influenza type or subtype, age, cause of death, and risk status
         ## Goncalo Matias,Robert Taylor,Francois Haguinet, Cynthia Schuck-Paim, Roger Lustig, Vivek Shinde
         ##see mortality rate data sheet for calculations
          
+        ## Relative death rate compared to influenza B
         ratio_death_strain_H1_0 = 0.444
         ratio_death_strain_H1_5 = 0.5882
         ratio_death_strain_H1_18 = 0.1245
@@ -232,7 +252,7 @@ if __name__ == "__main__":
         ratio_death_strain_H3_65 = 3.1693
         ratio_death_strain_H3_75 = 1.4822
          
-        
+        # Relative death rate for high risk individuals compared to low risk individuals
         ratio_death_highrisk_H1_0 = 5/11.
         ratio_death_highrisk_H1_5 = 8/12.
         ratio_death_highrisk_H1_18 = 19/15.
@@ -256,25 +276,14 @@ if __name__ == "__main__":
         ratio_death_highrisk_B_65 = 541/91.
         ratio_death_highrisk_B_75 = 2968/990.
          
-        ##################
-        # probability of hospitalization from  Molinari 2007
-        # https://www.sciencedirect.com/science/article/pii/S0264410X07003854 and
-        # de 2016 https://www.sciencedirect.com/science/article/pii/S1098301516305034?via%3Dihub        
-         
-        relative_prob_hosp_0 = 1
-        relative_prob_hosp_5 =  numpy.random.triangular(0.0002,0.0006,0.001)/numpy.random.triangular(0.0049, 0.0141,0.0233)
-        relative_prob_hosp_18 =  numpy.random.triangular(0.0015,0.0042,0.0069)/numpy.random.triangular(0.0049, 0.0141,0.0233)
-        relative_prob_hosp_50 =  numpy.random.triangular(0.00676,0.0193,0.0318)/numpy.random.triangular(0.0049, 0.0141,0.0233)
-        relative_prob_hosp_65 = numpy.random.triangular(0.0147,0.0421,0.0695)/numpy.random.triangular(0.0049, 0.0141,0.0233)
-         
- 
+     
         ############################################################
         #case hospitalization
         ##ref Table 4 of Estimates of hospitalization attributable to influenza and RSV in the US during 1997-2009, by age and risk status
         # Goncalo Matias, Robert Taylor, Francois Haguinet, Cynthia Schuck-Paim, Roger Lustig and Vivek Shinde
         #######################################
          
-         
+        ## Relative hospitalization rate compared to influenza B
         low_risk_hosp_rate_H1_0 = numpy.random.triangular(0,8,23)
         low_risk_hosp_rate_H1_5 = numpy.random.triangular(0,3,9)
         low_risk_hosp_rate_H1_18 = numpy.random.triangular(0,1,3)
@@ -342,7 +351,8 @@ if __name__ == "__main__":
         ratio_hosp_highrisk_B_50 =  high_risk_hosp_rate_B_50 /min(low_risk_hosp_rate_B_50,1)
         ratio_hosp_highrisk_B_65 =  high_risk_hosp_rate_B_65 /min(low_risk_hosp_rate_B_65,1)
         ratio_hosp_highrisk_B_75 =  high_risk_hosp_rate_B_75 /min(low_risk_hosp_rate_B_75,1)
-         
+        
+        #####################
         vac_eff_hospitalization = 0
         vac_eff_mortality = 0
         
@@ -367,10 +377,11 @@ if __name__ == "__main__":
         ##################
  
          
-        elements = [num, "six year average", incidence, hospitalizations, mortality, vacEfficacy, vacDoses, H1_0, H1_5, H1_25, H1_65, H3_0, H3_5, H3_25, H3_65, B_0, B_5, B_25, B_65, infectious_period_0, infectious_period_15,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, 
+        elements = [num, "nine year average (2010-11 to 2018-19)", incidence, hospitalizations, mortality, vacEfficacy, vacDoses, H1_0, H1_5, H1_25, H1_65, H3_0, H3_5, H3_25, H3_65, B_0, B_5, B_25, B_65, infectious_period_0, infectious_period_15,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, 
                     vac_eff_inf_H1_0, vac_eff_inf_H1_6mo, vac_eff_inf_H1_5, vac_eff_inf_H1_18, vac_eff_inf_H1_50,
                     vac_eff_inf_H3_0, vac_eff_inf_H3_6mo, vac_eff_inf_H3_5, vac_eff_inf_H3_18, vac_eff_inf_H3_50,
                     vac_eff_inf_B_0, vac_eff_inf_B_6mo, vac_eff_inf_B_5, vac_eff_inf_B_18, vac_eff_inf_B_50,
+                    vac_eff_inf_age_adjusted_H1, vac_eff_inf_age_adjusted_H3, vac_eff_inf_age_adjusted_B,
                  
                     relative_vac_eff_hosp_H1_0, relative_vac_eff_hosp_H1_6mo, relative_vac_eff_hosp_H1_16, relative_vac_eff_hosp_H1_65,
                     relative_vac_eff_hosp_H3_0, relative_vac_eff_hosp_H3_6mo, relative_vac_eff_hosp_H3_16, relative_vac_eff_hosp_H3_65,
@@ -380,10 +391,6 @@ if __name__ == "__main__":
                     relative_vac_eff_death_H1_0, relative_vac_eff_death_H1_6mo, relative_vac_eff_death_H1_18, relative_vac_eff_death_H1_65,
                     relative_vac_eff_death_H3_0, relative_vac_eff_death_H3_6mo, relative_vac_eff_death_H3_18, relative_vac_eff_death_H3_65,
                     relative_vac_eff_death_B_0, relative_vac_eff_death_B_6mo, relative_vac_eff_death_B_18, relative_vac_eff_death_B_65,
- 
-                    relative_high_risk_vac_eff_death_H1_0, relative_high_risk_vac_eff_death_H1_6mo, relative_high_risk_vac_eff_death_H1_18, relative_high_risk_vac_eff_death_H1_65,
-                    relative_high_risk_vac_eff_death_H3_0, relative_high_risk_vac_eff_death_H3_6mo, relative_high_risk_vac_eff_death_H3_18, relative_high_risk_vac_eff_death_H3_65,
-                    relative_high_risk_vac_eff_death_B_0, relative_high_risk_vac_eff_death_B_6mo, relative_high_risk_vac_eff_death_B_18, relative_high_risk_vac_eff_death_B_65,
                      
                     relative_prob_death_0, relative_prob_death_5, relative_prob_death_18, relative_prob_death_50, relative_prob_death_65,
                 ratio_death_strain_H1_0, ratio_death_strain_H1_5, ratio_death_strain_H1_18, ratio_death_strain_H1_50, ratio_death_strain_H1_65, ratio_death_strain_H1_75,

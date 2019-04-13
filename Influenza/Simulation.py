@@ -59,8 +59,6 @@ class run_Simulation:
 	    return vaccination_coverage + vaccination_coverage
 	    
 
-    #def computeR0(self):
-    #    return self.parameters.computeR0()
 
     def getLastValues(self):
         return (self.SUL[-1, :], self.IUL_H1[-1, :], self.IUL_H3[-1, :], self.IUL_B[-1, :], self.RUL_H1[-1, :], self.RUL_H3[-1, :], self.RUL_B[-1, :], 
@@ -327,40 +325,41 @@ class run_Simulation:
 	dRUH_B    = self.parameters.recoveryRate * IUH_B
 	
 	#TL
-	dSTL = - ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STL
+	dSTL = - ((1 - self.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B)  *STL
 
-        dITL_H1 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate ) * ITL_H1
-	dITL_H3 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate) * ITL_H3
-	dITL_B  = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B * STL) - (self.parameters.recoveryRate) * ITL_B
+        dITL_H1 = ((1 - self.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate ) * ITL_H1
+	dITL_H3 = ((1 - self.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate) * ITL_H3
+	dITL_B  = ((1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B * STL) - (self.parameters.recoveryRate) * ITL_B
 	dRTL_H1    = self.parameters.recoveryRate * ITL_H1
 	dRTL_H3    = self.parameters.recoveryRate * ITL_H3
 	dRTL_B    = self.parameters.recoveryRate * ITL_B
 	
 	#TH
-	dSTH =- ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) * Lambda_H1 + (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) * Lambda_H3+ (1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B)  *STH
+	dSTH =- ((1 - self.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B)  *STH
 	
-        dITH_H1 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate) * ITH_H1
-	dITH_H3 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate) * ITH_H3
-	dITH_B = ((1 - self.parameters.TypicalvaccineEfficacyVsInfectionTypical_B) * Lambda_B * STH) - (self.parameters.recoveryRate) * ITH_B
+        dITH_H1 = ((1 - self.TypicalvaccineEfficacyVsInfection_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate) * ITH_H1
+	dITH_H3 = ((1 - self.TypicalvaccineEfficacyVsInfection_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate) * ITH_H3
+	dITH_B = ((1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B * STH) - (self.parameters.recoveryRate) * ITH_B
 	dRTH_H1    = self.parameters.recoveryRate * ITH_H1
 	dRTH_H3    = self.parameters.recoveryRate * ITH_H3
 	dRTH_B    = self.parameters.recoveryRate * ITH_B
 	
 	#NL
-	dSNL = - ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNL
 	
-        dINL_H1 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate ) * INL_H1
-	dINL_H3 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate ) * INL_H3
-	dINL_B = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) * Lambda_B * SNL) - (self.parameters.recoveryRate ) * INL_B
+	dSNL = - ((1 - self.UniversalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.UniversalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.UniversalvaccineEfficacyVsInfection_B) * Lambda_B)  *SNL
+	
+        dINL_H1 = ((1 - self.UniversalvaccineEfficacyVsInfection_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate ) * INL_H1
+	dINL_H3 = ((1 - self.UniversalvaccineEfficacyVsInfection_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate ) * INL_H3
+	dINL_B = ((1 - self.UniversalvaccineEfficacyVsInfection_B) * Lambda_B * SNL) - (self.parameters.recoveryRate ) * INL_B
 	dRNL_H1    = self.parameters.recoveryRate * INL_H1
 	dRNL_H3    = self.parameters.recoveryRate * INL_H3
 	dRNL_B    = self.parameters.recoveryRate * INL_B
 	
 	#NH
-	dSNH =  - ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) * Lambda_H1 + (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) * Lambda_H3+ (1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) * Lambda_B)  *SNH
-        dINH_H1 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate ) * INH_H1
-	dINH_H3 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate ) * INH_H3
-	dINH_B = ((1 - self.parameters.UniversalvaccineEfficacyVsInfectionUniversal_B) *Lambda_B * SNH) - (self.parameters.recoveryRate ) * INH_B
+	dSNH =  - ((1 - self.UniversalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.UniversalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.UniversalvaccineEfficacyVsInfection_B) * Lambda_B)  *SNH
+        dINH_H1 = ((1 - self.UniversalvaccineEfficacyVsInfection_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate ) * INH_H1
+	dINH_H3 = ((1 - self.UniversalvaccineEfficacyVsInfection_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate ) * INH_H3
+	dINH_B = ((1 - self.UniversalvaccineEfficacyVsInfection_B) *Lambda_B * SNH) - (self.parameters.recoveryRate ) * INH_B
 	dRNH_H1    = self.parameters.recoveryRate * INH_H1
 	dRNH_H3    = self.parameters.recoveryRate * INH_H3
 	dRNH_B    = self.parameters.recoveryRate * INH_B
@@ -854,56 +853,6 @@ class run_Simulation:
 	self._cost_hospitalization_B = self.parameters.costHospitalization * self.hospitalizations_B
 	self.totalCosts_B = self._cost_overcounterMeds_B + self._cost_outpatient_B + self._cost_hospitalization_B
 	
-	
-	"""
-	self.YLL_L = numpy.multiply(self.parameters.expectationOfLife, self.deathsL)
-	self.YLL_H = numpy.multiply(self.parameters.expectationOfLife, self.deathsH)
-	self.YLL = numpy.multiply(self.parameters.expectationOfLife, self.deaths)
-
-	#Years lived with disability
-	################################################################################
-	### Complications cases that are hospitalized. NOTE DALY to be updated with low and high risk groups
-	self._ARDS = numpy.multiply(self.infections, self.parameters.caseARDSfraction)
-	self.YLD_ARDS = self.parameters.disabilityWeightARDS * (numpy.multiply(self._ARDS, self.parameters.expectationOfLife))
-	
-	self._pneumonia = numpy.multiply(self.infections, self.parameters.casePneumoniafraction)
-	self.YLD_pneumonia = self.parameters.disabilityWeightPneumonia * (numpy.multiply(self._pneumonia, self.parameters.durationPneumonia))
-
-	self._HospitalizedComplicated_cases = self._ARDS + self._pneumonia
-	self.YLD_HospitalizedComplicated = self.YLD_ARDS + self.YLD_pneumonia
-	################################################################################
-	## Complications that are not hospitalized
-	
-	self._otitis = numpy.multiply(self.infections, self.parameters.caseOtitisfraction)
-	self.YLD_otitis = self.parameters.disabilityWeightOtitis * (numpy.multiply(self._otitis, self.parameters.durationOtitis))
-	
-	
-	self._deafness = numpy.multiply(self.infections, self.parameters.caseDeafnessfraction)
-	self.YLD_deafness = numpy.multiply(self.parameters.disabilityWeightDeafness, (numpy.multiply(self._deafness, self.parameters.expectationOfLife)))
-	
-	self._NonhospitalizedComplicated_cases =  self._otitis + self._deafness
-	self.YLD_NonhospitalizedComplicated = self.YLD_otitis + self.YLD_deafness
-	################################################################################
-	## Hospitalizations with no complications
-	
-	self._HospitalizedUncomplicated_cases = self.hospitalizations - self._HospitalizedComplicated_cases
-	self.YLD_HospitalizedUncomplicated =  self.parameters.disabilityWeightHospitalizedUncomplicated * numpy.multiply(self._HospitalizedUncomplicated_cases, (1./(self.parameters.recoveryRate*365)))
-	
-	################################################################################
-	## No hospitalizations with no complications 
-	self._NonhospitalizedUncomplicated_cases = self.infections - (self._HospitalizedUncomplicated_cases + self._HospitalizedComplicated_cases + self._NonhospitalizedComplicated_cases)	
-	self.YLD_NonhospitalizedUncomplicated = self.parameters.disabilityWeightUncomplicated * numpy.multiply(self._NonhospitalizedUncomplicated_cases, (1./(self.parameters.recoveryRate*365)))
-	
-	########################################################################
-	##total YLD
-	self.YLD = self.YLD_NonhospitalizedUncomplicated + self.YLD_HospitalizedUncomplicated + self.YLD_HospitalizedComplicated + self.YLD_NonhospitalizedComplicated
-	
-
-	self.DALY = (self.YLL + self.YLD)
-	self.totalDALY = self.DALY.sum()
-	"""
-
-        
         
     def simulate(self):
         self.updateIC()
@@ -913,7 +862,8 @@ class run_Simulation:
     def updateProportionVaccinated(self, PVPWVal, nVacTypes, vacDoses):
         # Update propotion vaccinated
 
-	 # Convert flat vector to 2-D array
+
+	# Convert flat vector to 2-D array
         if numpy.ndim(PVPWVal) != 2:
 	  
             PVPWVal = numpy.asarray(PVPWVal).reshape(
@@ -956,6 +906,12 @@ class run_Simulation:
 	self.parameters.proportionVaccinatedTHPW.values = [(a/(1.*b)) for a,b in zip(self.doses_TH,  self.parameters.population_highrisk[1:])]
 	self.parameters.proportionVaccinatedNLPW.values = [(a/(1.*b)) for a,b in zip(self.doses_NL,  self.parameters.population_lowrisk[1:])]
 	self.parameters.proportionVaccinatedNHPW.values = [(a/(1.*b)) for a,b in zip(self.doses_NH,  self.parameters.population_highrisk[1:])]
+	
+	vacsUsedTypical = sum(self.doses_TL + self.doses_TH)
+	vacsUsedUniversal = sum(self.doses_NL + self.doses_NH)
+
+	##the proportion of all vaccinated individuals that belong to age group a.
+	self.proportionVaccinated = [((a+b+c+d)/(1.*(vacsUsedTypical+vacsUsedUniversal))) for (a,b,c,d) in zip(self.doses_TL, self.doses_TH,  self.doses_NL, self.doses_NH)]
 
 	## extend to full ages groups. Proportions calculated by multiplying PVPWVal 
 	##values with the matrix defined in S.142
@@ -968,14 +924,12 @@ class run_Simulation:
 	
 	
 
-	vacsUsedTypical = sum(self.doses_TL + self.doses_TH)
-	vacsUsedUniversal = sum(self.doses_NL + self.doses_NH)
 
 	   
         # Update initial condition for ODEs
         self.updateIC()
 
-        return vacsUsedTypical, vacsUsedUniversal
+        return vacsUsedTypical, vacsUsedUniversal, self.proportionVaccinated
     
         
     def simulateWithVaccine(self, PVPWVals, vacEfficacy_seasonal, vacEfficacy_universal, vacDoses):
@@ -985,7 +939,7 @@ class run_Simulation:
         self.resetSolution()
 
         # Vaccinate the population
-	vacsUsedTypical, vacsUsedUniversal = self.updateProportionVaccinated(PVPWVals, nVacTypes, vacDoses)
+	vacsUsedTypical, vacsUsedUniversal, self.proportionVaccinated = self.updateProportionVaccinated(PVPWVals, nVacTypes, vacDoses)
 	
 	if vacsUsedUniversal <0 and min(list(PVPWVals)) >0 : print ("check!!!!"), PVPWVals, nVacTypes, vacsUsedUniversal
         tEnd = self.tMax
@@ -993,15 +947,7 @@ class run_Simulation:
 	self.solve(tStart = tStart, tEnd = tEnd)
 	
 	self.updateStats()
-	
-	#import matplotlib.pyplot as plt
-	#times = [num for num in xrange(tEnd+1)]
-	#plt.plot(times, (self.IUL_H1).sum(axis=1), color = "red", linestyle= "-")
-	#plt.plot(times, (self.IUL_H3).sum(axis=1), color = "blue", linestyle= "-")
-	#plt.plot(times, (self.IUL_B).sum(axis=1), color = "green", linestyle = "-")	 
-	#plt.show()
-	
-        
+            
 
 	return vacsUsedTypical, vacsUsedUniversal
 
