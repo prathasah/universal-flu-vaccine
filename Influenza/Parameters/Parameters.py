@@ -175,12 +175,53 @@ class Parameters:
 	
 	
 	#VE_a = VE * SVE_a/SVEAA
-	self.TypicalvaccineEfficacyVsInfection_H1 = (self.passedParamValues["vacEfficacy_seasonal"]  * self.age_specific_TypicalvaccineEfficacyVsInfection_H1)/self.vaccineEfficacyVsInfection_age_adjusted_H1
-	self.TypicalvaccineEfficacyVsInfection_H3 = (self.passedParamValues["vacEfficacy_seasonal"]  * self.age_specific_TypicalvaccineEfficacyVsInfection_H3)/self.vaccineEfficacyVsInfection_age_adjusted_H3
-	self.TypicalvaccineEfficacyVsInfection_B = (self.passedParamValues["vacEfficacy_seasonal"]  * self.age_specific_TypicalvaccineEfficacyVsInfection_B)/self.vaccineEfficacyVsInfection_age_adjusted_B
 	
-	self.UniversalvaccineEfficacyVsInfection_H1 = (self.passedParamValues["vacEfficacy_universal"] [0] * self.age_specific_TypicalvaccineEfficacyVsInfection_H1)/self.vaccineEfficacyVsInfection_age_adjusted_H1
-	self.UniversalvaccineEfficacyVsInfection_H3 = (self.passedParamValues["vacEfficacy_universal"] [0] * self.age_specific_TypicalvaccineEfficacyVsInfection_H3)/self.vaccineEfficacyVsInfection_age_adjusted_H3
-	self.UniversalvaccineEfficacyVsInfection_B = (self.passedParamValues["vacEfficacy_universal"] [1]* self.age_specific_TypicalvaccineEfficacyVsInfection_B)/self.vaccineEfficacyVsInfection_age_adjusted_B
-	print ("check....."), self.proportionVaccinatedTypical, len(self.proportionVaccinatedTypical)
+	self.TypicalvaccineEfficacyVsInfection_H1 = np.array([min(1, num) for num in (self.passedParamValues["vacEfficacy_seasonal"]  * self.age_specific_vaccineEfficacyVsInfection)/self.vaccineEfficacyVsInfection_all_ages])
+	self.TypicalvaccineEfficacyVsInfection_H3 =np.array( [min(1, num) for num in (self.passedParamValues["vacEfficacy_seasonal"]  * self.age_specific_vaccineEfficacyVsInfection)/self.vaccineEfficacyVsInfection_all_ages])
+	self.TypicalvaccineEfficacyVsInfection_B = np.array([min(1, num) for num in (self.passedParamValues["vacEfficacy_seasonal"]  * self.age_specific_vaccineEfficacyVsInfection)/self.vaccineEfficacyVsInfection_all_ages])
+	
+	self.UniversalvaccineEfficacyVsInfection_H1 =np.array([min(1, num) for num in  (self.passedParamValues["vacEfficacy_universal"] [0] * self.age_specific_vaccineEfficacyVsInfection)/self.vaccineEfficacyVsInfection_all_ages])
+	self.UniversalvaccineEfficacyVsInfection_H3 =np.array([min(1, num) for num in (self.passedParamValues["vacEfficacy_universal"] [0] * self.age_specific_vaccineEfficacyVsInfection)/self.vaccineEfficacyVsInfection_all_ages])
+	self.UniversalvaccineEfficacyVsInfection_B = np.array([min(1, num) for num in (self.passedParamValues["vacEfficacy_universal"] [1] * self.age_specific_vaccineEfficacyVsInfection)/self.vaccineEfficacyVsInfection_all_ages])
+	
 
+
+	if 'contactMatrix' in paramValues:
+            self.contactMatrix = paramValues.get('contactMatrix')
+        else:
+            from sys import modules
+            import os.path
+            import cPickle
+            modulePath = os.path.dirname(modules[self.__module__].__file__)
+            contactMatrixFile = os.path.join(modulePath, 'contactMatrix.p')
+            self.contactMatrix = cPickle.load(open(contactMatrixFile))
+
+	if calibration:
+	    if "betaList" in self.passedParamValues:
+		self.transmissionScaling_H1 =  self.passedParamValues["betaList"][0]
+		self.transmissionScaling_H3 =  self.passedParamValues["betaList"][1]
+		self.transmissionScaling_B =   self.passedParamValues["betaList"][2]
+	    
+	    if "vac_eff_hospitalization" in self.passedParamValues: 
+		self.vac_eff_hospitalization = self.passedParamValues["vac_eff_hospitalization"]
+	    
+	    if "vac_eff_mortality" in self.passedParamValues: 
+		self.vac_eff_mortality = self.passedParamValues["vac_eff_mortality"]
+		
+	    if "susceptibility_H1" in self.passedParamValues:
+		susceptibility_H1PW = PiecewiseAgeRate(self.passedParamValues["susceptibility_H1"], [0,5,25,65])
+		susceptibility_H3PW = PiecewiseAgeRate(self.passedParamValues["susceptibility_H3"], [0,5,25,65])
+		susceptibility_BPW = PiecewiseAgeRate(self.passedParamValues["susceptibility_B"], [0,5,25,65])
+		setattr(self, "susceptibility_H1",susceptibility_H1PW.full(self.ages))
+		setattr(self, "susceptibility_H3", susceptibility_H3PW.full(self.ages))
+		setattr(self,"susceptibility_B", susceptibility_BPW.full(self.ages))
+		
+		
+	    if "prob_hosp_scaling" in self.passedParamValues:
+		self.prob_hosp_scaling = self.passedParamValues["prob_hosp_scaling"]
+		
+	    if "prob_death_scaling" in self.passedParamValues:
+		self.prob_death_scaling = self.passedParamValues["prob_death_scaling"]
+
+		
+	

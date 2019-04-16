@@ -13,10 +13,8 @@ if __name__ == "__main__":
      
      
     header = ["iter", "year","data_incidence", "data_hospitalizations", "data_mortality", "data_vacEfficacy", "data_vacDoses", "data_H1_0", "data_H1_5", "data_H1_25", "data_H1_65", "data_H3_0", "data_H3_5", "data_H3_25", "data_H3_65", "data_B_0", "data_B_5", "data_B_25", "data_B_65", "infectious_period_0", "infectious_period_15", "proportionHighRisk_0", "proportionHighRisk_2","proportionHighRisk_5","proportionHighRisk_19", "proportionHighRisk_25", "proportionHighRisk_50","proportionHighRisk_65", 
-              "age_specific_vaccineEfficacyVsInfection_H1_0", "age_specific_vaccineEfficacyVsInfection_H1_0.5",  "age_specific_vaccineEfficacyVsInfection_H1_5","age_specific_vaccineEfficacyVsInfection_H1_18","age_specific_vaccineEfficacyVsInfection_H1_50",
-              "age_specific_vaccineEfficacyVsInfection_H3_0", "age_specific_vaccineEfficacyVsInfection_H3_0.5",  "age_specific_vaccineEfficacyVsInfection_H3_5","age_specific_vaccineEfficacyVsInfection_H3_18","age_specific_vaccineEfficacyVsInfection_H3_50",
-              "age_specific_vaccineEfficacyVsInfection_B_0", "age_specific_vaccineEfficacyVsInfection_B_0.5",  "age_specific_vaccineEfficacyVsInfection_B_5","age_specific_vaccineEfficacyVsInfection_B_18","age_specific_vaccineEfficacyVsInfection_B_50",
-              "vaccineEfficacyVsInfection_age_adjusted_H1","vaccineEfficacyVsInfection_age_adjusted_H3","vaccineEfficacyVsInfection_age_adjusted_B",
+              "age_specific_vaccineEfficacyVsInfection_0", "age_specific_vaccineEfficacyVsInfection_0.5",  "age_specific_vaccineEfficacyVsInfection_5","age_specific_vaccineEfficacyVsInfection_18","age_specific_vaccineEfficacyVsInfection_50",
+              "vaccineEfficacyVsInfection_all_ages",
                "relative_vaccineEfficacyVsHospitalization_H1_0", "relative_vaccineEfficacyVsHospitalization_H1_0.5", "relative_vaccineEfficacyVsHospitalization_H1_16", "relative_vaccineEfficacyVsHospitalization_H1_65",
               "relative_vaccineEfficacyVsHospitalization_H3_0", "relative_vaccineEfficacyVsHospitalization_H3_0.5", "relative_vaccineEfficacyVsHospitalization_H3_16", "relative_vaccineEfficacyVsHospitalization_H3_65",
               "relative_vaccineEfficacyVsHospitalization_B_0", "relative_vaccineEfficacyVsHospitalization_B_0.5", "relative_vaccineEfficacyVsHospitalization_B_16", "relative_vaccineEfficacyVsHospitalization_B_65",
@@ -41,7 +39,7 @@ if __name__ == "__main__":
               "highRiskhospitalizationRate_B_0","highRiskhospitalizationRate_B_5","highRiskhospitalizationRate_B_18","highRiskhospitalizationRate_B_50","highRiskhospitalizationRate_B_65", "highRiskhospitalizationRate_B_75", "vac_eff_hospitalization", "vac_eff_mortality",
               "prob_outpatient_lowrisk_0","prob_outpatient_lowrisk_5","prob_outpatient_lowrisk_18" ,"prob_outpatient_lowrisk_65",
                     "prob_outpatient_highrisk_0" ,"prob_outpatient_highrisk_5" ,"prob_outpatient_highrisk_18" ,"prob_outpatient_highrisk_65"]
-    writer = csv.writer(open('sampled_parameter_5000_set_with_data_20March2019.csv','wb'))
+    writer = csv.writer(open('sampled_parameter_5000_set_with_data_15April2019.csv','wb'))
     writer.writerow(header)
      
     for num in xrange(5000):
@@ -133,30 +131,16 @@ if __name__ == "__main__":
          
         ##################3
         ##vaccine efficacy against infection.
-        ##ref Table 2 of Assessment of influenza vaccine effectiveness in a sentinel surveillance network 2010-13, United States
+        ##ref Table 2 (complete dataset information) of Assessment of influenza vaccine effectiveness in a sentinel surveillance network 2010-13, United States
         ##Benjamin J. Cowlinga, Shuo Fenga, Lyn Finelli, Andrea Steffens, Ashley Fowlkes
          
-        vac_eff_inf_H1_0 = 0
-        vac_eff_inf_H1_6mo = numpy.random.triangular(0.48, 0.7, 0.83)
-        vac_eff_inf_H1_5 = numpy.random.triangular(0.31, 0.56, 0.72)
-        vac_eff_inf_H1_18 = numpy.random.triangular(0.39, 0.57, 0.70)
-        vac_eff_inf_H1_50 = numpy.random.triangular(0.1, 0.3, 0.63)
+        vac_eff_inf_0 = 0
+        vac_eff_inf_6mo = numpy.random.triangular(0.5, 0.6, 0.68)
+        vac_eff_inf_5 = numpy.random.triangular(0.35, 0.46, 0.56)
+        vac_eff_inf_18 = numpy.random.triangular(0.26, 0.39, 0.50)
+        vac_eff_inf_50 = numpy.random.triangular(0.08, 0.33, 0.51)
          
-        vac_eff_inf_H3_0 = 0
-        vac_eff_inf_H3_6mo = numpy.random.triangular(0.47, 0.60, 0.69)
-        vac_eff_inf_H3_5 = numpy.random.triangular(0.16, 0.33, 0.47)
-        vac_eff_inf_H3_18 = numpy.random.triangular(0.08, 0.26, 0.41)
-        vac_eff_inf_H3_50 = numpy.random.triangular(0.09, 0.34, 0.52)
-         
-        vac_eff_inf_B_0 = 0
-        vac_eff_inf_B_6mo = numpy.random.triangular(0.35, 0.51, 0.64)
-        vac_eff_inf_B_5 = numpy.random.triangular(0.4, 0.52, 0.62)
-        vac_eff_inf_B_18 = numpy.random.triangular(0.09, 0.33, 0.50)
-        vac_eff_inf_B_50 = numpy.random.triangular(0.10, 0.37, 0.65)
-        
-        vac_eff_inf_age_adjusted_H1 = numpy.random.triangular(0.53, 0.63, 0.71)
-        vac_eff_inf_age_adjusted_H3 =numpy.random.triangular(0.31, 0.39, 0.46)
-        vac_eff_inf_age_adjusted_B =numpy.random.triangular(0.43, 0.50, 0.57)
+        vac_eff_inf_all_ages = numpy.random.triangular(0.43, 0.49, 0.54)
         
         ##################
          
@@ -378,11 +362,8 @@ if __name__ == "__main__":
  
          
         elements = [num, "nine year average (2010-11 to 2018-19)", incidence, hospitalizations, mortality, vacEfficacy, vacDoses, H1_0, H1_5, H1_25, H1_65, H3_0, H3_5, H3_25, H3_65, B_0, B_5, B_25, B_65, infectious_period_0, infectious_period_15,  prop_high_risk_0, prop_high_risk_2,prop_high_risk_5,prop_high_risk_19, prop_high_risk_25, prop_high_risk_50, prop_high_risk_65, 
-                    vac_eff_inf_H1_0, vac_eff_inf_H1_6mo, vac_eff_inf_H1_5, vac_eff_inf_H1_18, vac_eff_inf_H1_50,
-                    vac_eff_inf_H3_0, vac_eff_inf_H3_6mo, vac_eff_inf_H3_5, vac_eff_inf_H3_18, vac_eff_inf_H3_50,
-                    vac_eff_inf_B_0, vac_eff_inf_B_6mo, vac_eff_inf_B_5, vac_eff_inf_B_18, vac_eff_inf_B_50,
-                    vac_eff_inf_age_adjusted_H1, vac_eff_inf_age_adjusted_H3, vac_eff_inf_age_adjusted_B,
-                 
+                    vac_eff_inf_0, vac_eff_inf_6mo, vac_eff_inf_5, vac_eff_inf_18, vac_eff_inf_50,
+                    vac_eff_inf_all_ages,
                     relative_vac_eff_hosp_H1_0, relative_vac_eff_hosp_H1_6mo, relative_vac_eff_hosp_H1_16, relative_vac_eff_hosp_H1_65,
                     relative_vac_eff_hosp_H3_0, relative_vac_eff_hosp_H3_6mo, relative_vac_eff_hosp_H3_16, relative_vac_eff_hosp_H3_65,
                     relative_vac_eff_hosp_B_0, relative_vac_eff_hosp_B_6mo, relative_vac_eff_hosp_B_16, relative_vac_eff_hosp_B_65,

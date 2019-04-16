@@ -53,43 +53,18 @@ def susceptibility_BPW(index):
 
 
 
-def age_specific_TypicalvaccineEfficacyVsInfection_H1PW(index):
+def age_specific_vaccineEfficacyVsInfectionPW(index):
     return PiecewiseAgeRate(
-    [df.at[index, "relative_vaccineEfficacyVsInfection_H1_0"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_H1_0.5"],
-      df.at[index, "relative_vaccineEfficacyVsInfection_H1_5"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_H1_18"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_H1_50"]],
+    [df.at[index, "age_specific_vaccineEfficacyVsInfection_0"],
+     df.at[index, "age_specific_vaccineEfficacyVsInfection_0.5"],
+      df.at[index, "age_specific_vaccineEfficacyVsInfection_5"],
+     df.at[index, "age_specific_vaccineEfficacyVsInfection_18"],
+     df.at[index, "age_specific_vaccineEfficacyVsInfection_50"]],
     [0, 0.5,  5, 18, 50])
 
-def age_specfic_TypicalvaccineEfficacyVsInfection_H3PW(index):
-    return PiecewiseAgeRate(
-    [df.at[index, "relative_vaccineEfficacyVsInfection_H3_0"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_H3_0.5"],
-      df.at[index, "relative_vaccineEfficacyVsInfection_H3_5"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_H3_18"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_H3_50"]],
-    [0, 0.5,  5, 18, 50])
 
-def age_specific_TypicalvaccineEfficacyVsInfection_BPW(index):
-    return PiecewiseAgeRate(
-    [df.at[index, "relative_vaccineEfficacyVsInfection_B_0"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_B_0.5"],
-      df.at[index, "relative_vaccineEfficacyVsInfection_B_5"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_B_18"],
-     df.at[index, "relative_vaccineEfficacyVsInfection_B_50"]],
-    [0, 0.5,  5, 18, 50])
-
-def vaccineEfficacyVsInfection_age_adjusted_H1(index):
-    return df.at["vaccineEfficacyVsInfection_age_adjusted_H1"]
-
-def vaccineEfficacyVsInfection_age_adjusted_H3(index):
-    return df.at["vaccineEfficacyVsInfection_age_adjusted_H3"]
-
-def vaccineEfficacyVsInfection_age_adjusted_B(index):
-    return df.at["vaccineEfficacyVsInfection_age_adjusted_B"]
-    
-    
+def vaccineEfficacyVsInfection_all_ages(index):
+    return df.at[index, "vaccineEfficacyVsInfection_all_ages"]
     
 def relative_vaccineEfficacyVsHospitalization_H1PW(index):
     return PiecewiseAgeRate(

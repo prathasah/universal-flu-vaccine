@@ -325,41 +325,41 @@ class run_Simulation:
 	dRUH_B    = self.parameters.recoveryRate * IUH_B
 	
 	#TL
-	dSTL = - ((1 - self.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B)  *STL
+	dSTL = - ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.parameters.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.parameters.TypicalvaccineEfficacyVsInfection_B) * Lambda_B)  *STL
 
-        dITL_H1 = ((1 - self.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate ) * ITL_H1
-	dITL_H3 = ((1 - self.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate) * ITL_H3
-	dITL_B  = ((1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B * STL) - (self.parameters.recoveryRate) * ITL_B
+        dITL_H1 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 * STL) - (self.parameters.recoveryRate ) * ITL_H1
+	dITL_H3 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3 * STL) - (self.parameters.recoveryRate) * ITL_H3
+	dITL_B  = ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_B) * Lambda_B * STL) - (self.parameters.recoveryRate) * ITL_B
 	dRTL_H1    = self.parameters.recoveryRate * ITL_H1
 	dRTL_H3    = self.parameters.recoveryRate * ITL_H3
 	dRTL_B    = self.parameters.recoveryRate * ITL_B
 	
 	#TH
-	dSTH =- ((1 - self.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B)  *STH
+	dSTH =- ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.parameters.TypicalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.parameters.TypicalvaccineEfficacyVsInfection_B) * Lambda_B)  *STH
 	
-        dITH_H1 = ((1 - self.TypicalvaccineEfficacyVsInfection_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate) * ITH_H1
-	dITH_H3 = ((1 - self.TypicalvaccineEfficacyVsInfection_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate) * ITH_H3
-	dITH_B = ((1 - self.TypicalvaccineEfficacyVsInfection_B) * Lambda_B * STH) - (self.parameters.recoveryRate) * ITH_B
+        dITH_H1 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_H1) *Lambda_H1 * STH) - (self.parameters.recoveryRate) * ITH_H1
+	dITH_H3 = ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_H3) *Lambda_H3 * STH) - (self.parameters.recoveryRate) * ITH_H3
+	dITH_B = ((1 - self.parameters.TypicalvaccineEfficacyVsInfection_B) * Lambda_B * STH) - (self.parameters.recoveryRate) * ITH_B
 	dRTH_H1    = self.parameters.recoveryRate * ITH_H1
 	dRTH_H3    = self.parameters.recoveryRate * ITH_H3
 	dRTH_B    = self.parameters.recoveryRate * ITH_B
 	
 	#NL
 	
-	dSNL = - ((1 - self.UniversalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.UniversalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.UniversalvaccineEfficacyVsInfection_B) * Lambda_B)  *SNL
+	dSNL = - ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.parameters.UniversalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.parameters.UniversalvaccineEfficacyVsInfection_B) * Lambda_B)  *SNL
 	
-        dINL_H1 = ((1 - self.UniversalvaccineEfficacyVsInfection_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate ) * INL_H1
-	dINL_H3 = ((1 - self.UniversalvaccineEfficacyVsInfection_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate ) * INL_H3
-	dINL_B = ((1 - self.UniversalvaccineEfficacyVsInfection_B) * Lambda_B * SNL) - (self.parameters.recoveryRate ) * INL_B
+        dINL_H1 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_H1) *Lambda_H1 * SNL) - (self.parameters.recoveryRate ) * INL_H1
+	dINL_H3 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_H3) *Lambda_H3 * SNL) - (self.parameters.recoveryRate ) * INL_H3
+	dINL_B = ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_B) * Lambda_B * SNL) - (self.parameters.recoveryRate ) * INL_B
 	dRNL_H1    = self.parameters.recoveryRate * INL_H1
 	dRNL_H3    = self.parameters.recoveryRate * INL_H3
 	dRNL_B    = self.parameters.recoveryRate * INL_B
 	
 	#NH
-	dSNH =  - ((1 - self.UniversalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.UniversalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.UniversalvaccineEfficacyVsInfection_B) * Lambda_B)  *SNH
-        dINH_H1 = ((1 - self.UniversalvaccineEfficacyVsInfection_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate ) * INH_H1
-	dINH_H3 = ((1 - self.UniversalvaccineEfficacyVsInfection_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate ) * INH_H3
-	dINH_B = ((1 - self.UniversalvaccineEfficacyVsInfection_B) *Lambda_B * SNH) - (self.parameters.recoveryRate ) * INH_B
+	dSNH =  - ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_H1) * Lambda_H1 + (1 - self.parameters.UniversalvaccineEfficacyVsInfection_H3) * Lambda_H3+ (1 - self.parameters.UniversalvaccineEfficacyVsInfection_B) * Lambda_B)  *SNH
+        dINH_H1 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_H1) *Lambda_H1 * SNH) - (self.parameters.recoveryRate ) * INH_H1
+	dINH_H3 = ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_H3) *Lambda_H3 * SNH) - (self.parameters.recoveryRate ) * INH_H3
+	dINH_B = ((1 - self.parameters.UniversalvaccineEfficacyVsInfection_B) *Lambda_B * SNH) - (self.parameters.recoveryRate ) * INH_B
 	dRNH_H1    = self.parameters.recoveryRate * INH_H1
 	dRNH_H3    = self.parameters.recoveryRate * INH_H3
 	dRNH_B    = self.parameters.recoveryRate * INH_B
